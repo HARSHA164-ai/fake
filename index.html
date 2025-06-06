@@ -66,12 +66,14 @@
       left: 50%;
       transform: translateX(-50%);
       width: 60%;
-      bottom: -5px; 
+      bottom: -5px;
     }
+
     .navbar .nav-link {
       text-decoration: none !important;
       box-shadow: none !important;
     }
+
     .navbar .nav-link:hover,
     .navbar .nav-link:focus {
       text-decoration: none !important;
@@ -648,6 +650,15 @@
       font-style: bold;
       color: black;
       margin-left: 20px;
+    }
+
+    /* Final override to ensure no underline appears */
+    .navbar .nav-link,
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus,
+    .navbar .nav-link:active {
+      text-decoration: none !important;
+      box-shadow: none !important;
     }
   </style>
 </head>
