@@ -644,7 +644,23 @@
       }
     }
 
-    
+    .logo {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #003366;
+      /* Dark navy */
+    }
+
+    .logo .highlight {
+      color: #007bff;
+      /* Bright blue */
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
 
     /* Final override to ensure no underline appears */
     .navbar .nav-link,
@@ -665,7 +681,8 @@
     <div class="container">
       <a class="navbar-brand" href="#">
         <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
-        <span class="logo"><b>ANDHRA DEVELOPRS</b></span>
+        <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
+
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
