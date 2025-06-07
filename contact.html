@@ -611,62 +611,64 @@
             <p class="form-subheader">We’re here to connect, collaborate, and create. Reach out to Andhra Developers for
                 any queries, project discussions, or support — we’re just a message away.</p>
 
-           <!-- contact.html -->
-<form id="contactForm">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="name">Name</label>
-      <input type="text" id="name" required>
+            <!-- contact.html -->
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-submit">Schedule Meeting</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="email">Email</label>
-      <input type="email" id="email" required>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="phone">Phone</label>
-      <input type="tel" id="phone" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="subject">Subject</label>
-      <input type="text" id="subject" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" rows="4" required></textarea>
-  </div>
-  <button type="submit" class="btn btn-submit">Schedule Meeting</button>
-</form>
 
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-<script src="firebase.js"></script>
-<script>
-  const db = firebase.firestore();
-  document.getElementById("contactForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <script src="firebase.js"></script>
+    <script>
+        const db = firebase.firestore();
+        document.getElementById("contactForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-    const messageData = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-      subject: document.getElementById("subject").value,
-      message: document.getElementById("message").value,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
+            const messageData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                subject: document.getElementById("subject").value,
+                message: document.getElementById("message").value,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            };
 
-    try {
-      await db.collection("messages").add(messageData);
-      alert("Message sent successfully!");
-      document.getElementById("contactForm").reset();
-    } catch (err) {
-      alert("Failed to send message.");
-      console.error(err);
-    }
-  });
-</script>
+            try {
+                await db.collection("messages").add(messageData);
+                alert("Message sent successfully!");
+                document.getElementById("contactForm").reset();
+            } catch (err) {
+                alert("Failed to send message.");
+                console.error(err);
+            }
+        });
+    </script>
 
 
     <!--google map-->
@@ -691,9 +693,11 @@
                 <!-- About Us Section -->
                 <div class="col-md-3">
                     <h5>About Us</h5>
-                    <p>At Andhra Developers, we create websites, apps, designs, and digital content that help students
+                    <p>At Andhra Developers, we create websites, apps, designs, and digital content that help
+                        students
                         and
-                        businesses grow. We also offer hands-on software courses to build real-world skills. With a
+                        businesses grow. We also offer hands-on software courses to build real-world skills.
+                        With a
                         focus on
                         quality, creativity, and support we turn ideas into powerful digital solutions.</p>
                 </div>
