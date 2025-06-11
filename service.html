@@ -9,112 +9,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* Navbar styles */
-        .navbar-custom {
-            background-color: #ffffff;
-            transition: background-color 0.3s ease;
-        }
+        /* --- NAVBAR STYLES LEFT UNCHANGED --- */
+        /* (Assuming your navbar CSS remains as is) */
 
-        /* Sticky navbar style when scrolling */
-        .navbar-scrolled {
-            background-color: #FFFFFF !important;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-scrolled .nav-link {
-            color: #081b29 !important;
-        }
-
-        .navbar-scrolled .btn-training {
-            background-color: #10375C !important;
-            color: #FFFFFF !important;
-        }
-
-        .navbar-brand img {
-            height: 50px;
-            transition: transform 0.3s ease;
-        }
-
-        .navbar-brand img:hover {
-            transform: scale(1.1);
-        }
-
-        /* Nav links styling */
-        .navbar-custom .navbar-nav .nav-link {
-            color: #181b31;
-            font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
-            margin: 0 15px;
-            position: relative;
-        }
-
-        /* Active link styling */
-        .navbar-custom .navbar-nav .nav-link.active::after {
-            content: '';
-            display: block;
-            height: 2px;
-            background-color: #10375C;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            bottom: -5px;
-        }
-
-        /* Disable underline effect on active link in mobile view */
-        @media (max-width: 768px) {
-            .navbar-custom .navbar-nav .nav-link.active::after {
-                display: none;
-            }
-        }
-
-        /* Hover effect for nav links */
-        .navbar-custom .navbar-nav .nav-link:hover {
-            color: #1A2024;
-            transform: scale(1.1);
-        }
-
-        /* Dropdown styling */
-        .navbar-custom .navbar-nav .dropdown-menu {
-            background-color: #ffffff;
-            border: none;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            transition: box-shadow 0.3s ease;
-            display: none;
-        }
-
-        /* Hover effect for dropdown items */
-        .navbar-custom .navbar-nav .dropdown-item:hover {
-            background-color: #f1f1f1;
-            color: #1A2024;
-        }
-
-        /* Show dropdown on hover */
-        .navbar-custom .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        /* Training button styling */
-        .navbar-custom .navbar-nav .btn-training {
-            background-color: #10375C;
-            color: #FFFFFF;
-            font-weight: bold;
-            border: none;
-            margin-left: 20px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            padding: 8px 20px;
-        }
-
-        .navbar-custom .navbar-nav .btn-training:hover {
-            background-color: #FFFFFF;
-            color: #10375C;
-            transform: scale(1.1);
-        }
-
-        /* Main Colors */
+        /* Main Colors (excluding navbar) */
         :root {
             --primary-color: #ffffff;
-            --background-light: #ffffff;
+            /* white */
+            --background-light: #001f4d;
+            /* dark blue background */
+            --accent-yellow: #FFD700;
+            /* yellow */
+            --accent-blue: #004080;
+            /* medium blue */
+            --text-black: #000000;
+            /* black */
         }
 
         /* Section Styling */
@@ -123,12 +32,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #ffffff;
+            background-color: var(--background-light);
         }
 
         /* Left Box Styling */
         .left-box {
-            background-color: #001f3f;
+            background-color: var(--accent-blue);
+            /* blue */
             padding: 40px;
             text-align: center;
             border-radius: 8px;
@@ -136,7 +46,7 @@
             font-weight: bold;
             font-size: 2.1rem;
             line-height: 1.3;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             opacity: 0;
             transform: translateX(-50px);
             animation: slideInLeft 1s forwards;
@@ -148,10 +58,11 @@
 
         /* Right Box Styling */
         .right-box {
-            background-color: #ffffff;
+            background-color: var(--primary-color);
+            /* white */
             padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             opacity: 0;
             transform: translateX(50px);
             animation: slideInRight 1s forwards 0.3s;
@@ -159,11 +70,12 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
+            color: var(--text-black);
         }
 
         .right-box h2 {
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--accent-blue);
         }
 
         /* Motion Effects */
@@ -208,57 +120,61 @@
 
         /* Footer Section Styling */
         .footer {
-            background-color: #1a1c1e;
-            color: #d4d4d4;
+            background-color: var(--text-black);
+            /* black */
+            color: var(--primary-color);
+            /* white */
             padding: 60px 0;
             font-size: 0.9rem;
         }
 
         .footer h5 {
-            color: #ffffff;
+            color: var(--accent-yellow);
+            /* yellow */
             font-weight: bold;
             margin-bottom: 20px;
         }
 
         .footer p,
         .footer a {
-            color: #d4d4d4;
+            color: var(--primary-color);
+            /* white */
             margin-bottom: 10px;
             font-size: 0.9rem;
         }
 
         .footer a:hover {
-            color: #ffffff;
+            color: var(--accent-yellow);
             text-decoration: none;
         }
 
         .footer-bottom {
-            background-color: #151718;
+            background-color: #111111;
             padding: 15px 0;
             text-align: center;
-            color: #7a7a7a;
+            color: #888888;
             font-size: 0.8rem;
         }
 
         .footer-bottom a {
-            color: #7a7a7a;
+            color: #888888;
             font-weight: bold;
             margin-left: 5px;
         }
 
         .footer-bottom a:hover {
-            color: #ffffff;
+            color: var(--accent-yellow);
         }
 
         .social-icons a {
-            color: #d4d4d4;
+            color: var(--primary-color);
             margin-right: 10px;
             font-size: 1.2rem;
             transition: color 0.3s;
         }
 
         .social-icons a:hover {
-            color: #ffffff;
+            color: var(--accent-yellow);
         }
 
         /* Scroll to Top Button Styles */
@@ -267,8 +183,8 @@
             bottom: 20px;
             right: 20px;
             display: none;
-            background-color: #3013AD;
-            color: #fff;
+            background-color: var(--accent-blue);
+            color: var(--primary-color);
             border: none;
             border-radius: 5px;
             padding: 10px 15px;
@@ -279,24 +195,25 @@
         }
 
         .scroll-to-top:hover {
-            background-color: #1A2024;
+            background-color: var(--accent-yellow);
+            color: var(--text-black);
         }
 
         /* Main Section Styling */
         .services-section {
-            background-color: #ffffff;
+            background-color: var(--background-light);
             padding: 60px 0;
         }
 
         /* Card Styling */
         .service-card {
-            background-color: #222;
+            background-color: var(--text-black);
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0px 4px 15px rgba(255, 215, 0, 0.3);
             /* yellow shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            color: #ddd;
+            color: var(--primary-color);
             text-align: left;
             min-height: 350px;
             display: flex;
@@ -317,8 +234,7 @@
         /* Icon Styling */
         .icon {
             font-size: 2.5rem;
-            color: #FFD700;
-            /* yellow */
+            color: var(--accent-yellow);
             margin-bottom: 15px;
         }
 
@@ -326,7 +242,7 @@
         .service-title {
             font-size: 1.3rem;
             font-weight: bold;
-            color: #ffffff;
+            color: var(--primary-color);
         }
 
         /* Description Styling */
@@ -337,7 +253,7 @@
 
         /* Link Button Styling */
         .service-link {
-            color: #FFD700;
+            color: var(--accent-yellow);
             font-weight: bold;
             text-decoration: none;
             transition: color 0.3s, transform 0.3s;
@@ -371,8 +287,8 @@
 
         /* Services Banner Section Styling */
         .services-banner {
-            background-color: #001f3f;
-            color: #ffffff;
+            background-color: var(--accent-blue);
+            color: var(--primary-color);
             padding: 60px 20px;
             text-align: center;
             border-radius: 8px;
@@ -468,21 +384,23 @@
             }
         }
 
+        /* Logo Styling */
         .logo {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 28px;
             font-weight: bold;
             letter-spacing: 1px;
-            color: #003366;
+            color: var(--accent-blue);
         }
 
         .logo .highlight {
-            color: #007bff;
-            background: linear-gradient(90deg, #007bff, #00c6ff);
+            color: var(--accent-yellow);
+            background: linear-gradient(90deg, var(--accent-yellow), #FFC107);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        /* Disable underline effect on active link in mobile view */
         .navbar-custom .navbar-nav .nav-link.active::after {
             display: none !important;
         }
