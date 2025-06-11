@@ -9,19 +9,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* --- NAVBAR STYLES LEFT UNCHANGED --- */
-        /* (Assuming your navbar CSS remains as is) */
+        /* --- NAVBAR STYLES ROLLED BACK TO ORIGINAL --- */
+        /* Please keep your existing navbar CSS unchanged here, no overrides */
 
-        /* Main Colors (excluding navbar) */
+        /* Reset background to white instead of blue */
         :root {
-            --primary-color: #ffffff;
-            /* white */
-            --background-light: #001f4d;
-            /* dark blue background */
+            --primary-color: #000000;
+            /* black text */
+            --background-light: #ffffff;
+            /* white background */
             --accent-yellow: #FFD700;
             /* yellow */
             --accent-blue: #004080;
-            /* medium blue */
+            /* blue accent */
             --text-black: #000000;
             /* black */
         }
@@ -38,11 +38,12 @@
         /* Left Box Styling */
         .left-box {
             background-color: var(--accent-blue);
-            /* blue */
+            /* keep blue box */
             padding: 40px;
             text-align: center;
             border-radius: 8px;
-            color: var(--primary-color);
+            color: #ffffff;
+            /* white text */
             font-weight: bold;
             font-size: 2.1rem;
             line-height: 1.3;
@@ -59,7 +60,7 @@
         /* Right Box Styling */
         .right-box {
             background-color: var(--primary-color);
-            /* white */
+            /* black text color */
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -71,6 +72,8 @@
             justify-content: center;
             height: 100%;
             color: var(--text-black);
+            background-color: #ffffff;
+            /* white background */
         }
 
         .right-box h2 {
@@ -287,8 +290,10 @@
 
         /* Services Banner Section Styling */
         .services-banner {
-            background-color: var(--accent-blue);
-            color: var(--primary-color);
+            background-color: var(--primary-color);
+            /* white */
+            color: var(--text-black);
+            /* black text */
             padding: 60px 20px;
             text-align: center;
             border-radius: 8px;
