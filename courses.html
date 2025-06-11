@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses | Andhra Developers</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    header {
+      background: linear-gradient(to right, #000000, #000066);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    nav a {
+      color: #00bfff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .courses {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .course-card {
+      background: #f8f8f8;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .course-card:hover {
+      transform: scale(1.03);
+    }
+    .course-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .course-info {
+      padding: 1rem;
+    }
+    .course-detail {
+      display: none;
+      padding: 1rem 2rem;
+      background-color: #e0f0ff;
+      border-top: 3px solid #000066;
+    }
+    .contact-section {
+      background: #000000;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    .contact-section input, .contact-section textarea {
+      width: 80%;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 5px;
+    }
+    .contact-section button {
+      padding: 0.7rem 2rem;
+      background-color: #00bfff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Andhra Developers - Courses</h1>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <section class="courses" id="courseList">
+    <!-- Course cards will be injected here -->
+  </section>
+
+  <section class="course-detail" id="courseDetail">
+    <h2 id="detailTitle"></h2>
+    <p id="detailDesc"></p>
+  </section>
+
+  <section class="contact-section">
+    <h2>Interested in a Course?</h2>
+    <p>Fill out the form below and we'll contact you!</p>
+    <input type="text" placeholder="Your Name" /><br />
+    <input type="email" placeholder="Your Email" /><br />
+    <textarea rows="4" placeholder="Course you're interested in and your message"></textarea><br />
+    <button>Contact Me</button>
+  </section>
+
+  <script>
+    const courses = [
+      {
+        title: "Java",
+        img: "https://via.placeholder.com/300x150?text=Java",
+        desc: "Comprehensive course covering OOP, JDBC, and more.",
+        detail: "This Java course is ideal for beginners and covers core Java concepts, OOP principles, exception handling, multithreading, and JDBC for database operations."
+      },
+      {
+        title: "Python",
+        img: "https://via.placeholder.com/300x150?text=Python",
+        desc: "Learn Python from basics to advanced scripting.",
+        detail: "Covers syntax, data structures, web scraping, automation, and basics of AI using Python libraries."
+      },
+      {
+        title: "SQL & NoSQL",
+        img: "https://via.placeholder.com/300x150?text=SQL+NoSQL",
+        desc: "Master relational and document-based databases.",
+        detail: "Covers MySQL, PostgreSQL, MongoDB, queries, indexing, and optimization techniques."
+      },
+      {
+        title: "ReactJS",
+        img: "https://via.placeholder.com/300x150?text=ReactJS",
+        desc: "Build modern UI with React library.",
+        detail: "Includes React hooks, components, props/state, routing, and API integration."
+      },
+      {
+        title: "App Development",
+        img: "https://via.placeholder.com/300x150?text=App+Dev",
+        desc: "Create mobile apps using Flutter and Java.",
+        detail: "Covers Android Studio, layouts, intents, SQLite, and publishing apps to the Play Store."
+      },
+      {
+        title: "Web Development",
+        img: "https://via.placeholder.com/300x150?text=Web+Dev",
+        desc: "Full stack: HTML, CSS, JavaScript, and backend basics.",
+        detail: "Frontend: HTML/CSS/JS. Backend: Node.js basics. Hosting with Netlify."
+      },
+      {
+        title: "Using AI Tools",
+        img: "https://via.placeholder.com/300x150?text=AI+Tools",
+        desc: "Leverage tools like ChatGPT, Midjourney, Notion AI.",
+        detail: "Practical guide on using AI tools for code generation, design, writing, and automation."
+      },
+      {
+        title: "C Programming",
+        img: "https://via.placeholder.com/300x150?text=C+Language",
+        desc: "Learn the foundation of all modern languages.",
+        detail: "Basics of memory management, pointers, structures, file I/O, and building CLI tools."
+      }
+    ];
+
+    const courseList = document.getElementById("courseList");
+    const courseDetail = document.getElementById("courseDetail");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailDesc = document.getElementById("detailDesc");
+
+    courses.forEach(course => {
+      const card = document.createElement("div");
+      card.className = "course-card";
+      card.innerHTML = `
+        <img src="${course.img}" alt="${course.title}" />
+        <div class="course-info">
+          <h3>${course.title}</h3>
+          <p>${course.desc}</p>
+        </div>
+      `;
+      card.addEventListener("click", () => {
+        detailTitle.innerText = course.title;
+        detailDesc.innerText = course.detail;
+        courseDetail.scrollIntoView({ behavior: 'smooth' });
+        courseDetail.style.display = 'block';
+      });
+      courseList.appendChild(card);
+    });
+  </script>
+</body>
+</html>
