@@ -35,6 +35,7 @@
             font-weight: 600;
         }
 
+
         .courses {
             padding: 2rem;
             display: grid;
@@ -137,6 +138,132 @@
         .contact-section button:hover {
             background-color: #009acd;
         }
+
+        /* hi  */
+
+         /* Navbar styles */
+        .navbar-custom {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Sticky navbar style when scrolling */
+        .navbar-scrolled {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-scrolled .nav-link {
+            color: #1a1b24 !important;
+        }
+
+        .navbar-scrolled .btn-training {
+            background-color: #10375C !important;
+            color: #FFFFFF !important;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Nav links styling */
+        .navbar-custom .navbar-nav .nav-link {
+            color: #181b31;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin: 0 15px;
+            position: relative;
+        }
+
+        /* Active link styling */
+        .navbar-custom .navbar-nav .nav-link.active::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background-color: #10375C;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            bottom: -5px;
+        }
+
+        /* Disable underline effect on active link in mobile view */
+        @media (max-width: 768px) {
+            .navbar-custom .navbar-nav .nav-link.active::after {
+                display: none;
+            }
+        }
+
+        /* Hover effect for nav links */
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #1A2024;
+            transform: scale(1.1);
+        }
+
+        /* Dropdown styling */
+        .navbar-custom .navbar-nav .dropdown-menu {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+            display: none;
+            /* Hide dropdown by default */
+        }
+
+        /* Hover effect for dropdown items */
+        .navbar-custom .navbar-nav .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #1A2024;
+        }
+
+        /* Show dropdown on hover */
+        .navbar-custom .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Training button styling */
+        .navbar-custom .navbar-nav .btn-training {
+            background-color: #10375C;
+            color: #FFFFFF;
+            font-weight: bold;
+            border: none;
+            margin-left: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            padding: 8px 20px;
+        }
+
+        .navbar-custom .navbar-nav .btn-training:hover {
+            background-color: #FFFFFF;
+            color: #10375C;
+            transform: scale(1.1);
+        }
+         .logo {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #003366;
+            /* Dark navy */
+        }
+
+        .logo .highlight {
+            color: #007bff;
+            /* Bright blue */
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .navbar-custom .navbar-nav .nav-link.active::after {
+            display: none !important;
+        }
+
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -144,9 +271,57 @@
 
 <body>
     <header>
-        <h1>Andhra Developers - Courses</h1>
-        <nav>
-            <a href="index.html">Home</a>
+        <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
+                    <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
+
+
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                        <!-- Services dropdown -->
+                        <li class="nav-item dropdown">
+                            <!-- Direct link to service.html, no data-toggle to avoid conflict -->
+                            <a class="nav-link" href="service.html" id="navbarDropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                Services
+                            </a>
+                            <!-- Dropdown menu items -->
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
+                                <a class="dropdown-item" href="cms.html">APP Development</a>
+                                <a class="dropdown-item" href="ecommerce.html">E-Commerce Website Development</a>
+                                <a class="dropdown-item" href="webapp.html">4k videos Editing</a>
+                                <a class="dropdown-item" href="graphic.html"> thumbnail Design</a>
+                                <a class="dropdown-item" href="digitalmarket.html">Digital Marketing</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="courses.html">Crouses</a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
