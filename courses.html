@@ -13,6 +13,71 @@
             color: #1e1e2f;
         }
 
+        /* Logo text */
+        .logo {
+            font-weight: 900;
+            font-size: 28px;
+            color: #002147;
+        }
+
+        .logo .highlight {
+            color: #00bfff;
+            /* Bright cyan-blue */
+        }
+
+        /* Nav background */
+        .navbar-custom {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Nav links */
+        .navbar-nav .nav-link {
+            font-weight: 700;
+            color: #0b0b2f;
+            padding: 0.8rem 1rem;
+            font-size: 18px;
+        }
+
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: #007bff;
+        }
+
+        /* Login button */
+        .btn-training {
+            background-color: #0b2d4a;
+            color: white !important;
+            font-weight: 700;
+            border-radius: 6px;
+            padding: 0.6rem 1.5rem;
+        }
+
+        .btn-training:hover {
+            background-color: #084063;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 0.5rem 0;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            font-size: 17px;
+            padding: 0.6rem 1.2rem;
+            color: #333;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f8ff;
+            color: #007bff;
+        }
+
+
         /* header {
             background: linear-gradient(to right, #000000, #002b80);
             color: white;
@@ -140,131 +205,8 @@
         }
 
         /* hi  */
-
-        /* Navbar styles */
-        .nav-link {
-            text-decoration: none !important;
-        }
-
-        /* Navbar styles */
-        .navbar-custom {
-            background-color: #ffffff;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Sticky navbar style when scrolling */
-        .navbar-scrolled {
-            background-color: #FFFFFF !important;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-scrolled .nav-link {
-            color: #1a1b24 !important;
-        }
-
-        .navbar-scrolled .btn-training {
-            background-color: #10375C !important;
-            color: #FFFFFF !important;
-        }
-
-        .navbar-brand img {
-            height: 50px;
-            transition: transform 0.3s ease;
-        }
-
-        .navbar-brand img:hover {
-            transform: scale(1.1);
-        }
-
-        /* Nav links styling */
-        .navbar-custom .navbar-nav .nav-link {
-            color: #181b31;
-            font-weight: bold;
-            transition: color 0.3s ease, transform 0.3s ease;
-            margin: 0 15px;
-            position: relative;
-        }
-
-        /* Active link styling */
-        .navbar-custom .navbar-nav .nav-link.active::after {
-            content: '';
-            display: block;
-            height: 2px;
-            background-color: #10375C;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            bottom: -5px;
-        }
-
-        .navbar .nav-link {
-            text-decoration: none !important;
-            box-shadow: none !important;
-        }
-
-        .navbar .nav-link:hover,
-        .navbar .nav-link:focus {
-            text-decoration: none !important;
-            box-shadow: none !important;
-        }
-
-
-
-
-        /* Disable underline effect on active link in mobile view */
-        @media (max-width: 768px) {
-            .navbar-custom .navbar-nav .nav-link.active::after {
-                display: none;
-                text-decoration: none !important;
-
-            }
-        }
-
-        /* Hover effect for nav links */
-        .navbar-custom .navbar-nav .nav-link:hover {
-            color: #1A2024;
-            transform: scale(1.1);
-        }
-
-        /* Dropdown styling */
-        .navbar-custom .navbar-nav .dropdown-menu {
-            background-color: #ffffff;
-            border: none;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-            transition: box-shadow 0.3s ease;
-            display: none;
-            /* Hide dropdown by default */
-        }
-
-        /* Hover effect for dropdown items */
-        .navbar-custom .navbar-nav .dropdown-item:hover {
-            background-color: #f1f1f1;
-            color: #1A2024;
-        }
-
-        /* Show dropdown on hover */
-        .navbar-custom .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        /* Training button styling */
-        .navbar-custom .navbar-nav .btn-training {
-            background-color: #10375C;
-            color: #FFFFFF;
-            font-weight: bold;
-            border: none;
-            margin-left: 20px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            padding: 8px 20px;
-        }
-
-        .navbar-custom .navbar-nav .btn-training:hover {
-            background-color: #FFFFFF;
-            color: #10375C;
-            transform: scale(1.1);
-        }
     </style>
+
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
@@ -309,13 +251,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="courses.html">Crouses</a>
+                        <a class="nav-link" href="courses.html">Courses</a>
                     </li>
-
-
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">contact</a>
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
+
                     <li class="nav-item">
                         <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
                     </li>
@@ -428,20 +369,23 @@
                 .catch(error => alert("Error: " + error.message));
         }
 
-    window.addEventListener('scroll', () => {
-        const navbar = document.getElementById('navbar');
-        if (window.scrollY > 10) {
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 10) {
                 navbar.classList.add('navbar-scrolled');
-        } else {
+            } else {
                 navbar.classList.remove('navbar-scrolled');
-        }
-    });
-    </script>
+            }
+        });
+
 
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
 
 </html>
