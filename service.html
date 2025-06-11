@@ -81,7 +81,6 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             transition: box-shadow 0.3s ease;
             display: none;
-            /* Hide dropdown by default */
         }
 
         /* Hover effect for dropdown items */
@@ -116,7 +115,6 @@
         :root {
             --primary-color: #ffffff;
             --background-light: #ffffff;
-            /* Light blue background */
         }
 
         /* Section Styling */
@@ -267,34 +265,21 @@
         .scroll-to-top {
             position: fixed;
             bottom: 20px;
-            /* Space from bottom */
             right: 20px;
-            /* Space from right */
             display: none;
-            /* Hidden by default */
             background-color: #3013AD;
-            /* Button color */
             color: #fff;
-            /* Text color */
             border: none;
-            /* No border */
             border-radius: 5px;
-            /* Rounded corners */
             padding: 10px 15px;
-            /* Padding for button */
             font-size: 18px;
-            /* Font size */
             cursor: pointer;
-            /* Pointer on hover */
             z-index: 1000;
-            /* On top of other elements */
             transition: background-color 0.3s ease;
-            /* Smooth transition */
         }
 
         .scroll-to-top:hover {
             background-color: #1A2024;
-            /* Darker on hover */
         }
 
         /* Main Section Styling */
@@ -308,29 +293,32 @@
             background-color: #222;
             border-radius: 15px;
             padding: 30px;
-            /* Changed box-shadow to yellow */
-            box-shadow: 0px 4px 15px rgba(255, 204, 0, 0.3);
+            box-shadow: 0px 4px 15px rgba(255, 215, 0, 0.3);
+            /* yellow shadow */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             color: #ddd;
             text-align: left;
             min-height: 350px;
-            /* Ensures equal height across all cards */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+
+            /* Animation */
+            animation: fadeSlideUp 0.8s ease forwards;
         }
 
+        /* Hover effect for cards */
         .service-card:hover {
             transform: translateY(-5px) scale(1.05);
-            /* Changed hover shadow to yellow */
-            box-shadow: 0px 8px 25px rgba(255, 204, 0, 0.5);
+            box-shadow: 0px 8px 25px rgba(255, 215, 0, 0.5);
+            /* stronger yellow shadow */
         }
 
         /* Icon Styling */
         .icon {
             font-size: 2.5rem;
-            color: #ffcc00;
-            /* Yellow */
+            color: #FFD700;
+            /* yellow */
             margin-bottom: 15px;
         }
 
@@ -349,15 +337,16 @@
 
         /* Link Button Styling */
         .service-link {
-            color: #ffcc00;
+            color: #FFD700;
             font-weight: bold;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
         }
 
         .service-link:hover {
-            color: #e6b800;
-            /* Darker yellow */
+            color: #FFC107;
+            /* lighter yellow */
+            transform: scale(1.1);
         }
 
         /* Responsive Styling */
@@ -368,15 +357,13 @@
         }
 
         /* Fade-in-up Motion Effect */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
-            animation-delay: 0.2s;
-        }
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
 
-        @keyframes fadeInUp {
-            to {
+            100% {
                 opacity: 1;
                 transform: translateY(0);
             }
@@ -385,34 +372,25 @@
         /* Services Banner Section Styling */
         .services-banner {
             background-color: #001f3f;
-            /* Dark blue background color */
             color: #ffffff;
-            /* White text color */
             padding: 60px 20px;
             text-align: center;
             border-radius: 8px;
             margin-top: 5%;
-            /* Space from the top */
             opacity: 0;
-            /* Start with an invisible section */
             transform: scale(0.8);
-            /* Start with the section slightly smaller */
             animation: scaleUpFadeIn 1.5s ease-out forwards;
-            /* Scale and fade-in effect */
         }
 
-        /* Scaling and Fade-in Effect */
         @keyframes scaleUpFadeIn {
             0% {
                 opacity: 0;
                 transform: scale(0.8);
-                /* Start with smaller size */
             }
 
             100% {
                 opacity: 1;
                 transform: scale(1);
-                /* End with normal size */
             }
         }
 
@@ -430,80 +408,63 @@
         }
 
         /* Responsive Styling */
-
-        /* For larger tablets and medium screens (max-width: 1024px) */
         @media (max-width: 1024px) {
             .services-banner {
                 padding: 50px 15px;
                 margin-top: 10%;
-                /* Adjusted margin-top for tablets */
             }
 
             .services-banner h1 {
                 font-size: 2.2rem;
-                /* Slightly smaller heading for tablets */
             }
 
             .services-banner p {
                 font-size: 1.05rem;
-                /* Slightly smaller paragraph font for tablets */
             }
         }
 
-        /* For small tablets and medium screens (max-width: 768px) */
         @media (max-width: 768px) {
             .services-banner {
                 padding: 40px 15px;
                 margin-top: 15%;
-                /* Adjusted margin-top for small screens */
             }
 
             .services-banner h1 {
                 font-size: 2rem;
-                /* Reduced heading size for medium screens */
             }
 
             .services-banner p {
                 font-size: 1rem;
-                /* Reduced paragraph size for medium screens */
             }
         }
 
-        /* For mobile phones and extra-small screens (max-width: 480px) */
         @media (max-width: 480px) {
             .services-banner {
                 padding: 30px 10px;
                 margin-top: 25%;
-                /* Further margin-top increase for extra-small screens */
             }
 
             .services-banner h1 {
                 font-size: 1.8rem;
-                /* Smaller heading font for mobile */
             }
 
             .services-banner p {
                 font-size: 0.95rem;
-                /* Smaller paragraph font for mobile */
             }
         }
 
-        /* For very small screens (extra-small devices like 320px width) */
         @media (max-width: 320px) {
             .services-banner {
                 padding: 20px 10px;
                 margin-top: 25%;
-                /* Further margin-top increase for very small screens */
             }
 
             .services-banner h1 {
                 font-size: 1.6rem;
-                /* Further reduce heading size for very small screens */
             }
 
             .services-banner p {
                 font-size: 0.9rem;
-                /* Further reduce paragraph font for very small screens */
             }
         }
 
@@ -513,12 +474,10 @@
             font-weight: bold;
             letter-spacing: 1px;
             color: #003366;
-            /* Dark navy */
         }
 
         .logo .highlight {
             color: #007bff;
-            /* Bright blue */
             background: linear-gradient(90deg, #007bff, #00c6ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
