@@ -188,52 +188,6 @@
 
         /* Content section styling */
         .content-section {
-            margin-top: 40px;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1.5s ease-out forwards;
-        }
-
-        /* Key Points Section Styling */
-        .content-section img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        .content-bullet-points {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .content-bullet-points li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .content-bullet-points li i {
-            color: #001f3f;
-            margin-right: 8px;
-        }
-
-        /* Animation Keyframes */
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-        /* Technologies Section Styling */
-        /* Section Container Styling */
-        .content-section {
             margin-top: 60px;
             padding: 40px;
             background-color: white;
@@ -255,14 +209,19 @@
             padding-left: 15px;
         }
 
-        /* Section Text */
-        .section-text {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #333;
+
+        /* Key Points Section Styling */
+        .content-section img {
+            max-width: 100%;
+            border-radius: 8px;
         }
 
-        /* Bullet Points */
+        .content-bullet-points {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
         .content-bullet-points {
             list-style: none;
             padding: 0;
@@ -296,6 +255,111 @@
             }
         }
 
+        .content-bullet-points li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .content-bullet-points li i {
+            color: #001f3f;
+            margin-right: 8px;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* Technologies Section Styling */
+        .technologies-section h2 {
+            color: #001f3f;
+            margin-bottom: 30px;
+            font-weight: bold;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .tech-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            min-height: 280px;
+            /* Ensures all cards have equal height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tech-card i {
+            color: #001f3f;
+            transition: color 0.3s ease;
+            size: 10px
+        }
+
+        .tech-card h5 {
+            color: #10375C;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .tech-card p {
+            color: #1A2024;
+            transition: color 0.3s ease;
+            margin-bottom: 0;
+        }
+
+        /* Hover Effects for Cards */
+        .tech-card:hover {
+            background-color: #001f3f;
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-card:hover i {
+            color: #ffbf00;
+        }
+
+        .tech-card:hover h5,
+        .tech-card:hover p {
+            color: #ffdd00;
+        }
+
+        /* Animation for Heading */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Fade-in-up effect for tech cards */
         .fade-in-up {
