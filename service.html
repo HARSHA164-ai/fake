@@ -112,9 +112,6 @@
             transform: scale(1.1);
         }
 
-
-
-
         /* Main Colors */
         :root {
             --primary-color: #ffffff;
@@ -311,7 +308,8 @@
             background-color: #222;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0px 4px 15px rgba(0, 255, 136, 0.3);
+            /* Changed box-shadow to yellow */
+            box-shadow: 0px 4px 15px rgba(255, 204, 0, 0.3);
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             color: #ddd;
             text-align: left;
@@ -324,15 +322,15 @@
 
         .service-card:hover {
             transform: translateY(-5px) scale(1.05);
-            /* Adds a slight upward motion */
-            box-shadow: 0px 8px 25px rgba(0, 255, 136, 0.5);
-            /* Enhanced shadow on hover */
+            /* Changed hover shadow to yellow */
+            box-shadow: 0px 8px 25px rgba(255, 204, 0, 0.5);
         }
 
         /* Icon Styling */
         .icon {
             font-size: 2.5rem;
-            color: #00ff88;
+            color: #ffcc00;
+            /* Yellow */
             margin-bottom: 15px;
         }
 
@@ -351,14 +349,15 @@
 
         /* Link Button Styling */
         .service-link {
-            color: #00ff88;
+            color: #ffcc00;
             font-weight: bold;
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .service-link:hover {
-            color: #00d377;
+            color: #e6b800;
+            /* Darker yellow */
         }
 
         /* Responsive Styling */
@@ -382,7 +381,6 @@
                 transform: translateY(0);
             }
         }
-
 
         /* Services Banner Section Styling */
         .services-banner {
