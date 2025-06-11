@@ -427,6 +427,18 @@
                 .then(() => alert("Submitted Successfully!"))
                 .catch(error => alert("Error: " + error.message));
         }
+
+        <script>
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 10) {
+                navbar.classList.add('navbar-scrolled');
+        } else {
+                navbar.classList.remove('navbar-scrolled');
+        }
+    });
+    </script>
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
