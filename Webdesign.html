@@ -232,79 +232,62 @@
 
 
         /* Technologies Section Styling */
-        .technologies-section h2 {
-            color: #001f3f;
-            margin-bottom: 30px;
-            font-weight: bold;
-            animation: fadeInDown 1.5s ease-out;
+        /* Section Container Styling */
+        .content-section {
+            margin-top: 60px;
+            padding: 40px;
+            background-color: white;
+            color: #111;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
         }
 
-        .tech-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            min-height: 280px;
-            /* Ensures all cards have equal height */
+        /* Section Heading */
+        .section-heading {
+            color: #001f3f;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+            padding-left: 15px;
+        }
+
+        /* Section Text */
+        .section-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        /* Bullet Points */
+        .content-bullet-points {
+            list-style: none;
+            padding: 0;
+            margin-top: 25px;
+        }
+
+        .content-bullet-points li {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            color: #111;
         }
 
-        .tech-card i {
-            color: #001f3f;
-            transition: color 0.3s ease;
-            size:10px
-            
-        }
-
-        .tech-card h5 {
-            color: #10375C;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .tech-card p {
-            color: #1A2024;
-            transition: color 0.3s ease;
-            margin-bottom: 0;
-        }
-
-        /* Hover Effects for Cards */
-        .tech-card:hover {
-            background-color: #001f3f;
-            transform: translateY(-10px);
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .tech-card:hover i {
-            color: #ffbf00;
-        }
-
-        .tech-card:hover h5,
-        .tech-card:hover p {
-            color: #ffdd00;
-        }
-
-        /* Animation for Heading */
-        @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .content-bullet-points li i {
+            color: #1e90ff;
+            margin-right: 10px;
+            font-size: 18px;
         }
 
         /* Animation Keyframes */
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px);
             }
 
             100% {
@@ -312,6 +295,7 @@
                 transform: translateY(0);
             }
         }
+
 
         /* Fade-in-up effect for tech cards */
         .fade-in-up {
@@ -550,32 +534,27 @@
         </div>
     </div>
 
-
     <!-- Additional Content Section -->
     <section class="container content-section">
         <div class="row">
             <div class="col-md-6">
-                <h2 style="color: #001f3f;">Why Choose Our Web Design & Development Services?</h2>
-                <p>
-                    Our approach to web design and development focuses on delivering user-centric, visually appealing,
-                    and
-                    functional websites that serve as a powerful digital presence for your brand. We understand the
-                    significance
-                    of first impressions and leverage our expertise to create memorable and engaging online experiences.
+                <h2 class="section-heading">Why Choose Andhra Developers?</h2>
+                <p class="section-text">
+                    At Andhra Developers, we specialize in crafting cutting-edge websites, mobile apps, and online
+                    platforms that help your business grow digitally. Whether you're a startup, small business, or
+                    enterprise, we provide high-quality solutions tailored to your goals.
                 </p>
                 <ul class="content-bullet-points">
-                    <li><i class="fas fa-check-circle"></i> Modern, responsive design that looks great on any device
-                    </li>
-                    <li><i class="fas fa-check-circle"></i> SEO-friendly architecture for improved visibility</li>
-                    <li><i class="fas fa-check-circle"></i> Fast loading times for an optimized user experience</li>
-                    <li><i class="fas fa-check-circle"></i> Easy-to-use content management systems</li>
-                    <li><i class="fas fa-check-circle"></i> Ongoing support and maintenance services</li>
+                    <li><i class="fas fa-check-circle"></i> Custom web and app development for your business</li>
+                    <li><i class="fas fa-check-circle"></i> Responsive designs optimized for all devices</li>
+                    <li><i class="fas fa-check-circle"></i> SEO-ready and fast-loading for better reach</li>
+                    <li><i class="fas fa-check-circle"></i> Tech courses to upskill future developers</li>
+                    <li><i class="fas fa-check-circle"></i> Trusted support and maintenance by our team</li>
                 </ul>
-
             </div>
-
         </div>
     </section>
+
 
 
 
