@@ -2,212 +2,207 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Courses | Andhra Developers</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f0f4f8;
-            color: #1e1e2f;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses | Andhra Developers</title>
 
-        header {
-            background: linear-gradient(to right, #000000, #002b80);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      color: #1e1e2f;
+    }
 
-        nav a {
-            color: #00bfff;
-            margin-left: 1rem;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    header {
+      background: linear-gradient(to right, #000000, #002b80);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .courses {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
 
-        .course-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
+    nav a {
+      color: #00bfff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
 
-        .course-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
+    .courses {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
 
-        .course-card img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
+    .course-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .course-info {
-            padding: 1rem;
-        }
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
 
-        .course-info h3 {
-            margin: 0 0 0.5rem 0;
-            color: #002b80;
-        }
+    .course-info {
+      padding: 1rem;
+    }
 
-        .course-detail {
-            display: none;
-            padding: 1rem;
-            background-color: #eef6ff;
-            border-top: 1px solid #007bff;
-            color: #333;
-            font-size: 0.95rem;
-        }
+    .course-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: #002b80;
+    }
 
-        .course-card.active .course-detail {
-            display: block;
-        }
+    .course-detail {
+      display: none;
+      padding: 1rem;
+      background-color: #eef6ff;
+      border-top: 1px solid #007bff;
+      color: #333;
+      font-size: 0.95rem;
+    }
 
-        .enroll-button {
-            margin: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: #00bfff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .course-card.active .course-detail {
+      display: block;
+    }
 
-        .enroll-button:hover {
-            background-color: #009acd;
-        }
+    .enroll-button {
+      margin: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #00bfff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-        .contact-section {
-            background: #002b80;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
+    .enroll-button:hover {
+      background-color: #009acd;
+    }
 
-        .contact-section input,
-        .contact-section textarea,
-        .contact-section select {
-            width: 90%;
-            max-width: 500px;
-            margin: 0.5rem 0;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
+    .contact-section {
+      background: #002b80;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
 
-        .contact-section button {
-            padding: 0.75rem 2rem;
-            background-color: #00bfff;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 1rem;
-            transition: background 0.3s ease;
-        }
+    .contact-section input,
+    .contact-section textarea,
+    .contact-section select {
+      width: 90%;
+      max-width: 500px;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
 
-        .contact-section button:hover {
-            background-color: #009acd;
-        }
-    </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    .contact-section button {
+      padding: 0.75rem 2rem;
+      background-color: #00bfff;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .contact-section button:hover {
+      background-color: #009acd;
+    }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>Andhra Developers - Courses</h1>
-        <nav>
-            <a href="index.html">Home</a>
-        </nav>
-    </header>
+  <header>
+    <h1>Andhra Developers - Courses</h1>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
 
-    <section class="courses" id="courseList"></section>
+  <section class="courses" id="courseList"></section>
 
-    <section class="contact-section">
-        <h2>Interested in a Course?</h2>
-        <p>Fill out the form below and we'll contact you!</p>
-        <input id="name" type="text" placeholder="Your Name" /><br />
-        <input id="email" type="email" placeholder="Your Email" /><br />
-        <input id="phone" type="text" placeholder="Phone Number" /><br />
-        <select id="courseSelect">
-            <option value="">Select Course</option>
-        </select><br />
-        <textarea id="message" rows="4" placeholder="Your Message"></textarea><br />
-        <button onclick="submitForm()">Contact Me</button>
-    </section>
+  <section class="contact-section">
+    <h2>Interested in a Course?</h2>
+    <p>Fill out the form below and we'll contact you!</p>
+    <input id="name" type="text" placeholder="Your Name" /><br />
+    <input id="email" type="email" placeholder="Your Email" /><br />
+    <input id="phone" type="text" placeholder="Phone Number" /><br />
+    <select id="courseSelect">
+      <option value="">Select Course</option>
+    </select><br />
+    <textarea id="message" rows="4" placeholder="Your Message"></textarea><br />
+    <button onclick="submitForm()">Contact Me</button>
+  </section>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-        const courses = [
-            { title: "Java", img: "javact.png", desc: "Comprehensive course covering OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." },
-            { title: "Python", img: "pythonct.png", desc: "Learn Python from basics to advanced scripting.", detail: "Includes syntax, automation, AI libraries." },
-            { title: "SQL & NoSQL", img: "sqlct.png", desc: "Master relational and document-based databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
-            { title: "ReactJS", img: "reactjs.png", desc: "Build modern UI with React library.", detail: "React hooks, props/state, routing, API." },
-            { title: "App Development", img: "appct.png", desc: "Create mobile apps using Flutter and Java.", detail: "Android Studio, SQLite, Play Store." },
-            { title: "Web Development", img: "https://via.placeholder.com/300x150?text=Web+Dev", desc: "Full stack: HTML, CSS, JavaScript.", detail: "Frontend + backend overview with hosting." },
-            { title: "Using AI Tools", img: "https://via.placeholder.com/300x150?text=AI+Tools", desc: "Use tools like ChatGPT, Notion AI.", detail: "Code generation, design, writing with AI." },
-            { title: "C Programming", img: "https://via.placeholder.com/300x150?text=C+Language", desc: "Foundation of all modern languages.", detail: "Pointers, memory, structures, file I/O." },
-            {
-                title: "Node.js",
-                img: "https://yourdomain.com/images/node.jpg",
-                desc: "Build fast and scalable server-side apps.",
-                detail: "Learn Express, REST APIs, and connect with databases like MongoDB."
-            }
+    const courses = [
+      { title: "Java", icon: "fa-brands fa-java", desc: "Comprehensive course covering OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." },
+      { title: "Python", icon: "fa-brands fa-python", desc: "Learn Python from basics to advanced scripting.", detail: "Includes syntax, automation, AI libraries." },
+      { title: "SQL & NoSQL", icon: "fa-solid fa-database", desc: "Master relational and document-based databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
+      { title: "ReactJS", icon: "fa-brands fa-react", desc: "Build modern UI with React library.", detail: "React hooks, props/state, routing, API." },
+      { title: "App Development", icon: "fa-solid fa-mobile-screen-button", desc: "Create mobile apps using Flutter and Java.", detail: "Android Studio, SQLite, Play Store." },
+      { title: "Web Development", icon: "fa-solid fa-code", desc: "Full stack: HTML, CSS, JavaScript.", detail: "Frontend + backend overview with hosting." },
+      { title: "Using AI Tools", icon: "fa-solid fa-robot", desc: "Use tools like ChatGPT, Notion AI.", detail: "Code generation, design, writing with AI." },
+      { title: "C Programming", icon: "fa-solid fa-terminal", desc: "Foundation of all modern languages.", detail: "Pointers, memory, structures, file I/O." },
+      { title: "Node.js", icon: "fa-brands fa-node-js", desc: "Build fast and scalable server-side apps.", detail: "Learn Express, REST APIs, and connect with databases like MongoDB." }
+    ];
 
-        ];
+    const courseList = document.getElementById("courseList");
+    const courseSelect = document.getElementById("courseSelect");
 
-        const courseList = document.getElementById("courseList");
-        const courseSelect = document.getElementById("courseSelect");
+    courses.forEach(course => {
+      const opt = document.createElement("option");
+      opt.value = course.title;
+      opt.innerText = course.title;
+      courseSelect.appendChild(opt);
 
-        courses.forEach(course => {
-            const opt = document.createElement("option");
-            opt.value = course.title;
-            opt.innerText = course.title;
-            courseSelect.appendChild(opt);
-
-            const card = document.createElement("div");
-            card.className = "course-card";
-            card.innerHTML = `
-        <img src="${course.img}" alt="${course.title}" />
+      const card = document.createElement("div");
+      card.className = "course-card";
+      card.innerHTML = `
+        <div style="font-size: 60px; color: #002b80; padding: 1rem; text-align:center;">
+          <i class="${course.icon}"></i>
+        </div>
         <div class="course-info">
           <h3>${course.title}</h3>
           <p>${course.desc}</p>
@@ -218,41 +213,41 @@
           <button class="enroll-button" onclick="scrollToForm('${course.title}')">Enroll Now</button>
         </div>
       `;
-            card.addEventListener("click", () => {
-                card.classList.toggle("active");
-            });
-            courseList.appendChild(card);
-        });
+      card.addEventListener("click", () => {
+        card.classList.toggle("active");
+      });
+      courseList.appendChild(card);
+    });
 
-        function scrollToForm(courseTitle) {
-            document.getElementById("courseSelect").value = courseTitle;
-            document.querySelector(".contact-section").scrollIntoView({ behavior: "smooth" });
-        }
+    function scrollToForm(courseTitle) {
+      document.getElementById("courseSelect").value = courseTitle;
+      document.querySelector(".contact-section").scrollIntoView({ behavior: "smooth" });
+    }
 
-        function submitForm() {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
-            const course = document.getElementById("courseSelect").value;
-            const message = document.getElementById("message").value;
+    function submitForm() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const course = document.getElementById("courseSelect").value;
+      const message = document.getElementById("message").value;
 
-            if (!name || !email || !course) {
-                alert("Please fill in all required fields.");
-                return;
-            }
+      if (!name || !email || !course) {
+        alert("Please fill in all required fields.");
+        return;
+      }
 
-            db.collection("courseContacts").add({
-                name,
-                email,
-                phone,
-                course,
-                message,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            })
-                .then(() => alert("Submitted Successfully!"))
-                .catch(error => alert("Error: " + error.message));
-        }
-    </script>
+      db.collection("courseContacts").add({
+        name,
+        email,
+        phone,
+        course,
+        message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+        .then(() => alert("Submitted Successfully!"))
+        .catch(error => alert("Error: " + error.message));
+    }
+  </script>
 </body>
 
 </html>
