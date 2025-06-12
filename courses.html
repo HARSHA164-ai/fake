@@ -13,74 +13,7 @@
             color: #1e1e2f;
         }
 
-        /* Logo text */
-        .logo {
-            font-weight: 900;
-            font-size: 28px;
-            color: #002147;
-        }
-
-        .logo .highlight {
-            color: #00bfff;
-            /* Bright cyan-blue */
-        }
-
-        /* Nav background */
-        .navbar-custom {
-            background-color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Nav links */
-        .navbar-nav .nav-link {
-            font-weight: 700;
-            color: #0b0b2f;
-            padding: 0.8rem 1rem;
-            font-size: 18px;
-            text-decoration: none;
-            
-        }
-
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: #007bff;
-        }
-
-        /* Login button */
-        .btn-training {
-            background-color: #0b2d4a;
-            color: white !important;
-            font-weight: 700;
-            border-radius: 6px;
-            padding: 0.6rem 1.5rem;
-        }
-
-        .btn-training:hover {
-            background-color: #084063;
-        }
-
-        /* Dropdown menu styling */
-        .dropdown-menu {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            padding: 0.5rem 0;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .dropdown-item {
-            font-size: 17px;
-            padding: 0.6rem 1.2rem;
-            color: #333;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f0f8ff;
-            color: #007bff;
-        }
-
-
-        /* header {
+        header {
             background: linear-gradient(to right, #000000, #002b80);
             color: white;
             padding: 1rem 2rem;
@@ -101,7 +34,6 @@
             text-decoration: none;
             font-weight: 600;
         }
- */
 
         .courses {
             padding: 2rem;
@@ -205,68 +137,18 @@
         .contact-section button:hover {
             background-color: #009acd;
         }
-
-        /* hi  */
     </style>
-
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
-                <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
-
-
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <!-- Services dropdown -->
-                    <li class="nav-item dropdown">
-                        <!-- Direct link to service.html, no data-toggle to avoid conflict -->
-                        <a class="nav-link" href="service.html" id="navbarDropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">
-                            Services
-                        </a>
-                        <!-- Dropdown menu items -->
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
-                            <a class="dropdown-item" href="cms.html">APP Development</a>
-                            <a class="dropdown-item" href="ecommerce.html">E-Commerce Website Development</a>
-                            <a class="dropdown-item" href="webapp.html">4k videos Editing</a>
-                            <a class="dropdown-item" href="graphic.html"> thumbnail Design</a>
-                            <a class="dropdown-item" href="digitalmarket.html">Digital Marketing</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="courses.html">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <header>
+        <h1>Andhra Developers - Courses</h1>
+        <nav>
+            <a href="index.html">Home</a>
+        </nav>
+    </header>
 
     <section class="courses" id="courseList"></section>
 
@@ -370,24 +252,7 @@
                 .then(() => alert("Submitted Successfully!"))
                 .catch(error => alert("Error: " + error.message));
         }
-
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 10) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
-
-
     </script>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </body>
 
 </html>
