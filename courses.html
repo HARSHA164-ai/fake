@@ -2,246 +2,247 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Courses | Andhra Developers</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses | Andhra Developers</title>
 
-  <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f8;
-      color: #1e1e2f;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f4f8;
+            color: #1e1e2f;
+        }
 
-    header {
-      background: linear-gradient(to right, #000000, #002b80);
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        header {
+            background: linear-gradient(to right, #000000, #002b80);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
 
-    nav a {
-      color: #00bfff;
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        nav a {
+            color: #00bfff;
+            margin-left: 1rem;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-    .courses-wrapper {
-      padding: 2rem;
-      text-align: center;
-    }
+        .courses-wrapper {
+            padding: 2rem;
+            text-align: center;
+        }
 
-    .section-title {
-      font-size: 2rem;
-      color: #002b80;
-    }
+        .section-title {
+            font-size: 2rem;
+            color: #002b80;
+        }
 
-    .section-subtitle {
-      color: #555;
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
+        .section-subtitle {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
 
-    .courses {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
 
-    .course-card {
-      background: linear-gradient(135deg, #ffffff, #f0f7ff);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.6s forwards;
-    }
+        .course-card {
+            background: linear-gradient(135deg, #ffffff, #f0f7ff);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .course-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-    }
+        .course-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
 
-    .course-icon-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #e0f0ff;
-      padding: 1.2rem;
-      border-radius: 50%;
-      width: 80px;
-      height: 80px;
-      margin: 1rem auto 0.5rem auto;
-    }
+        .course-icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e0f0ff;
+            padding: 1.2rem;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: 1rem auto 0.5rem auto;
+        }
 
-    .course-icon {
-      font-size: 2.2rem;
-      color: #007bff;
-    }
+        .course-icon {
+            font-size: 2.2rem;
+            color: #007bff;
+        }
 
-    .course-info {
-      padding: 1rem;
-    }
+        .course-info {
+            padding: 1rem;
+        }
 
-    .course-info h3 {
-      margin: 0 0 0.5rem 0;
-      color: #002b80;
-      font-size: 1.2rem;
-    }
+        .course-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #002b80;
+            font-size: 1.2rem;
+        }
 
-    .badge {
-      background: #00bfff;
-      color: white;
-      display: inline-block;
-      padding: 0.3rem 0.6rem;
-      font-size: 0.8rem;
-      border-radius: 999px;
-      margin-bottom: 0.5rem;
-    }
+        .badge {
+            background: #00bfff;
+            color: white;
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            border-radius: 999px;
+            margin-bottom: 0.5rem;
+        }
 
-    .course-detail {
-      display: none;
-      padding: 1rem;
-      background-color: #eef6ff;
-      border-top: 1px solid #007bff;
-      color: #333;
-      font-size: 0.95rem;
-    }
+        .course-detail {
+            display: none;
+            padding: 1rem;
+            background-color: #eef6ff;
+            border-top: 1px solid #007bff;
+            color: #333;
+            font-size: 0.95rem;
+        }
 
-    .course-card.active .course-detail {
-      display: block;
-    }
+        .course-card.active .course-detail {
+            display: block;
+        }
 
-    .enroll-button {
-      margin: 1rem;
-      padding: 0.5rem 1rem;
-      background-color: #00bfff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        .enroll-button {
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-    .enroll-button:hover {
-      background-color: #009acd;
-    }
+        .enroll-button:hover {
+            background-color: #009acd;
+        }
 
-    .contact-section {
-      background: #002b80;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 2rem;
-    }
+        .contact-section {
+            background: #002b80;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
 
-    .contact-section input,
-    .contact-section textarea,
-    .contact-section select {
-      width: 90%;
-      max-width: 500px;
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
+        .contact-section input,
+        .contact-section textarea,
+        .contact-section select {
+            width: 90%;
+            max-width: 500px;
+            margin: 0.5rem 0;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
 
-    .contact-section button {
-      padding: 0.75rem 2rem;
-      background-color: #00bfff;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: background 0.3s ease;
-    }
+        .contact-section button {
+            padding: 0.75rem 2rem;
+            background-color: #00bfff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
 
-    .contact-section button:hover {
-      background-color: #009acd;
-    }
-  </style>
+        .contact-section button:hover {
+            background-color: #009acd;
+        }
+    </style>
 </head>
 
 <body>
-  <header>
-    <h1>Andhra Developers - Courses</h1>
-    <nav><a href="index.html">Home</a></nav>
-  </header>
+    <header>
+        <h1>Andhra Developers - Courses</h1>
+        <nav><a href="index.html">Home</a></nav>
+    </header>
 
-  <section class="courses-wrapper">
-    <h2 class="section-title">Explore Our Courses</h2>
-    <p class="section-subtitle">Choose a course and start building your career with Andhra Developers!</p>
-    <div class="courses" id="courseList"></div>
-  </section>
+    <section class="courses-wrapper">
+        <h2 class="section-title">Explore Our Courses</h2>
+        <p class="section-subtitle">Choose a course and start building your career with Andhra Developers!</p>
+        <div class="courses" id="courseList"></div>
+    </section>
 
-  <section class="contact-section">
-    <h2>Interested in a Course?</h2>
-    <p>Fill out the form below and we'll contact you!</p>
-    <input id="name" type="text" placeholder="Your Name" /><br />
-    <input id="email" type="email" placeholder="Your Email" /><br />
-    <input id="phone" type="text" placeholder="Phone Number" /><br />
-    <select id="courseSelect">
-      <option value="">Select Course</option>
-    </select><br />
-    <textarea id="message" rows="4" placeholder="Your Message"></textarea><br />
-    <button onclick="submitForm()">Contact Me</button>
-  </section>
+    <section class="contact-section">
+        <h2>Interested in a Course?</h2>
+        <p>Fill out the form below and we'll contact you!</p>
+        <input id="name" type="text" placeholder="Your Name" /><br />
+        <input id="email" type="email" placeholder="Your Email" /><br />
+        <input id="phone" type="text" placeholder="Phone Number" /><br />
+        <select id="courseSelect">
+            <option value="">Select Course</option>
+        </select><br />
+        <textarea id="message" rows="4" placeholder="Your Message"></textarea><br />
+        <button onclick="submitForm()">Contact Me</button>
+    </section>
 
-  <script>
-    const courses = [
-      { icon: "fa-java", title: "Java", level: "Intermediate", desc: "OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." },
-      { icon: "fa-python", title: "Python", level: "Beginner", desc: "Learn Python scripting.", detail: "Includes syntax, automation, AI libraries." },
-      { icon: "fa-database", title: "SQL & NoSQL", level: "Intermediate", desc: "Master databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
-      { icon: "fa-react", title: "ReactJS", level: "Intermediate", desc: "Modern UI with React.", detail: "Hooks, props/state, routing, API." },
-      { icon: "fa-mobile-alt", title: "App Development", level: "Advanced", desc: "Mobile apps with Flutter.", detail: "Android Studio, SQLite, Play Store." },
-      { icon: "fa-code", title: "Web Development", level: "Beginner", desc: "HTML, CSS, JS full stack.", detail: "Frontend + backend with hosting." },
-      { icon: "fa-robot", title: "Using AI Tools", level: "Beginner", desc: "AI in writing/design.", detail: "Code generation, Notion AI, ChatGPT." },
-      { icon: "fa-c", title: "C Programming", level: "Beginner", desc: "Base of all languages.", detail: "Pointers, memory, file I/O." },
-      { icon: "fa-node-js", title: "Node.js", level: "Advanced", desc: "Server-side with Express.", detail: "REST APIs, MongoDB, full backend." }
-    ];
+    <script>
+        const courses = [
+            { icon: "fab fa-python", title: "Python", level: "Beginner", desc: "Learn Python scripting.", detail: "Includes syntax, automation, AI libraries." },
+            { icon: "fas fa-database", title: "SQL & NoSQL", level: "Intermediate", desc: "Master databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
+            { icon: "fas fa-code", title: "Web Development", level: "Beginner", desc: "HTML, CSS, JS full stack.", detail: "Frontend + backend with hosting." },
+            { icon: "fab fa-react", title: "ReactJS", level: "Intermediate", desc: "Modern UI with React.", detail: "Hooks, props/state, routing, API." },
+            { icon: "fas fa-mobile-alt", title: "App Development", level: "Advanced", desc: "Mobile apps with Flutter.", detail: "Android Studio, SQLite, Play Store." },
+            { icon: "fas fa-robot", title: "Using AI Tools", level: "Beginner", desc: "AI in writing/design.", detail: "Code generation, Notion AI, ChatGPT." },
+            { icon: "fas fa-terminal", title: "C Programming", level: "Beginner", desc: "Base of all languages.", detail: "Pointers, memory, file I/O." },
+            { icon: "fab fa-node-js", title: "Node.js", level: "Advanced", desc: "Server-side with Express.", detail: "REST APIs, MongoDB, full backend." },
+            { icon: "fab fa-java", title: "Java", level: "Intermediate", desc: "OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." }
+        ];
 
-    const courseList = document.getElementById("courseList");
-    const courseSelect = document.getElementById("courseSelect");
 
-    courses.forEach((course, index) => {
-      const opt = document.createElement("option");
-      opt.value = course.title;
-      opt.innerText = course.title;
-      courseSelect.appendChild(opt);
+        const courseList = document.getElementById("courseList");
+        const courseSelect = document.getElementById("courseSelect");
 
-      const card = document.createElement("div");
-      card.className = "course-card";
-      card.style.animationDelay = `${index * 0.1}s`;
-      card.innerHTML = `
+        courses.forEach((course, index) => {
+            const opt = document.createElement("option");
+            opt.value = course.title;
+            opt.innerText = course.title;
+            courseSelect.appendChild(opt);
+
+            const card = document.createElement("div");
+            card.className = "course-card";
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.innerHTML = `
         <div class="course-icon-wrapper">
           <i class="fab ${course.icon} course-icon"></i>
         </div>
@@ -256,30 +257,30 @@
           <button class="enroll-button" onclick="scrollToForm('${course.title}')">Enroll Now</button>
         </div>
       `;
-      card.addEventListener("click", () => card.classList.toggle("active"));
-      courseList.appendChild(card);
-    });
+            card.addEventListener("click", () => card.classList.toggle("active"));
+            courseList.appendChild(card);
+        });
 
-    function scrollToForm(courseTitle) {
-      document.getElementById("courseSelect").value = courseTitle;
-      document.querySelector(".contact-section").scrollIntoView({ behavior: "smooth" });
-    }
+        function scrollToForm(courseTitle) {
+            document.getElementById("courseSelect").value = courseTitle;
+            document.querySelector(".contact-section").scrollIntoView({ behavior: "smooth" });
+        }
 
-    function submitForm() {
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
-      const course = document.getElementById("courseSelect").value;
-      const message = document.getElementById("message").value;
+        function submitForm() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const course = document.getElementById("courseSelect").value;
+            const message = document.getElementById("message").value;
 
-      if (!name || !email || !course) {
-        alert("Please fill in all required fields.");
-        return;
-      }
+            if (!name || !email || !course) {
+                alert("Please fill in all required fields.");
+                return;
+            }
 
-      alert("Form submitted successfully!"); // Placeholder, replace with Firebase if needed
-    }
-  </script>
+            alert("Form submitted successfully!"); // Placeholder, replace with Firebase if needed
+        }
+    </script>
 </body>
 
 </html>
