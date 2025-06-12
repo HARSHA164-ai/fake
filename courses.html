@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Courses | Andhra Developers</title>
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
   <style>
     body {
@@ -39,27 +39,58 @@
       font-weight: 600;
     }
 
-    .courses {
+    .courses-wrapper {
       padding: 2rem;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      color: #002b80;
+    }
+
+    .section-subtitle {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .courses {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
 
     .course-card {
-      background: white;
+      background: linear-gradient(135deg, #ffffff, #f0f7ff);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .course-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      transform: scale(1.03);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
     }
 
     .course-info {
@@ -69,6 +100,17 @@
     .course-info h3 {
       margin: 0 0 0.5rem 0;
       color: #002b80;
+      font-size: 1.2rem;
+    }
+
+    .badge {
+      background: #00bfff;
+      color: white;
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
     }
 
     .course-detail {
@@ -137,6 +179,7 @@
     }
   </style>
 
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
@@ -149,7 +192,11 @@
     </nav>
   </header>
 
-  <section class="courses" id="courseList"></section>
+  <section class="courses-wrapper">
+    <h2 class="section-title">Explore Our Courses</h2>
+    <p class="section-subtitle">Choose a course and start building your career with Andhra Developers!</p>
+    <div class="courses" id="courseList"></div>
+  </section>
 
   <section class="contact-section">
     <h2>Interested in a Course?</h2>
@@ -177,21 +224,21 @@
     const db = firebase.firestore();
 
     const courses = [
-      { title: "Java", icon: "fa-brands fa-java", desc: "Comprehensive course covering OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." },
-      { title: "Python", icon: "fa-brands fa-python", desc: "Learn Python from basics to advanced scripting.", detail: "Includes syntax, automation, AI libraries." },
-      { title: "SQL & NoSQL", icon: "fa-solid fa-database", desc: "Master relational and document-based databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
-      { title: "ReactJS", icon: "fa-brands fa-react", desc: "Build modern UI with React library.", detail: "React hooks, props/state, routing, API." },
-      { title: "App Development", icon: "fa-solid fa-mobile-screen-button", desc: "Create mobile apps using Flutter and Java.", detail: "Android Studio, SQLite, Play Store." },
-      { title: "Web Development", icon: "fa-solid fa-code", desc: "Full stack: HTML, CSS, JavaScript.", detail: "Frontend + backend overview with hosting." },
-      { title: "Using AI Tools", icon: "fa-solid fa-robot", desc: "Use tools like ChatGPT, Notion AI.", detail: "Code generation, design, writing with AI." },
-      { title: "C Programming", icon: "fa-solid fa-terminal", desc: "Foundation of all modern languages.", detail: "Pointers, memory, structures, file I/O." },
-      { title: "Node.js", icon: "fa-brands fa-node-js", desc: "Build fast and scalable server-side apps.", detail: "Learn Express, REST APIs, and connect with databases like MongoDB." }
+      { icon: "fa-java", title: "Java", level: "Intermediate", img: "javact.png", desc: "OOP, JDBC, and more.", detail: "Covers Java basics, OOP, multithreading, JDBC." },
+      { icon: "fa-python", title: "Python", level: "Beginner", img: "pythonct.png", desc: "Learn Python scripting.", detail: "Includes syntax, automation, AI libraries." },
+      { icon: "fa-database", title: "SQL & NoSQL", level: "Intermediate", img: "sqlct.png", desc: "Master databases.", detail: "MySQL, PostgreSQL, MongoDB, queries." },
+      { icon: "fa-react", title: "ReactJS", level: "Intermediate", img: "reactjs.png", desc: "Modern UI with React.", detail: "Hooks, props/state, routing, API." },
+      { icon: "fa-mobile-alt", title: "App Development", level: "Advanced", img: "appct.png", desc: "Mobile apps with Flutter.", detail: "Android Studio, SQLite, Play Store." },
+      { icon: "fa-code", title: "Web Development", level: "Beginner", img: "https://via.placeholder.com/300x150?text=Web+Dev", desc: "HTML, CSS, JS full stack.", detail: "Frontend + backend with hosting." },
+      { icon: "fa-robot", title: "Using AI Tools", level: "Beginner", img: "https://via.placeholder.com/300x150?text=AI+Tools", desc: "AI in writing/design.", detail: "Code generation, Notion AI, ChatGPT." },
+      { icon: "fa-c", title: "C Programming", level: "Beginner", img: "https://via.placeholder.com/300x150?text=C+Language", desc: "Base of all languages.", detail: "Pointers, memory, file I/O." },
+      { icon: "fa-node-js", title: "Node.js", level: "Advanced", img: "https://yourdomain.com/images/node.jpg", desc: "Server-side with Express.", detail: "REST APIs, MongoDB, full backend." }
     ];
 
     const courseList = document.getElementById("courseList");
     const courseSelect = document.getElementById("courseSelect");
 
-    courses.forEach(course => {
+    courses.forEach((course, index) => {
       const opt = document.createElement("option");
       opt.value = course.title;
       opt.innerText = course.title;
@@ -199,12 +246,12 @@
 
       const card = document.createElement("div");
       card.className = "course-card";
+      card.style.animationDelay = `${index * 0.1}s`;
       card.innerHTML = `
-        <div style="font-size: 60px; color: #002b80; padding: 1rem; text-align:center;">
-          <i class="${course.icon}"></i>
-        </div>
+        <img src="${course.img}" alt="${course.title}" />
         <div class="course-info">
-          <h3>${course.title}</h3>
+          <div class="badge">${course.level}</div>
+          <h3><i class="fab ${course.icon}"></i> ${course.title}</h3>
           <p>${course.desc}</p>
         </div>
         <div class="course-detail">
