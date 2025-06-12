@@ -7,7 +7,8 @@
     <title>Courses | Andhra Developers</title>
 
     <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         body {
@@ -145,7 +146,8 @@
         .enroll-button:hover {
             background-color: #009acd;
         }
-/* 
+
+        /* 
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
@@ -352,7 +354,7 @@
         <textarea id="message" rows="4" placeholder="Your Message"></textarea><br />
         <button onclick="submitForm()">Contact Me</button>
     </section>
-    
+
 
     <script>
         const courses = [
@@ -382,7 +384,8 @@
             card.style.animationDelay = `${index * 0.1}s`;
             card.innerHTML = `
         <div class="course-icon-wrapper">
-          <i class="fab ${course.icon} course-icon"></i>
+         <i class="${course.icon} course-icon"></i>
+
         </div>
         <div class="course-info">
           <div class="badge">${course.level}</div>
