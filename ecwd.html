@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDHRA DEVELOPERS-Web Design & Development</title>
-    <link rel="icon" href="images/logo anurag.png" type="image/x-png">
+    <title>ANDHRA DEVELOPERS-Ecommerce</title>
+    <link rel="icon" href="logo.png" type="image/x-png">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         /* Navbar styles */
         .navbar-custom {
@@ -115,7 +117,8 @@
 
 
 
-        /* Web Design & Development Banner Styling */
+
+        /* E-Commerce Website Development Banner Styling */
         .web-design-banner {
             background-color: #001f3f;
             color: #ffffff;
@@ -142,8 +145,6 @@
         }
 
         /* Responsive Styles for Web Design Banner */
-
-
         @media (max-width: 480px) {
             .web-design-banner {
                 padding: 30px 10px;
@@ -160,7 +161,7 @@
             }
         }
 
-        /* Card Styles */
+        /* Card Styles for E-Commerce */
         .card {
             transition: transform 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s, border-radius 0.3s;
             border: none;
@@ -186,27 +187,30 @@
             color: #ffdd00;
         }
 
+        /* Responsive Card Styles */
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-body h5 {
+                font-size: 1.1rem;
+            }
+
+            .card-body p {
+                font-size: 0.9rem;
+            }
+        }
+
+
         /* Content section styling */
         .content-section {
-            margin-top: 60px;
-            padding: 40px;
-            background-color: white;
-            color: #111;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 1.5s ease-out forwards;
-        }
-
-        /* Section Heading */
-        .section-heading {
-            color: #001f3f;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-left: 5px solid #ffc107;
-            padding-left: 15px;
         }
 
         /* Key Points Section Styling */
@@ -245,6 +249,37 @@
             }
         }
 
+        /* Core Services Section Motion Effects */
+        .key-points-section {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .web-design-banner {
+                padding: 30px 15px;
+                font-size: 1.2rem;
+            }
+
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            .content-section,
+            .key-points-section {
+                padding: 0 15px;
+            }
+
+            .card i {
+                font-size: 2.5rem;
+            }
+        }
 
         /* Technologies Section Styling */
         .technologies-section h2 {
@@ -260,7 +295,6 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             min-height: 280px;
-            /* Ensures all cards have equal height */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -270,7 +304,6 @@
         .tech-card i {
             color: #001f3f;
             transition: color 0.3s ease;
-            size: 10px
         }
 
         .tech-card h5 {
@@ -289,28 +322,23 @@
         .tech-card:hover {
             background-color: #001f3f;
             transform: translateY(-10px);
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.25);
         }
 
         .tech-card:hover i {
-            color: #ffbf00;
+            color: #ffdd00;
         }
 
         .tech-card:hover h5,
         .tech-card:hover p {
-            color: #ffdd00;
+            color: #fff;
         }
 
-        /* Animation for Heading */
-        @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
+        /* Mobile-Responsive Technology Section */
+        @media (max-width: 768px) {
+            .technologies-section .col-md-4 {
+                flex: 0 0 50%;
+                max-width: 50%;
             }
         }
 
@@ -367,12 +395,6 @@
             animation-delay: 0.8s;
         }
 
-        /* Responsive Styling for Smaller Screens */
-        @media (max-width: 768px) {
-            .technologies-section {
-                padding: 0 15px;
-            }
-        }
 
         /* Footer Section Styling */
         .footer {
@@ -462,153 +484,176 @@
             background-color: #1A2024;
             /* Darker on hover */
         }
-
-        .logo {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            color: #003366;
-        }
-
-        .logo .highlight {
-            color: #007bff;
-            background: linear-gradient(90deg, #007bff, #00c6ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .navbar-custom .navbar-nav .nav-link.active::after {
-            display: none !important;
-        }
     </style>
+
 </head>
 
 <body>
 
     <!-- Navbar Section -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
-                <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
+        <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
 
-
-
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <!-- Services dropdown -->
+          <li class="nav-item dropdown">
+            <!-- Direct link to service.html, no data-toggle to avoid conflict -->
+            <a class="nav-link" href="service.html" id="navbarDropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">
+              Services
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class='nav-link active' href='/'>Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class='nav-link' href='/about'>About</a>
-                    </li>
-                    <!-- Services dropdown -->
-                    <li class="nav-item dropdown">
-                        <!-- Direct link to service.html, no data-toggle to avoid conflict -->
-                        <a aria-expanded='false' aria-haspopup='true' class='nav-link' href='/service'
-                            id='navbarDropdown' role='button'>
-                            Services
-                        </a>
-                        <!-- Dropdown menu items -->
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
-                            <a class="dropdown-item" href="AppDevelopment.html">APP Development</a>
-                            <a class="dropdown-item" href="ecwd.html">E-Commerce Website Development</a>
-                            <a class="dropdown-item" href="404.html">4k videos Editing</a>
-                            <a class="dropdown-item" href="404.html"> thumbnail Design</a>
-                            <a class="dropdown-item" href="404.html">Digital Marketing</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="courses.html">Crouses</a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class='nav-link' href='/contact'>contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
-                    </li>
-                </ul>
+            <!-- Dropdown menu items -->
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
+              <a class="dropdown-item" href="AppDevelopment.html">APP Development</a>
+              <a class="dropdown-item" href="ecwd.html">E-Commerce Website Development</a>
+              <a class="dropdown-item" href="404.html">4k videos Editing</a>
+              <a class="dropdown-item" href="404.html"> thumbnail Design</a>
+              <a class="dropdown-item" href="404.html">Digital Marketing</a>
             </div>
-        </div>
-    </nav>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="courses.html">Crouses</a>
+          </li>
 
-    <!-- Web Design & Development Banner Section -->
+
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <!-- E-Commerce Website Development Banner Section -->
     <section class="web-design-banner">
-        <h1>Web Design & Development</h1>
-        <p>Crafting beautiful and functional websites tailored to your brand.</p>
+        <h1>E-Commerce Website Development</h1>
+        <p>Build powerful online stores with seamless shopping experiences for your customers.</p>
     </section>
 
-    <!-- Key Services Section -->
+    <!-- E-Commerce Website Development Key Services Section -->
     <div class="container my-5 content-section">
-        <h2 class="text-center mb-2" style="color: #001f3f;">OUR KEY SERVICES</h2>
-        <p class="text-center mb-4">Providing expert solutions to enhance your online presence.</p>
+        <h2 class="text-center mb-2" style="color: #001f3f;">OUR E-COMMERCE DEVELOPMENT SERVICES</h2>
+        <p class="text-center mb-4">We create customized, user-friendly, and scalable e-commerce solutions to boost your
+            online business.</p>
         <div class="row">
             <div class="col-sm-6 col-md-4 mb-3">
                 <div class="card text-center py-4">
-                    <i class="fas fa-laptop-code fa-3x py-3" style="color: #1e90ff;"></i>
+                    <i class="fas fa-shopping-cart fa-3x py-3" style="color: #28a745;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Responsive Design</h5>
-                        <p class="card-text">Creating websites that adapt to any screen size for seamless user
-                            experience.</p>
+                        <h5 class="card-title">Custom E-Commerce Stores</h5>
+                        <p class="card-text">Design and development of unique, branded online stores tailored to your
+                            business.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
                 <div class="card text-center py-4">
-                    <i class="fas fa-paint-brush fa-3x py-3" style="color: #ff6347;"></i>
+                    <i class="fas fa-credit-card fa-3x py-3" style="color: #17a2b8;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Custom Themes</h5>
-                        <p class="card-text">Designing unique, brand-focused themes that stand out.</p>
+                        <h5 class="card-title">Secure Payment Integration</h5>
+                        <p class="card-text">Integrating trusted and secure payment gateways to provide a smooth
+                            checkout experience.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
                 <div class="card text-center py-4">
-                    <i class="fas fa-cogs fa-3x py-3" style="color: #28a745;"></i>
+                    <i class="fas fa-mobile-alt fa-3x py-3" style="color: #ffc107;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Web Optimization</h5>
-                        <p class="card-text">Ensuring your website is fast and optimized for best performance.</p>
+                        <h5 class="card-title">Mobile-Responsive Design</h5>
+                        <p class="card-text">Creating responsive e-commerce websites that provide an optimal shopping
+                            experience across all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4">
+                    <i class="fas fa-sync-alt fa-3x py-3" style="color: #6c757d;"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Website Maintenance & Support</h5>
+                        <p class="card-text">Ongoing support and maintenance to keep your e-commerce website running
+                            smoothly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4">
+                    <i class="fas fa-chart-line fa-3x py-3" style="color: #007bff;"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">SEO & Marketing Integration</h5>
+                        <p class="card-text">Optimizing your website for search engines to increase visibility and
+                            attract more customers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4">
+                    <i class="fas fa-users fa-3x py-3" style="color: #dc3545;"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">User Experience (UX) Design</h5>
+                        <p class="card-text">Improving user satisfaction with intuitive navigation, quick load times,
+                            and easy checkout processes.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Additional Content Section -->
+
+
+    <!-- Why Choose Us Section -->
     <section class="container content-section">
         <div class="row">
             <div class="col-md-6">
-                <h2 class="section-heading">Why Choose Andhra Developers?</h2>
-                <p class="section-text">
-                    At Andhra Developers, we specialize in crafting cutting-edge websites, mobile apps, and online
-                    platforms that help your business grow digitally. Whether you're a startup, small business, or
-                    enterprise, we provide high-quality solutions tailored to your goals.
+                <h2 style="color: #001f3f;">Why Choose Our E-Commerce Website Development Services?</h2>
+                <p>
+                    Our team understands the nuances of e-commerce and offers cutting-edge solutions to ensure your
+                    online store
+                    performs at its best. From intuitive design to robust functionality, we provide end-to-end services
+                    to help you succeed in the digital marketplace.
                 </p>
                 <ul class="content-bullet-points">
-                    <li><i class="fas fa-check-circle"></i> Custom web and app development for your business</li>
-                    <li><i class="fas fa-check-circle"></i> Responsive designs optimized for all devices</li>
-                    <li><i class="fas fa-check-circle"></i> SEO-ready and fast-loading for better reach</li>
-                    <li><i class="fas fa-check-circle"></i> Tech courses to upskill future developers</li>
-                    <li><i class="fas fa-check-circle"></i> Trusted support and maintenance by our team</li>
+                    <li><i class="fas fa-check-circle"></i> Mobile-responsive, user-friendly interfaces for seamless
+                        shopping</li>
+                    <li><i class="fas fa-check-circle"></i> Integration with secure payment gateways for hassle-free
+                        transactions</li>
+                    <li><i class="fas fa-check-circle"></i> Scalable platforms to grow with your business</li>
+                    <li><i class="fas fa-check-circle"></i> Advanced analytics for data-driven decision making</li>
+                    <li><i class="fas fa-check-circle"></i> Ongoing support and optimization to ensure smooth operations
+                    </li>
                 </ul>
+                <p>
+                    We collaborate closely with you to understand your goals, creating a customized solution that fits
+                    your unique business needs. Whether you need a new e-commerce platform or an upgrade to your current
+                    website, our expert team is ready to deliver.
+                </p>
             </div>
             <div class="col-md-6">
-                <img src="logo.png" alt="Web Development Image">
+                <img src="images/e-commerce.png" alt="E-Commerce Development Image" class="img-fluid">
             </div>
         </div>
     </section>
-
-
-
 
     <!-- Technologies We Use Section -->
     <section class="container my-5 technologies-section">
@@ -616,65 +661,62 @@
         <div class="row">
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-html5 fa-3x mb-3" style="color: #E34F26;"></i>
+                    <i class="fab fa-html5 fa-3x mb-3" style="color: #E34F26;"></i> <!-- HTML5 color -->
                     <h5>HTML5</h5>
-                    <p>Building the structure of websites with semantic HTML.</p>
+                    <p>Creating a robust structure for e-commerce websites with semantic HTML.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-css3-alt fa-3x mb-3" style="color: #1572B6;"></i>
+                    <i class="fab fa-css3-alt fa-3x mb-3" style="color: #1572B6;"></i> <!-- CSS3 color -->
                     <h5>CSS3</h5>
-                    <p>Styling websites with advanced CSS for visual appeal.</p>
+                    <p>Designing attractive, responsive layouts with advanced CSS styling.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-js fa-3x mb-3" style="color: #F7DF1E;"></i>
+                    <i class="fab fa-js fa-3x mb-3" style="color: #F7DF1E;"></i> <!-- JavaScript color -->
                     <h5>JavaScript</h5>
-                    <p>Adding interactivity and dynamic elements to websites.</p>
+                    <p>Adding dynamic functionality and interactivity to enhance the shopping experience.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i>
+                    <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i> <!-- React color -->
                     <h5>React</h5>
-                    <p>Building responsive and fast single-page applications.</p>
+                    <p>Building fast, modern single-page applications with React.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-bootstrap fa-3x mb-3" style="color: #7952B3;"></i>
-                    <h5>Bootstrap</h5>
-                    <p>Developing mobile-first websites with responsive design.</p>
+                    <i class="fab fa-shopify fa-3x mb-3" style="color: #96BF48;"></i> <!-- Shopify color -->
+                    <h5>Shopify</h5>
+                    <p>Creating seamless e-commerce experiences with Shopify for businesses of all sizes.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-node fa-3x mb-3" style="color: #339933;"></i>
-                    <h5>Node.js</h5>
-                    <p>Creating server-side applications with efficient JavaScript.</p>
+                    <i class="fab fa-wordpress fa-3x mb-3" style="color: #21759B;"></i> <!-- WordPress color -->
+                    <h5>WooCommerce</h5>
+                    <p>Building flexible and customizable online stores on WordPress using WooCommerce.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fa-brands fa-github fa-3x mb-3" style="color: #21759B;"></i>
-                    <h5>WordPress</h5>
-                    <p>Building CMS-driven websites with custom themes.</p>
+                    <i class="fas fa-database fa-3x mb-3" style="color: #4479A1;"></i> <!-- MySQL color -->
+                    <h5>MySQL</h5>
+                    <p>Managing customer and product data with scalable, secure MySQL databases.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
                 <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fas fa-database fa-3x mb-3" style="color: #4DB33D;"></i>
-                    <h5>Databases</h5>
-                    <p>Utilizing SQL and NoSQL databases for data management.</p>
+                    <i class="fab fa-paypal fa-3x mb-3" style="color: #00457C;"></i> <!-- PayPal color -->
+                    <h5>Payment Gateways</h5>
+                    <p>Integrating secure payment solutions for seamless transactions.</p>
                 </div>
             </div>
         </div>
     </section>
-
-
-
 
 
     <!-- Footer Section -->
@@ -722,6 +764,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <!-- Footer Bottom Section -->
@@ -785,6 +828,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
