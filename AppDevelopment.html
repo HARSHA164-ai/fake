@@ -1,786 +1,865 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anurag IT Solutions-CMS Development</title>
-    <link rel="icon" href="images/logo anurag.png" type="image/x-png">
-<!-- Bootstrap CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-<style>
-
-/* Navbar styles */
-.navbar-custom {
-  background-color: #ffffff;
-  transition: background-color 0.3s ease;
-}
-
-/* Sticky navbar style when scrolling */
-.navbar-scrolled {
-  background-color: #FFFFFF !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-scrolled .nav-link {
-  color: #1a1b24 !important;
-}
-
-.navbar-scrolled .btn-training {
-  background-color: #10375C !important;
-  color: #FFFFFF !important;
-}
-
-.navbar-brand img {
-  height: 50px;
-  transition: transform 0.3s ease;
-}
-
-.navbar-brand img:hover {
-  transform: scale(1.1);
-}
-
-/* Nav links styling */
-.navbar-custom .navbar-nav .nav-link {
-  color: #181b31;
-  font-weight: bold;
-  transition: color 0.3s ease, transform 0.3s ease;
-  margin: 0 15px;
-  position: relative;
-}
-
-/* Active link styling */
-.navbar-custom .navbar-nav .nav-link.active::after {
-  content: '';
-  display: block;
-  height: 2px;
-  background-color: #10375C;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  bottom: -5px;
-}
-
-/* Disable underline effect on active link in mobile view */
-@media (max-width: 768px) {
-  .navbar-custom .navbar-nav .nav-link.active::after {
-    display: none;
-  }
-}
-
-/* Hover effect for nav links */
-.navbar-custom .navbar-nav .nav-link:hover {
-  color: #1A2024;
-  transform: scale(1.1);
-}
-
-/* Dropdown styling */
-.navbar-custom .navbar-nav .dropdown-menu {
-  background-color: #ffffff;
-  border: none;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.3s ease;
-  display: none; /* Hide dropdown by default */
-}
-
-/* Hover effect for dropdown items */
-.navbar-custom .navbar-nav .dropdown-item:hover {
-  background-color: #f1f1f1;
-  color: #1A2024;
-}
-
-/* Show dropdown on hover */
-.navbar-custom .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-/* Training button styling */
-.navbar-custom .navbar-nav .btn-training {
-  background-color: #10375C;
-  color: #FFFFFF;
-  font-weight: bold;
-  border: none;
-  margin-left: 20px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  padding: 8px 20px;
-}
-
-.navbar-custom .navbar-nav .btn-training:hover {
-  background-color: #FFFFFF;
-  color: #10375C;
-  transform: scale(1.1);
-}
-
-
-
-
-/* CMS Development Banner Styling */
-.cms-development-banner {
-    background-color: #001f3f;
-    color: #ffffff;
-    text-align: center;
-    padding: 50px 20px;
-    border-radius: 12px;
-    margin-top: 5%;
-    opacity: 0;
-    transform: scale(0.9);
-    animation: scaleUpFadeIn 1.5s ease-out forwards;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes scaleUpFadeIn {
-    0% { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-/* Responsive Styles for CMS Development Banner */
-@media (max-width: 480px) {
-    .cms-development-banner {
-        padding: 30px 10px;
-        border-radius: 8px;
-        margin-top: 20%;
-    }
-
-    .cms-development-banner h1 {
-        font-size: 1.6rem;
-    }
-
-    .cms-development-banner p {
-        font-size: 0.9rem;
-    }
-}
-
-/* Card Styles */
-.card {
-    transition: transform 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s, border-radius 0.3s;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-/* Equal Height Cards */
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-/* Icon and Text */
-.card i {
-    color: #001f3f;
-    transition: color 0.3s;
-}
-
-/* Hover Effects */
-.card:hover {
-    background-color: #001f3f;
-    color: #ffdd00;
-    transform: translateY(-10px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-}
-
-.card:hover i {
-    color: #ffdd00;
-}
-
-/* Motion Effect for Cards */
-.motion-effect {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: slideUp 0.6s ease-out forwards;
-}
-
-@keyframes slideUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Add slight delay for each card */
-.motion-effect:nth-child(1) {
-    animation-delay: 0.1s;
-}
-.motion-effect:nth-child(2) {
-    animation-delay: 0.2s;
-}
-.motion-effect:nth-child(3) {
-    animation-delay: 0.3s;
-}
-.motion-effect:nth-child(4) {
-    animation-delay: 0.4s;
-}
-.motion-effect:nth-child(5) {
-    animation-delay: 0.5s;
-}
-.motion-effect:nth-child(6) {
-    animation-delay: 0.6s;
-}
-
-/* Content section styling */
-.content-section {
-    margin-top: 40px;
-    opacity: 0;
-    transform: translateY(50px);
-    animation: fadeInUp 1.5s ease-out forwards;
-}
-
-/* Key Points Section Styling */
-.content-section img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.content-bullet-points {
-    list-style: none;
-    padding: 0;
-    margin: 20px 0;
-}
-
-.content-bullet-points li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.content-bullet-points li i {
-    color: #001f3f;
-    margin-right: 8px;
-}
-
-/* Animation Keyframes */
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(50px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Core Services Section Motion Effects */
-.key-points-section {
-    opacity: 0;
-    transform: translateY(50px);
-    animation: fadeInUp 1.5s ease-out forwards;
-    animation-delay: 0.5s;
-}
-
-/* Technologies Section Styling */
-.technologies-section h2 {
-    color: #001f3f;
-    margin-bottom: 30px;
-    font-weight: bold;
-    animation: fadeInDown 1.5s ease-out;
-}
-
-.tech-card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    min-height: 280px; /* Ensures all cards have equal height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.tech-card i {
-    color: #001f3f;
-    transition: color 0.3s ease;
-}
-
-.tech-card h5 {
-    color: #10375C;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.tech-card p {
-    color: #1A2024;
-    transition: color 0.3s ease;
-    margin-bottom: 0;
-}
-
-/* Hover Effects for Cards */
-.tech-card:hover {
-    background-color: #001f3f;
-    transform: translateY(-10px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.tech-card:hover i {
-    color: #ffdd00;
-}
-
-.tech-card:hover h5,
-.tech-card:hover p {
-    color: #ffdd00;
-}
-
-/* Animation for Heading */
-@keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Animation Keyframes */
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Fade-in-up effect for tech cards */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.5s ease-out forwards;
-}
-
-/* Staggered delay for each card */
-.fade-in-up:nth-child(1) { animation-delay: 0.1s; }
-.fade-in-up:nth-child(2) { animation-delay: 0.2s; }
-.fade-in-up:nth-child(3) { animation-delay: 0.3s; }
-.fade-in-up:nth-child(4) { animation-delay: 0.4s; }
-.fade-in-up:nth-child(5) { animation-delay: 0.5s; }
-.fade-in-up:nth-child(6) { animation-delay: 0.6s; }
-.fade-in-up:nth-child(7) { animation-delay: 0.7s; }
-.fade-in-up:nth-child(8) { animation-delay: 0.8s; }
-
-
-/* Responsive Styling for Smaller Screens */
-@media (max-width: 768px) {
-    .technologies-section {
-        padding: 0 15px;
-    }
-}
-
- /* Footer Section Styling */
- .footer {
-      background-color: #1a1c1e;
-      color: #d4d4d4;
-      padding: 60px 0;
-      font-size: 0.9rem;
-    }
-
-    .footer h5 {
-      color: #ffffff;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
-    .footer p,
-    .footer a {
-      color: #d4d4d4;
-      margin-bottom: 10px;
-      font-size: 0.9rem;
-    }
-
-    .footer a:hover {
-      color: #ffffff;
-      text-decoration: none;
-    }
-
-    .footer-bottom {
-      background-color: #151718;
-      padding: 15px 0;
-      text-align: center;
-      color: #7a7a7a;
-      font-size: 0.8rem;
-    }
-
-    .footer-bottom a {
-      color: #7a7a7a;
-      font-weight: bold;
-      margin-left: 5px;
-    }
-
-    .footer-bottom a:hover {
-      color: #ffffff;
-    }
-
-    .social-icons a {
-      color: #d4d4d4;
-      margin-right: 10px;
-      font-size: 1.2rem;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: #ffffff;
-    }
-
-    /* Scroll to Top Button Styles */
-.scroll-to-top {
-  position: fixed;
-  bottom: 20px; /* Space from bottom */
-  right: 20px; /* Space from right */
-  display: none; /* Hidden by default */
-  background-color: #3013AD; /* Button color */
-  color: #fff; /* Text color */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 15px; /* Padding for button */
-  font-size: 18px; /* Font size */
-  cursor: pointer; /* Pointer on hover */
-  z-index: 1000; /* On top of other elements */
-  transition: background-color 0.3s ease; /* Smooth transition */
-}
-
-.scroll-to-top:hover {
-  background-color: #1A2024; /* Darker on hover */
-}
-
-
-
-</style>
+    <title>ANDHRA DEVELOPERS-APP Development</title>
+    <link rel="icon" href="logo.png" type="image/x-png">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Navbar styles */
+        .navbar-custom {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Sticky navbar style when scrolling */
+        .navbar-scrolled {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-scrolled .nav-link {
+            color: #1a1b24 !important;
+        }
+
+        .navbar-scrolled .btn-training {
+            background-color: #10375C !important;
+            color: #FFFFFF !important;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Nav links styling */
+        .navbar-custom .navbar-nav .nav-link {
+            color: #181b31;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+            margin: 0 15px;
+            position: relative;
+        }
+
+        /* Active link styling */
+        .navbar-custom .navbar-nav .nav-link.active::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background-color: #10375C;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            bottom: -5px;
+        }
+
+        /* Disable underline effect on active link in mobile view */
+        @media (max-width: 768px) {
+            .navbar-custom .navbar-nav .nav-link.active::after {
+                display: none;
+            }
+        }
+
+        /* Hover effect for nav links */
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #1A2024;
+            transform: scale(1.1);
+        }
+
+        /* Dropdown styling */
+        .navbar-custom .navbar-nav .dropdown-menu {
+            background-color: #ffffff;
+            border: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
+            display: none;
+            /* Hide dropdown by default */
+        }
+
+        /* Hover effect for dropdown items */
+        .navbar-custom .navbar-nav .dropdown-item:hover {
+            background-color: #f1f1f1;
+            color: #1A2024;
+        }
+
+        /* Show dropdown on hover */
+        .navbar-custom .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Training button styling */
+        .navbar-custom .navbar-nav .btn-training {
+            background-color: #10375C;
+            color: #FFFFFF;
+            font-weight: bold;
+            border: none;
+            margin-left: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            padding: 8px 20px;
+        }
+
+        .navbar-custom .navbar-nav .btn-training:hover {
+            background-color: #FFFFFF;
+            color: #10375C;
+            transform: scale(1.1);
+        }
+
+
+
+
+        /* CMS Development Banner Styling */
+        .cms-development-banner {
+            background-color: #001f3f;
+            color: #ffffff;
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 12px;
+            margin-top: 5%;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleUpFadeIn 1.5s ease-out forwards;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes scaleUpFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Styles for CMS Development Banner */
+        @media (max-width: 480px) {
+            .cms-development-banner {
+                padding: 30px 10px;
+                border-radius: 8px;
+                margin-top: 20%;
+            }
+
+            .cms-development-banner h1 {
+                font-size: 1.6rem;
+            }
+
+            .cms-development-banner p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            transition: transform 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s, border-radius 0.3s;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        /* Equal Height Cards */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        /* Icon and Text */
+        .card i {
+            color: #001f3f;
+            transition: color 0.3s;
+        }
+
+        /* Hover Effects */
+        .card:hover {
+            background-color: #001f3f;
+            color: #ffdd00;
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+        }
+
+        .card:hover i {
+            color: #ffdd00;
+        }
+
+        /* Motion Effect for Cards */
+        .motion-effect {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Add slight delay for each card */
+        .motion-effect:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .motion-effect:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .motion-effect:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .motion-effect:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .motion-effect:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .motion-effect:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        /* Content section styling */
+        .content-section {
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+
+        /* Key Points Section Styling */
+        .content-section img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .content-bullet-points {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .content-bullet-points li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .content-bullet-points li i {
+            color: #001f3f;
+            margin-right: 8px;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Core Services Section Motion Effects */
+        .key-points-section {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        /* Technologies Section Styling */
+        .technologies-section h2 {
+            color: #001f3f;
+            margin-bottom: 30px;
+            font-weight: bold;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .tech-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            min-height: 280px;
+            /* Ensures all cards have equal height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tech-card i {
+            color: #001f3f;
+            transition: color 0.3s ease;
+        }
+
+        .tech-card h5 {
+            color: #10375C;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .tech-card p {
+            color: #1A2024;
+            transition: color 0.3s ease;
+            margin-bottom: 0;
+        }
+
+        /* Hover Effects for Cards */
+        .tech-card:hover {
+            background-color: #001f3f;
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tech-card:hover i {
+            color: #ffdd00;
+        }
+
+        .tech-card:hover h5,
+        .tech-card:hover p {
+            color: #ffdd00;
+        }
+
+        /* Animation for Heading */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Fade-in-up effect for tech cards */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+
+        /* Staggered delay for each card */
+        .fade-in-up:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-in-up:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-up:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .fade-in-up:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in-up:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .fade-in-up:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .fade-in-up:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .fade-in-up:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+
+        /* Responsive Styling for Smaller Screens */
+        @media (max-width: 768px) {
+            .technologies-section {
+                padding: 0 15px;
+            }
+        }
+
+        /* Footer Section Styling */
+        .footer {
+            background-color: #1a1c1e;
+            color: #d4d4d4;
+            padding: 60px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer h5 {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .footer p,
+        .footer a {
+            color: #d4d4d4;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            background-color: #151718;
+            padding: 15px 0;
+            text-align: center;
+            color: #7a7a7a;
+            font-size: 0.8rem;
+        }
+
+        .footer-bottom a {
+            color: #7a7a7a;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .footer-bottom a:hover {
+            color: #ffffff;
+        }
+
+        .social-icons a {
+            color: #d4d4d4;
+            margin-right: 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #ffffff;
+        }
+
+        /* Scroll to Top Button Styles */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            /* Space from bottom */
+            right: 20px;
+            /* Space from right */
+            display: none;
+            /* Hidden by default */
+            background-color: #3013AD;
+            /* Button color */
+            color: #fff;
+            /* Text color */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            padding: 10px 15px;
+            /* Padding for button */
+            font-size: 18px;
+            /* Font size */
+            cursor: pointer;
+            /* Pointer on hover */
+            z-index: 1000;
+            /* On top of other elements */
+            transition: background-color 0.3s ease;
+            /* Smooth transition */
+        }
+
+        .scroll-to-top:hover {
+            background-color: #1A2024;
+            /* Darker on hover */
+        }
+    </style>
 
 
 </head>
+
 <body>
-    
-<!-- Navbar Section -->
-<nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="navbar">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
-        <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
 
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-          <!-- Services dropdown -->
-          <li class="nav-item dropdown">
-            <!-- Direct link to service.html, no data-toggle to avoid conflict -->
-            <a class="nav-link active" href="service.html" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              Services
+    <!-- Navbar Section -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
+                <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
+
             </a>
-             <!-- Dropdown menu items -->
-             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
-                <a class="dropdown-item" href="cms.html">CMS Development</a>
-                <a class="dropdown-item" href="ecommerce.html">E-Commerce Website Development</a>
-                <a class="dropdown-item" href="webapp.html">Web Applications & Portals</a>
-                <a class="dropdown-item" href="graphic.html">Graphic Design</a>
-                <a class="dropdown-item" href="digitalmarket.html">Digital Marketing</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="color: #000000;">&#9776;</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <!-- Services dropdown -->
+                    <li class="nav-item dropdown">
+                        <!-- Direct link to service.html, no data-toggle to avoid conflict -->
+                        <a class="nav-link active" href="service.html" id="navbarDropdown" role="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            Services
+                        </a>
+                        <!-- Dropdown menu items -->
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="Webdesign.html">Web Design & Development</a>
+                            <a class="dropdown-item" href="cms.html">CMS Development</a>
+                            <a class="dropdown-item" href="ecommerce.html">E-Commerce Website Development</a>
+                            <a class="dropdown-item" href="webapp.html">Web Applications & Portals</a>
+                            <a class="dropdown-item" href="graphic.html">Graphic Design</a>
+                            <a class="dropdown-item" href="digitalmarket.html">Digital Marketing</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pricing.html">Pricing Table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#career">Career</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="training.html" class="btn btn-training nav-link">Training</a>
+                    </li>
+                </ul>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pricing.html">Pricing Table</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#career">Career</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <a href="training.html" class="btn btn-training nav-link">Training</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-
-
-   <!-- CMS Development Banner Section -->
-<section class="cms-development-banner">
-    <h1>CMS Development</h1>
-    <p>Building intuitive and scalable content management systems for your business.</p>
-</section>
-
-<!-- Key CMS Services Section -->
-<div class="container my-5 content-section">
-  <h2 class="text-center mb-2" style="color: #001f3f;">OUR CMS SERVICES</h2>
-  <p class="text-center mb-4">Expert solutions for managing your content with ease and efficiency.</p>
-  <div class="row">
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-cogs fa-3x py-3" style="color: var(--icon-color, #374451);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">Custom CMS Development</h5>
-                  <p class="card-text">Developing tailor-made CMS solutions that match your business needs and workflow.</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-edit fa-3x py-3" style="color: var(--icon-color, #007bff);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">Content Management</h5>
-                  <p class="card-text">Simplifying content creation, management, and publishing through intuitive dashboards.</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-mobile-alt fa-3x py-3" style="color: var(--icon-color, #28a745);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">Responsive CMS</h5>
-                  <p class="card-text">Creating CMS solutions that are fully responsive across all devices, ensuring accessibility anywhere.</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-lock fa-3x py-3" style="color: var(--icon-color, #dc3545);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">Security & Updates</h5>
-                  <p class="card-text">Ensuring your CMS is secure, up-to-date, and protected from vulnerabilities.</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-users fa-3x py-3" style="color: var(--icon-color, #ffc107);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">User Access Control</h5>
-                  <p class="card-text">Managing user roles and permissions for streamlined access control within your CMS.</p>
-              </div>
-          </div>
-      </div>
-      <div class="col-sm-6 col-md-4 mb-3">
-          <div class="card text-center py-4 motion-effect">
-              <i class="fas fa-cloud fa-3x py-3" style="color: var(--icon-color, #17a2b8);"></i>
-              <div class="card-body">
-                  <h5 class="card-title">Cloud Integration</h5>
-                  <p class="card-text">Integrating cloud-based services for enhanced scalability and backup for your CMS data.</p>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-
-
-<!-- Additional Content Section: CMS Development -->
-<section class="container content-section">
-    <div class="row">
-        <div class="col-md-6">
-            <h2 style="color: #001f3f;">Why Choose Our CMS Development Services?</h2>
-            <p>
-                Our CMS development services are designed to empower your business with a scalable, flexible, and easy-to-manage platform 
-                that meets your unique needs. We build custom CMS solutions that simplify content management, while ensuring your site 
-                remains dynamic, secure, and user-friendly.
-            </p>
-            <ul class="content-bullet-points">
-                <li><i class="fas fa-check-circle"></i> Custom CMS tailored to your specific requirements</li>
-                <li><i class="fas fa-check-circle"></i> Easy-to-use admin interface for content management</li>
-                <li><i class="fas fa-check-circle"></i> Scalable solutions for growing businesses</li>
-                <li><i class="fas fa-check-circle"></i> Integration with third-party services and tools</li>
-                <li><i class="fas fa-check-circle"></i> Secure and optimized CMS platform</li>
-            </ul>
-            <p>
-                Whether you need a small website or an enterprise-level CMS, our team works with you every step of the way 
-                to ensure your vision is fully realized. We focus on building intuitive and high-performing CMS solutions that drive results.
-            </p>
         </div>
-        <div class="col-md-6">
-            <img src="images/cms devel.png" alt="CMS Development Image">
+    </nav>
+
+
+
+    <!-- CMS Development Banner Section -->
+    <section class="cms-development-banner">
+        <h1>CMS Development</h1>
+        <p>Building intuitive and scalable content management systems for your business.</p>
+    </section>
+
+    <!-- Key CMS Services Section -->
+    <div class="container my-5 content-section">
+        <h2 class="text-center mb-2" style="color: #001f3f;">OUR CMS SERVICES</h2>
+        <p class="text-center mb-4">Expert solutions for managing your content with ease and efficiency.</p>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-cogs fa-3x py-3" style="color: var(--icon-color, #374451);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Custom CMS Development</h5>
+                        <p class="card-text">Developing tailor-made CMS solutions that match your business needs and
+                            workflow.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-edit fa-3x py-3" style="color: var(--icon-color, #007bff);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Content Management</h5>
+                        <p class="card-text">Simplifying content creation, management, and publishing through intuitive
+                            dashboards.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-mobile-alt fa-3x py-3" style="color: var(--icon-color, #28a745);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Responsive CMS</h5>
+                        <p class="card-text">Creating CMS solutions that are fully responsive across all devices,
+                            ensuring accessibility anywhere.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-lock fa-3x py-3" style="color: var(--icon-color, #dc3545);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Security & Updates</h5>
+                        <p class="card-text">Ensuring your CMS is secure, up-to-date, and protected from
+                            vulnerabilities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-users fa-3x py-3" style="color: var(--icon-color, #ffc107);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">User Access Control</h5>
+                        <p class="card-text">Managing user roles and permissions for streamlined access control within
+                            your CMS.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 motion-effect">
+                    <i class="fas fa-cloud fa-3x py-3" style="color: var(--icon-color, #17a2b8);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Cloud Integration</h5>
+                        <p class="card-text">Integrating cloud-based services for enhanced scalability and backup for
+                            your CMS data.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</section>
-<!-- Technologies We Use for CMS Development Section -->
-<section class="container my-5 technologies-section">
-  <h2 class="text-center mb-4" style="color: #001f3f;">Technologies We Use</h2>
-  <div class="row">
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-wordpress fa-3x mb-3" style="color: #21759B;"></i> <!-- WordPress blue -->
-              <h5>WordPress</h5>
-              <p>Building CMS-driven websites with custom themes and plugins.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-drupal fa-3x mb-3" style="color: #0678BE;"></i> <!-- Drupal blue -->
-              <h5>Drupal</h5>
-              <p>Robust, flexible CMS solution for complex sites and applications.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-joomla fa-3x mb-3" style="color: #F44321;"></i> <!-- Joomla red -->
-              <h5>Joomla</h5>
-              <p>Open-source CMS offering a wide range of customizable features.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fas fa-database fa-3x mb-3" style="color: #00758F;"></i> <!-- General database color -->
-              <h5>MySQL</h5>
-              <p>Reliable and fast relational database management system for CMS.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-php fa-3x mb-3" style="color: #777BB4;"></i> <!-- PHP purple -->
-              <h5>PHP</h5>
-              <p>Server-side scripting language for dynamic and scalable CMS development.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i> <!-- React blue -->
-              <h5>React</h5>
-              <p>Building fast, responsive user interfaces for CMS-based websites.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-node fa-3x mb-3" style="color: #43853D;"></i> <!-- Node.js green -->
-              <h5>Node.js</h5>
-              <p>Creating fast and scalable server-side CMS applications.</p>
-          </div>
-      </div>
-      <div class="col-md-4 col-lg-3 mb-4">
-          <div class="tech-card text-center p-4 fade-in-up">
-              <i class="fab fa-sass fa-3x mb-3" style="color: #CF649A;"></i> <!-- Sass pink -->
-              <h5>Sass</h5>
-              <p>Enhancing CMS styles with advanced CSS pre-processing features.</p>
-          </div>
-      </div>
-  </div>
-</section>
 
 
 
-<!-- Footer Section -->
-<footer class="footer">
-  <div class="container">
-    <div class="row">
-      <!-- About Us Section -->
-      <div class="col-md-3">
-        <h5>About Us</h5>
-        <p>Anurag IT Solutions started with a vision to empower businesses through innovative technology solutions. Our journey has been driven by excellence, and our team is dedicated to delivering the highest standards in the industry.</p>
-      </div>
-      
-      <!-- Important Links Section -->
-      <div class="col-md-3">
-        <h5>Important Links</h5>
-        <p><a href="about.html">About Us</a></p>
-        <p><a href="contact.html">Contact Us</a></p>
-        <p><a href="pricing.html">Pricing Plans</a></p>
-        <p><a href="privacypolicy.html">Privacy Policy</a></p>
-        <p><a href="termsandconditions.html">Terms and Conditions</a></p>
-        <p><a href="refundpolicy.html">Refund Policy</a></p>
-      </div>
-      
-      <!-- Featured Services Section -->
-      <div class="col-md-3">
-        <h5>Featured Services</h5>
-        <p><a href="Webdesign.html">Web Design & Development</a></p>
-        <p><a href="cms.html">CMS Development</a></p>
-        <p><a href="ecommerce.html">E-Commerce Website Development</a></p>
-        <p><a href="webapp.html">Web Applications & Portals</a></p>
-        <p><a href="graphic.html">Graphic Design</a></p>
-        <p><a href="digitalmarket.html">Digital Marketing</a></p>
-      </div>
-      
-      <!-- Contact Us Section -->
-      <div class="col-md-3">
-        <h5>Contact Us</h5>
-        <p>Office Address</p>
-        <p>22-9-15/3, Korukonda Rd, opp. bijili Ice Factory, Ganesh Nagar,<br>Rajamahendravaram, Andhra Pradesh 533101</p>
-        <p>Phone: +91 7396610166</p>
-        <p>Email: info@anuragitsolutions.com</p>
-      </div>
-    </div>
-  </div>
-    
-  
-    
-    <!-- Footer Bottom Section -->
-    <div class="footer-bottom">
-      <div class="container d-flex justify-content-between align-items-center">
-        <span>Designed by <a href="#">AnuragItSolutions</a></span>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-google-plus-g"></i></a>
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-vimeo-v"></i></a>
+    <!-- Additional Content Section: CMS Development -->
+    <section class="container content-section">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 style="color: #001f3f;">Why Choose Our CMS Development Services?</h2>
+                <p>
+                    Our CMS development services are designed to empower your business with a scalable, flexible, and
+                    easy-to-manage platform
+                    that meets your unique needs. We build custom CMS solutions that simplify content management, while
+                    ensuring your site
+                    remains dynamic, secure, and user-friendly.
+                </p>
+                <ul class="content-bullet-points">
+                    <li><i class="fas fa-check-circle"></i> Custom CMS tailored to your specific requirements</li>
+                    <li><i class="fas fa-check-circle"></i> Easy-to-use admin interface for content management</li>
+                    <li><i class="fas fa-check-circle"></i> Scalable solutions for growing businesses</li>
+                    <li><i class="fas fa-check-circle"></i> Integration with third-party services and tools</li>
+                    <li><i class="fas fa-check-circle"></i> Secure and optimized CMS platform</li>
+                </ul>
+                <p>
+                    Whether you need a small website or an enterprise-level CMS, our team works with you every step of
+                    the way
+                    to ensure your vision is fully realized. We focus on building intuitive and high-performing CMS
+                    solutions that drive results.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <img src="images/cms devel.png" alt="CMS Development Image">
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
-  
-  
-  <!-- Scroll to Top Button -->
-  <button id="scrollToTopBtn" class="scroll-to-top">
-    ↑
-  </button>
-  
-  
-  
-  <script>
-    window.addEventListener("scroll", function() {
-      const navbar = document.getElementById("navbar");
-      const logo = document.getElementById("navbar-logo");
-      if (window.scrollY > 50) {
-        navbar.classList.add("navbar-scrolled");
-        logo.src = "images/logo anurag.png"; // Optionally, use a different logo when scrolled
-      } else {
-        navbar.classList.remove("navbar-scrolled");
-        logo.src = "images/logo anurag.png";
-      }
-    });
-  </script>
-  
-  <script>
-    // Get the button
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-  
-    // When the user scrolls down 100px from the top of the document, show the button
-    window.onscroll = function() {
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        scrollToTopBtn.style.display = "block";
-      } else {
-        scrollToTopBtn.style.display = "none";
-      }
-    };
-  
-    // When the user clicks on the button, scroll to the top of the document
-    scrollToTopBtn.onclick = function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' // Smooth scroll effect
-      });
-    };
-  </script>
+    </section>
+    <!-- Technologies We Use for CMS Development Section -->
+    <section class="container my-5 technologies-section">
+        <h2 class="text-center mb-4" style="color: #001f3f;">Technologies We Use</h2>
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-wordpress fa-3x mb-3" style="color: #21759B;"></i> <!-- WordPress blue -->
+                    <h5>WordPress</h5>
+                    <p>Building CMS-driven websites with custom themes and plugins.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-drupal fa-3x mb-3" style="color: #0678BE;"></i> <!-- Drupal blue -->
+                    <h5>Drupal</h5>
+                    <p>Robust, flexible CMS solution for complex sites and applications.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-joomla fa-3x mb-3" style="color: #F44321;"></i> <!-- Joomla red -->
+                    <h5>Joomla</h5>
+                    <p>Open-source CMS offering a wide range of customizable features.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fas fa-database fa-3x mb-3" style="color: #00758F;"></i> <!-- General database color -->
+                    <h5>MySQL</h5>
+                    <p>Reliable and fast relational database management system for CMS.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-php fa-3x mb-3" style="color: #777BB4;"></i> <!-- PHP purple -->
+                    <h5>PHP</h5>
+                    <p>Server-side scripting language for dynamic and scalable CMS development.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i> <!-- React blue -->
+                    <h5>React</h5>
+                    <p>Building fast, responsive user interfaces for CMS-based websites.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-node fa-3x mb-3" style="color: #43853D;"></i> <!-- Node.js green -->
+                    <h5>Node.js</h5>
+                    <p>Creating fast and scalable server-side CMS applications.</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="tech-card text-center p-4 fade-in-up">
+                    <i class="fab fa-sass fa-3x mb-3" style="color: #CF649A;"></i> <!-- Sass pink -->
+                    <h5>Sass</h5>
+                    <p>Enhancing CMS styles with advanced CSS pre-processing features.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- About Us Section -->
+                <div class="col-md-3">
+                    <h5>About Us</h5>
+                    <p>Anurag IT Solutions started with a vision to empower businesses through innovative technology
+                        solutions. Our journey has been driven by excellence, and our team is dedicated to delivering
+                        the highest standards in the industry.</p>
+                </div>
+
+                <!-- Important Links Section -->
+                <div class="col-md-3">
+                    <h5>Important Links</h5>
+                    <p><a href="about.html">About Us</a></p>
+                    <p><a href="contact.html">Contact Us</a></p>
+                    <p><a href="pricing.html">Pricing Plans</a></p>
+                    <p><a href="privacypolicy.html">Privacy Policy</a></p>
+                    <p><a href="termsandconditions.html">Terms and Conditions</a></p>
+                    <p><a href="refundpolicy.html">Refund Policy</a></p>
+                </div>
+
+                <!-- Featured Services Section -->
+                <div class="col-md-3">
+                    <h5>Featured Services</h5>
+                    <p><a href="Webdesign.html">Web Design & Development</a></p>
+                    <p><a href="cms.html">CMS Development</a></p>
+                    <p><a href="ecommerce.html">E-Commerce Website Development</a></p>
+                    <p><a href="webapp.html">Web Applications & Portals</a></p>
+                    <p><a href="graphic.html">Graphic Design</a></p>
+                    <p><a href="digitalmarket.html">Digital Marketing</a></p>
+                </div>
+
+                <!-- Contact Us Section -->
+                <div class="col-md-3">
+                    <h5>Contact Us</h5>
+                    <p>Office Address</p>
+                    <p>22-9-15/3, Korukonda Rd, opp. bijili Ice Factory, Ganesh Nagar,<br>Rajamahendravaram, Andhra
+                        Pradesh 533101</p>
+                    <p>Phone: +91 7396610166</p>
+                    <p>Email: info@anuragitsolutions.com</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Footer Bottom Section -->
+        <div class="footer-bottom">
+            <div class="container d-flex justify-content-between align-items-center">
+                <span>Designed by <a href="#">AnuragItSolutions</a></span>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-vimeo-v"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top">
+        ↑
+    </button>
+
+
+
+    <script>
+        window.addEventListener("scroll", function () {
+            const navbar = document.getElementById("navbar");
+            const logo = document.getElementById("navbar-logo");
+            if (window.scrollY > 50) {
+                navbar.classList.add("navbar-scrolled");
+                logo.src = "images/logo anurag.png"; // Optionally, use a different logo when scrolled
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+                logo.src = "images/logo anurag.png";
+            }
+        });
+    </script>
+
+    <script>
+        // Get the button
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 100px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollToTopBtn.onclick = function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll effect
+            });
+        };
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>
