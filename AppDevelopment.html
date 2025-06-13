@@ -531,6 +531,19 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Final override to ensure no underline appears */
+        .navbar .nav-link,
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus,
+        .navbar .nav-link:active {
+            text-decoration: none !important;
+            box-shadow: none !important;
+        }
+
+        .navbar-custom .navbar-nav .nav-link.active::after {
+            display: none !important;
+        }
     </style>
 
 
