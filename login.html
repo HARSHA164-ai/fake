@@ -150,8 +150,6 @@
                 </div>
                 <div id="passwordMessage" style="font-size: 0.9rem; margin-bottom: 10px;"></div>
                 <button class="btn btn-custom w-100" onclick="signUp()">Sign Up</button>
-                <button class="btn btn-google w-100" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Sign up
-                    with Google</button>
             </div>
         </div>
     </div>
@@ -287,7 +285,12 @@
                             });
                         }
 
-                        window.location.href = "/dashboard/user.html";
+                        return userRef.get();
+                    }).then(doc => {
+                        const role = doc.data()?.role || "user";
+                        if (role === "admin") window.location.href = "/dashboard/admin.html";
+                        else if (role === "employer") window.location.href = "/dashboard/employer.html";
+                        else window.location.href = "/dashboard/user.html";
                     });
                 })
                 .catch(error => {
