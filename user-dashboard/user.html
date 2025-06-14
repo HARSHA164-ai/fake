@@ -123,10 +123,7 @@
             </button>
             <span class="fw-bold fs-5">Andhra Developers</span>
         </div>
-        <div>
-            <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
-            <button class="btn btn-danger ms-2" onclick="logout()">Logout</button>
-        </div>
+        <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
     </header>
 
     <div class="sidebar" id="sidebar">
@@ -142,7 +139,8 @@
     <div class="main-content" id="mainContent">
         <section id="dashboardSection">
             <h2>Welcome, <span id="userName">User</span></h2>
-            <span id="userEmail">user@example.com</span>
+            <p><strong>Email:</strong> <span id="userEmail">user@example.com</span></p>
+            <p><strong>Phone:</strong> <span id="userPhone">loading...</span></p>
             <hr>
             <p>This is the Dashboard content.</p>
         </section>
@@ -173,10 +171,28 @@
         </section>
     </div>
 
+    <!-- Phone number modal -->
+    <div class="modal" tabindex="-1" id="phoneModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Phone Number</h5>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="phoneInput" class="form-control" placeholder="Enter phone number" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="savePhoneNumber()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
@@ -188,25 +204,41 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
-        firebase.auth().onAuthStateChanged(user => {
+        const phoneModal = new bootstrap.Modal(document.getElementById("phoneModal"));
+        const phoneInput = document.getElementById("phoneInput");
+
+        auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById("userName").textContent = user.displayName || "User";
                 document.getElementById("userEmail").textContent = user.email;
-            } else {
-                window.location.href = "/login.html";
+
+                db.collection("users").doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        const phone = data.phone || null;
+                        document.getElementById("userPhone").textContent = phone || "Not Provided";
+                        if (!phone) {
+                            phoneModal.show();
+                        }
+                    } else {
+                        phoneModal.show();
+                    }
+                });
             }
         });
 
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "/login.html";
+        function savePhoneNumber() {
+            const user = auth.currentUser;
+            const phone = phoneInput.value.trim();
+            if (!phone || !user) return;
+            db.collection("users").doc(user.uid).set({ phone }, { merge: true }).then(() => {
+                document.getElementById("userPhone").textContent = phone;
+                phoneModal.hide();
             });
         }
-    </script>
 
-    <!-- App Logic -->
-    <script>
         const body = document.body;
         const darkToggle = document.getElementById("darkModeToggle");
         const sidebar = document.getElementById("sidebar");
