@@ -44,6 +44,7 @@
       position: fixed;
       top: 0;
       left: 0;
+      padding-top: 10px;
       padding-top: 4rem;
       z-index: 1000;
       transition: transform 0.3s ease;
@@ -51,6 +52,15 @@
 
     .sidebar.hidden {
       transform: translateX(-100%);
+    }
+
+    @media (min-width: 768px) {
+      .sidebar {
+        transform: none !important;
+      }
+      .toggle-sidebar-btn {
+        display: none;
+      }
     }
 
     .dark-mode .sidebar {
@@ -84,13 +94,7 @@
       padding: 2rem;
     }
 
-    @media (max-width: 1024px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-      .sidebar.show {
-        transform: translateX(0);
-      }
+    @media (max-width: 767px) {
       .main-content {
         margin-left: 0;
       }
@@ -102,27 +106,20 @@
       color: white;
       font-size: 1.5rem;
       margin-right: 1rem;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="d-flex align-items-center">
-      <button class="toggle-sidebar-btn d-lg-none" id="toggleSidebarHeader">
-        <i class="fas fa-bars"></i>
-      </button>
+      <button class="toggle-sidebar-btn" id="toggleSidebar"><i class="fas fa-bars"></i></button>
       <span>Andhra Developers Dashboard</span>
     </div>
     <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
   </header>
 
-  <div class="sidebar" id="sidebar">
-    <!-- Toggle button inside sidebar for mobile -->
-    <div class="d-lg-none text-end pe-3">
-      <button class="btn btn-sm btn-outline-secondary mt-2" id="toggleSidebarInside">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
+  <div class="sidebar hidden" id="sidebar">
     <h5 class="text-center">👨‍💻 Andhra Developers</h5>
     <a href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
     <a href="#"><i class="fas fa-book me-2"></i> Courses</a>
@@ -152,17 +149,11 @@
       localStorage.setItem("darkMode", body.classList.contains("dark-mode") ? "enabled" : "disabled");
     });
 
-    // Sidebar Toggle Logic
+    // Toggle Sidebar
+    const toggleSidebarBtn = document.getElementById("toggleSidebar");
     const sidebar = document.getElementById("sidebar");
-    const toggleSidebarInside = document.getElementById("toggleSidebarInside");
-    const toggleSidebarHeader = document.getElementById("toggleSidebarHeader");
-
-    toggleSidebarInside.addEventListener("click", () => {
-      sidebar.classList.remove("show");
-    });
-
-    toggleSidebarHeader.addEventListener("click", () => {
-      sidebar.classList.add("show");
+    toggleSidebarBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
     });
 
     // Dummy user data
