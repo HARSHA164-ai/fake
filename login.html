@@ -20,11 +20,12 @@
     <style>
         body {
             background-color: #f4f6f9;
+            padding: 15px;
         }
 
         .auth-box {
             max-width: 400px;
-            margin: 80px auto;
+            margin: 40px auto;
             background: white;
             padding: 30px;
             border-radius: 12px;
@@ -76,6 +77,28 @@
             color: #a33a3a;
             border: 1px solid #e0a5a5;
         }
+
+        .btn-google {
+            margin-top: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            color: #444;
+        }
+
+        .btn-google i {
+            margin-right: 8px;
+        }
+
+        .btn-google:hover {
+            background-color: #f1f1f1;
+        }
+
+        @media (max-width: 576px) {
+            .auth-box {
+                margin: 20px auto;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -105,6 +128,8 @@
                 <a href="#" class="forgot-password" onclick="resetPassword()">Forgot Password?</a>
                 <div id="messageBox"></div>
                 <button class="btn btn-custom w-100" onclick="login()">Login</button>
+                <button class="btn btn-google w-100" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Sign in
+                    with Google</button>
             </div>
 
             <!-- Sign Up Tab -->
@@ -118,16 +143,19 @@
                             class="fas fa-eye"></i></span>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password"
+                        oninput="checkPasswordMatch()">
                     <span class="input-group-text" onclick="togglePassword('confirmPassword', this)"><i
                             class="fas fa-eye"></i></span>
                 </div>
+                <div id="passwordMessage" style="font-size: 0.9rem; margin-bottom: 10px;"></div>
                 <button class="btn btn-custom w-100" onclick="signUp()">Sign Up</button>
+                <button class="btn btn-google w-100" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Sign up
+                    with Google</button>
             </div>
         </div>
     </div>
 
-    <!-- Firebase Setup + Script -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
@@ -162,6 +190,25 @@
             box.innerText = message;
             box.style.display = 'block';
             setTimeout(() => box.style.display = 'none', 5000);
+        }
+
+        function checkPasswordMatch() {
+            const password = document.getElementById("signupPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const message = document.getElementById("passwordMessage");
+
+            if (!confirmPassword) {
+                message.innerText = "";
+                return;
+            }
+
+            if (password === confirmPassword) {
+                message.style.color = "green";
+                message.innerText = "Passwords match.";
+            } else {
+                message.style.color = "red";
+                message.innerText = "Passwords do not match.";
+            }
         }
 
         function login() {
@@ -221,6 +268,31 @@
             auth.sendPasswordResetEmail(email)
                 .then(() => showMessage("success", "Password reset email sent!"))
                 .catch(error => showMessage("error", "Failed to send reset email: " + error.message));
+        }
+
+        function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(result => {
+                    const uid = result.user.uid;
+                    const userRef = db.collection("users").doc(uid);
+
+                    userRef.get().then(doc => {
+                        if (!doc.exists) {
+                            userRef.set({
+                                name: result.user.displayName,
+                                email: result.user.email,
+                                phone: result.user.phoneNumber || "",
+                                role: "user"
+                            });
+                        }
+
+                        window.location.href = "/dashboard/user.html";
+                    });
+                })
+                .catch(error => {
+                    showMessage("error", "Google sign-in failed: " + error.message);
+                });
         }
     </script>
 
