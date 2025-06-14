@@ -139,8 +139,8 @@
     <div class="main-content" id="mainContent">
         <section id="dashboardSection">
             <h2>Welcome, <span id="userName">User</span></h2>
-            <p><strong>Email:</strong> <span id="userEmail">user@example.com</span></p>
-            <p><strong>Phone:</strong> <span id="userPhone">loading...</span></p>
+            <span id="userEmail">user@example.com</span>
+            <p id="userPhone"></p>
             <hr>
             <p>This is the Dashboard content.</p>
         </section>
@@ -152,7 +152,7 @@
 
         <section id="enrolledSection" style="display: none;">
             <h2>Enrolled Courses</h2>
-            <p>Courses you're enrolled in.</p>
+            <div id="enrolledCourses">Loading...</div>
         </section>
 
         <section id="eventsSection" style="display: none;">
@@ -171,28 +171,11 @@
         </section>
     </div>
 
-    <!-- Phone number modal -->
-    <div class="modal" tabindex="-1" id="phoneModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Phone Number</h5>
-          </div>
-          <div class="modal-body">
-            <input type="text" id="phoneInput" class="form-control" placeholder="Enter phone number" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="savePhoneNumber()">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
@@ -205,39 +188,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
-
-        const phoneModal = new bootstrap.Modal(document.getElementById("phoneModal"));
-        const phoneInput = document.getElementById("phoneInput");
-
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                document.getElementById("userName").textContent = user.displayName || "User";
-                document.getElementById("userEmail").textContent = user.email;
-
-                db.collection("users").doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        const phone = data.phone || null;
-                        document.getElementById("userPhone").textContent = phone || "Not Provided";
-                        if (!phone) {
-                            phoneModal.show();
-                        }
-                    } else {
-                        phoneModal.show();
-                    }
-                });
-            }
-        });
-
-        function savePhoneNumber() {
-            const user = auth.currentUser;
-            const phone = phoneInput.value.trim();
-            if (!phone || !user) return;
-            db.collection("users").doc(user.uid).set({ phone }, { merge: true }).then(() => {
-                document.getElementById("userPhone").textContent = phone;
-                phoneModal.hide();
-            });
-        }
 
         const body = document.body;
         const darkToggle = document.getElementById("darkModeToggle");
@@ -257,6 +207,23 @@
             sidebar.classList.toggle("visible");
         });
 
+        auth.onAuthStateChanged(async user => {
+            if (!user) return;
+
+            const { displayName, email, uid, phoneNumber } = user;
+            document.getElementById("userName").textContent = displayName || "User";
+            document.getElementById("userEmail").textContent = email;
+            document.getElementById("userPhone").textContent = phoneNumber ? `Phone: ${phoneNumber}` : "";
+
+            if (!phoneNumber) {
+                const number = prompt("Please enter your phone number:");
+                if (number) {
+                    await db.collection("users").doc(uid).set({ phone: number }, { merge: true });
+                    document.getElementById("userPhone").textContent = `Phone: ${number}`;
+                }
+            }
+        });
+
         const navLinks = document.querySelectorAll(".sidebar a");
         const sections = document.querySelectorAll(".main-content section");
 
@@ -268,6 +235,7 @@
                     section.style.display = section.id === target ? "block" : "none";
                 });
                 if (target === "coursesSection") loadCourses();
+                if (target === "enrolledSection") loadEnrolledCourses();
             });
         });
 
@@ -286,7 +254,7 @@
                         <div class="course-card">
                             <h5>${course.title}</h5>
                             <p>${course.description}</p>
-                            <button class="btn btn-primary btn-sm btn-enroll" onclick="alert('Enroll requested for ${course.title}')">Enroll</button>
+                            <button class="btn btn-primary btn-sm btn-enroll" onclick="requestEnroll('${doc.id}', '${course.title}')">Request Enroll</button>
                         </div>
                     `;
                 });
@@ -294,6 +262,53 @@
             }).catch(err => {
                 container.innerHTML = `<p>Error loading courses: ${err.message}</p>`;
             });
+        }
+
+        function requestEnroll(courseId, title) {
+            const user = auth.currentUser;
+            if (!user) return alert("Login required");
+            db.collection("course_requests").add({
+                userId: user.uid,
+                courseId,
+                status: "pending",
+                timestamp: new Date()
+            }).then(() => {
+                alert(`Enrollment request sent for ${title}`);
+            });
+        }
+
+        function loadEnrolledCourses() {
+            const container = document.getElementById("enrolledCourses");
+            container.innerHTML = "Loading...";
+            const user = auth.currentUser;
+            if (!user) return;
+
+            db.collection("course_requests")
+                .where("userId", "==", user.uid)
+                .where("status", "==", "approved")
+                .get()
+                .then(requests => {
+                    const courseIds = requests.docs.map(doc => doc.data().courseId);
+                    if (!courseIds.length) {
+                        container.innerHTML = "<p>No enrolled courses.</p>";
+                        return;
+                    }
+                    db.collection("courses").where(firebase.firestore.FieldPath.documentId(), "in", courseIds).get()
+                        .then(coursesSnap => {
+                            let html = "";
+                            coursesSnap.forEach(courseDoc => {
+                                const course = courseDoc.data();
+                                html += `
+                                    <div class="course-card">
+                                        <h5>${course.title}</h5>
+                                        <p>${course.description}</p>
+                                        <a class="btn btn-success btn-sm" href="#">View Course</a>
+                                    </div>
+                                `;
+                            });
+                            container.innerHTML = html;
+                        });
+                });
         }
     </script>
 </body>
