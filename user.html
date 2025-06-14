@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard | Andhra Developers</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .topbar {
+            background: #1f1f1f;
+        }
+
+        .course-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            background: white;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .course-card {
+            background: #2a2a2a;
+            border-color: #444;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 20px;
+        }
+
+        .badge-category {
+            margin-left: 10px;
+        }
+
+        #sidebarToggleBtn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #sidebarToggleBtn {
+                display: inline-block;
+            }
+
+            #sidebarMenu {
+                display: none;
+            }
+
+            #sidebarMenu.show {
+                display: block;
+            }
+        }
+
+        #sidebarMenu a {
+            text-decoration: none;
+            padding: 8px 0;
+            display: block;
+            font-weight: 500;
+            transition: background 0.2s, padding-left 0.2s;
+        }
+
+        #sidebarMenu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="d-flex align-items-center">
+            <button id="sidebarToggleBtn" class="btn btn-outline-primary btn-sm me-2">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h5 class="mb-0">Welcome, <span id="userName">User</span>!</h5>
+        </div>
+        <div>
+            <i class="fas fa-bell me-3"></i>
+            <button id="darkModeToggle" class="btn btn-sm btn-outline-secondary">🌙</button>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div id="sidebarMenu" class="bg-primary text-white p-3">
+        <h4>Navigation</h4>
+        <a href="#" class="text-white">Dashboard</a>
+        <a href="#" class="text-white">Courses</a>
+        <a href="#" class="text-white">Events</a>
+        <a href="#" class="text-white">Chat</a>
+        <a href="#" class="text-white">Bookmarks</a>
+        <a href="#" class="text-white">Activity Log</a>
+        <a href="#" class="text-white">Feedback</a>
+        <a href="#" class="text-white">Settings</a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container mt-4">
+        <!-- User Info -->
+        <div class="mb-4">
+            <h5>Name: <span id="displayName">John Doe</span></h5>
+            <h6>Email: <span id="displayEmail">john@example.com</span></h6>
+        </div>
+
+        <!-- Enrolled Courses Section (dynamic) -->
+        <h4 class="mt-4">Enrolled Courses</h4>
+        <div id="enrolledCourses">
+            <!-- Firebase will insert enrolled courses here -->
+        </div>
+
+        <!-- Events Section (dynamic) -->
+        <h4 class="mt-5">Upcoming Events</h4>
+        <div id="upcomingEvents">
+            <!-- Firebase will insert event cards here -->
+        </div>
+
+        <!-- Feedback Section -->
+        <h4 class="mt-5">Feedback</h4>
+        <textarea class="form-control mb-2" placeholder="Leave feedback..."></textarea>
+        <button class="btn btn-primary">Submit</button>
+
+        <!-- Chat Request -->
+        <h4 class="mt-5">Chat with Faculty</h4>
+        <form id="chatRequestForm">
+            <div class="mb-2">
+                <label for="chatReason" class="form-label">Reason for Chat:</label>
+                <input type="text" class="form-control" id="chatReason" placeholder="Enter your query topic">
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Request Chat</button>
+        </form>
+
+        <!-- Bookmarks Section -->
+        <h4 class="mt-5">Bookmarked Courses</h4>
+        <ul id="bookmarkList">
+            <!-- Bookmarked course titles will go here -->
+        </ul>
+
+        <!-- Activity Log -->
+        <h4 class="mt-5">Activity Log</h4>
+        <ul id="activityLog">
+            <!-- User actions will be listed here -->
+        </ul>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
+            authDomain: "ad2026-b18de.firebaseapp.com",
+            projectId: "ad2026-b18de",
+            storageBucket: "ad2026-b18de.firebasestorage.app",
+            messagingSenderId: "837618240318",
+            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+
+    <!-- UI Logic -->
+    <script>
+        document.getElementById('sidebarToggleBtn').addEventListener('click', function () {
+            document.getElementById('sidebarMenu').classList.toggle('show');
+        });
+
+        document.getElementById('chatRequestForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const reason = document.getElementById('chatReason').value;
+            alert('Chat request sent with reason: ' + reason);
+        });
+
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
