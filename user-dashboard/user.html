@@ -23,7 +23,6 @@
             color: #f1f1f1;
         }
 
-        /* Header */
         header {
             background-color: #0d6efd;
             color: white;
@@ -45,7 +44,6 @@
             cursor: pointer;
         }
 
-        /* Sidebar */
         .sidebar {
             position: fixed;
             width: 260px;
@@ -98,16 +96,26 @@
             }
         }
 
-        @media (max-width: 767px) {
-            .sidebar {
-                width: 220px;
-            }
+        .course-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: white;
+        }
+
+        .dark-mode .course-card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+
+        .btn-enroll {
+            float: right;
         }
     </style>
 </head>
 
 <body>
-    <!-- Header -->
     <header>
         <div class="d-flex align-items-center">
             <button class="toggle-sidebar-btn" id="toggleSidebar">
@@ -115,10 +123,12 @@
             </button>
             <span class="fw-bold fs-5">Andhra Developers</span>
         </div>
-        <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+        <div>
+            <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+            <button class="btn btn-danger ms-2" onclick="logout()">Logout</button>
+        </div>
     </header>
 
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <h5 class="text-center">👨‍💻 Andhra Developers</h5>
         <a href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
@@ -129,25 +139,79 @@
         <a href="#"><i class="fas fa-certificate me-2"></i> Certificates</a>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <div class="d-flex justify-content-between align-items-center">
+        <section id="dashboardSection">
             <h2>Welcome, <span id="userName">User</span></h2>
             <span id="userEmail">user@example.com</span>
-        </div>
-        <hr>
-        <p>This is the main dashboard content area. You can add more components like cards, progress bars, or course
-            lists here.</p>
+            <hr>
+            <p>This is the Dashboard content.</p>
+        </section>
+
+        <section id="coursesSection" style="display: none;">
+            <h2>Courses</h2>
+            <div id="coursesList">Loading...</div>
+        </section>
+
+        <section id="enrolledSection" style="display: none;">
+            <h2>Enrolled Courses</h2>
+            <p>Courses you're enrolled in.</p>
+        </section>
+
+        <section id="eventsSection" style="display: none;">
+            <h2>Events</h2>
+            <p>Upcoming events and schedules.</p>
+        </section>
+
+        <section id="notificationsSection" style="display: none;">
+            <h2>Notifications</h2>
+            <p>All latest updates.</p>
+        </section>
+
+        <section id="certificatesSection" style="display: none;">
+            <h2>Certificates</h2>
+            <p>Download your earned certificates.</p>
+        </section>
     </div>
 
-    <!-- Script -->
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
+            authDomain: "ad2026-b18de.firebaseapp.com",
+            projectId: "ad2026-b18de",
+            storageBucket: "ad2026-b18de.appspot.com",
+            messagingSenderId: "837618240318",
+            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById("userName").textContent = user.displayName || "User";
+                document.getElementById("userEmail").textContent = user.email;
+            } else {
+                window.location.href = "/login.html";
+            }
+        });
+
+        function logout() {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/login.html";
+            });
+        }
+    </script>
+
+    <!-- App Logic -->
     <script>
         const body = document.body;
         const darkToggle = document.getElementById("darkModeToggle");
         const sidebar = document.getElementById("sidebar");
         const toggleSidebarBtn = document.getElementById("toggleSidebar");
 
-        // Dark Mode
         if (localStorage.getItem("darkMode") === "enabled") {
             body.classList.add("dark-mode");
         }
@@ -157,14 +221,48 @@
             localStorage.setItem("darkMode", body.classList.contains("dark-mode") ? "enabled" : "disabled");
         });
 
-        // Sidebar Toggle
         toggleSidebarBtn.addEventListener("click", () => {
             sidebar.classList.toggle("visible");
         });
 
-        // Dummy Data
-        document.getElementById("userName").textContent = "Yash";
-        document.getElementById("userEmail").textContent = "yaswanthgiet@gmail.com";
+        const navLinks = document.querySelectorAll(".sidebar a");
+        const sections = document.querySelectorAll(".main-content section");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target = link.textContent.trim().toLowerCase() + "Section";
+                sections.forEach(section => {
+                    section.style.display = section.id === target ? "block" : "none";
+                });
+                if (target === "coursesSection") loadCourses();
+            });
+        });
+
+        function loadCourses() {
+            const container = document.getElementById("coursesList");
+            container.innerHTML = "Loading...";
+            db.collection("courses").get().then(snapshot => {
+                if (snapshot.empty) {
+                    container.innerHTML = "<p>No courses available.</p>";
+                    return;
+                }
+                let html = "";
+                snapshot.forEach(doc => {
+                    const course = doc.data();
+                    html += `
+                        <div class="course-card">
+                            <h5>${course.title}</h5>
+                            <p>${course.description}</p>
+                            <button class="btn btn-primary btn-sm btn-enroll" onclick="alert('Enroll requested for ${course.title}')">Enroll</button>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }).catch(err => {
+                container.innerHTML = `<p>Error loading courses: ${err.message}</p>`;
+            });
+        }
     </script>
 </body>
 
