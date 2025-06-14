@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDHRA DEVELOPERS-APP Development</title>
+    <title>ANDHRA DEVELOPERS-4K Video Editing</title>
     <link rel="icon" href="logo.png" type="image/x-png">
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -116,10 +117,8 @@
         }
 
 
-
-
-        /* APP Development Banner Styling */
-        .APP-development-banner {
+        /* Graphic Design & Development Banner Styling */
+        .graphic-design-banner {
             background-color: #001f3f;
             color: #ffffff;
             text-align: center;
@@ -144,19 +143,19 @@
             }
         }
 
-        /* Responsive Styles for APP Development Banner */
+        /* Responsive Styles for Graphic Design Banner */
         @media (max-width: 480px) {
-            .APP-development-banner {
+            .graphic-design-banner {
                 padding: 30px 10px;
                 border-radius: 8px;
                 margin-top: 20%;
             }
 
-            .APP-development-banner h1 {
+            .graphic-design-banner h1 {
                 font-size: 1.6rem;
             }
 
-            .APP-development-banner p {
+            .graphic-design-banner p {
                 font-size: 0.9rem;
             }
         }
@@ -167,25 +166,11 @@
             border: none;
             border-radius: 10px;
             box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.15);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
         }
 
-        /* Equal Height Cards */
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-
-        /* Icon and Text */
         .card i {
             color: #001f3f;
             transition: color 0.3s;
-            size: 10px;
         }
 
         /* Hover Effects */
@@ -201,51 +186,7 @@
             color: #ffdd00;
         }
 
-        /* Motion Effect for Cards */
-        .motion-effect {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: slideUp 0.6s ease-out forwards;
-        }
-
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Add slight delay for each card */
-        .motion-effect:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .motion-effect:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .motion-effect:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .motion-effect:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .motion-effect:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .motion-effect:nth-child(6) {
-            animation-delay: 0.6s;
-        }
-
-        /* Content section styling */
+        /* Content Section Styling */
         .content-section {
             margin-top: 40px;
             opacity: 0;
@@ -253,7 +194,6 @@
             animation: fadeInUp 1.5s ease-out forwards;
         }
 
-        /* Key Points Section Styling */
         .content-section img {
             max-width: 100%;
             border-radius: 8px;
@@ -289,14 +229,6 @@
             }
         }
 
-        /* Core Services Section Motion Effects */
-        .key-points-section {
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1.5s ease-out forwards;
-            animation-delay: 0.5s;
-        }
-
         /* Technologies Section Styling */
         .technologies-section h2 {
             color: #001f3f;
@@ -311,7 +243,6 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             min-height: 280px;
-            /* Ensures all cards have equal height */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -321,7 +252,6 @@
         .tech-card i {
             color: #001f3f;
             transition: color 0.3s ease;
-            size: 10px;
         }
 
         .tech-card h5 {
@@ -352,24 +282,13 @@
             color: #ffdd00;
         }
 
-        /* Animation for Heading */
-        @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
 
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
         /* Animation Keyframes */
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px);
             }
 
             100% {
@@ -378,44 +297,62 @@
             }
         }
 
-        /* Fade-in-up effect for tech cards */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1.5s ease-out forwards;
+        /* Apply animation to section titles */
+        .content-section h2,
+        .technologies-section h2 {
+            animation: fadeInUp 1s ease-in-out;
         }
 
-        /* Staggered delay for each card */
-        .fade-in-up:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .fade-in-up:nth-child(2) {
+        /* Apply animation to paragraphs and list items */
+        .content-section p,
+        .content-section ul,
+        .technologies-section p,
+        .technologies-section .tech-card {
+            animation: fadeInUp 1s ease-in-out;
             animation-delay: 0.2s;
         }
 
-        .fade-in-up:nth-child(3) {
+        /* Apply staggered animation for each tech-card */
+        .technologies-section .tech-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .technologies-section .tech-card:nth-child(2) {
             animation-delay: 0.3s;
         }
 
-        .fade-in-up:nth-child(4) {
+        .technologies-section .tech-card:nth-child(3) {
             animation-delay: 0.4s;
         }
 
-        .fade-in-up:nth-child(5) {
+        .technologies-section .tech-card:nth-child(4) {
             animation-delay: 0.5s;
         }
 
-        .fade-in-up:nth-child(6) {
+        .technologies-section .tech-card:nth-child(5) {
             animation-delay: 0.6s;
         }
 
-        .fade-in-up:nth-child(7) {
+        .technologies-section .tech-card:nth-child(6) {
             animation-delay: 0.7s;
         }
 
-        .fade-in-up:nth-child(8) {
+        .technologies-section .tech-card:nth-child(7) {
             animation-delay: 0.8s;
+        }
+
+        .technologies-section .tech-card:nth-child(8) {
+            animation-delay: 0.9s;
+        }
+
+        /* Optional: Add a slightly longer duration for smoother effect */
+        .content-section h2,
+        .technologies-section h2,
+        .content-section p,
+        .content-section ul,
+        .technologies-section .tech-card {
+            animation-duration: 1s;
+            animation-fill-mode: both;
         }
 
 
@@ -425,6 +362,8 @@
                 padding: 0 15px;
             }
         }
+
+
 
         /* Footer Section Styling */
         .footer {
@@ -546,7 +485,6 @@
         }
     </style>
 
-
 </head>
 
 <body>
@@ -606,182 +544,178 @@
         </div>
     </nav>
 
-
-
-    <!-- App Development Banner Section -->
-    <section class="APP-development-banner">
-        <h1>App Development</h1>
-        <p>Building intuitive and scalable content management systems for your business.</p>
+    <!-- Graphic Design & Development Banner Section -->
+    <section class="graphic-design-banner">
+        <h1>4K Videp Editing</h1>
+        <p>Delivering stunning visuals and creative solutions tailored to elevate your brand.</p>
     </section>
 
-    <!-- Key APP Services Section -->
+    <!-- Key Graphic Design Services Section -->
     <div class="container my-5 content-section">
-        <h2 class="text-center mb-2" style="color: #001f3f;">OUR APP SERVICES</h2>
-        <p class="text-center mb-4">Expert solutions for managing your content with ease and efficiency.</p>
+        <h2 class="text-center mb-2" style="color: #001f3f;">4K Video Editing Services</h2>
+        <p class="text-center mb-4">Professional design solutions to make your brand stand out.</p>
         <div class="row">
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-cogs fa-3x py-3" style="color: var(--icon-color, #374451);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-cut" style="color: #ff5733;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Custom APP Development</h5>
-                        <p class="card-text">Developing tailor-made APP solutions that match your business needs and
-                            workflow.</p>
+                        <h5 class="card-title">Video Editing</h5>
+                        <p class="card-text">High-end editing for cinematic cuts, transitions, and scene flow.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-edit fa-3x py-3" style="color: var(--icon-color, #007bff);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-ad fa-3x py-3" style="color: #28a745;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Content Management</h5>
-                        <p class="card-text">Simplifying content creation, management, and publishing through intuitive
-                            dashboards.</p>
+                        <h5 class="card-title">Advertising Design</h5>
+                        <p class="card-text">Creating impactful visuals for digital and print advertising campaigns.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-mobile-alt fa-3x py-3" style="color: var(--icon-color, #28a745);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-vector-square fa-3x py-3" style="color: #17a2b8;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Responsive APP</h5>
-                        <p class="card-text">Creating APP solutions that are fully responsive across all devices,
-                            ensuring accessibility anywhere.</p>
+                        <h5 class="card-title">Illustrations & Icons</h5>
+                        <p class="card-text">Custom illustrations and icons to enhance your brand's visual storytelling.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-lock fa-3x py-3" style="color: var(--icon-color, #dc3545);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-book fa-3x py-3" style="color: #ffc107;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Security & Updates</h5>
-                        <p class="card-text">Ensuring your APP is secure, up-to-date, and protected from
-                            vulnerabilities.</p>
+                        <h5 class="card-title">Print Design</h5>
+                        <p class="card-text">Designing brochures, flyers, and other print materials that engage and
+                            inform.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-users fa-3x py-3" style="color: var(--icon-color, #ffc107);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-laptop fa-3x py-3" style="color: #007bff;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">User Access Control</h5>
-                        <p class="card-text">Managing user roles and permissions for streamlined access control within
-                            your APP.</p>
+                        <h5 class="card-title">Web Graphics</h5>
+                        <p class="card-text">High-quality visuals for websites, including banners and social media
+                            graphics.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4 motion-effect">
-                    <i class="fas fa-cloud fa-3x py-3" style="color: var(--icon-color, #17a2b8);"></i>
+                <div class="card text-center py-4">
+                    <i class="fas fa-file-alt fa-3x py-3" style="color: #dc3545;"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Cloud Integration</h5>
-                        <p class="card-text">Integrating cloud-based services for enhanced scalability and backup for
-                            your APP data.</p>
+                        <h5 class="card-title">Presentation Design</h5>
+                        <p class="card-text">Creating professional slide decks that convey your message effectively.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-    <!-- Additional Content Section: APP Development -->
+    <!-- GRAPHIC DESIGN SERVICES SECTION -->
     <section class="container content-section">
         <div class="row">
             <div class="col-md-6">
-                <h2 style="color: #001f3f;">Why Choose Andhra Developers for Your App Development?</h2>
+                <h2 style="color: #001f3f;">Why Choose Our Graphic Design Services?</h2>
                 <p>
-                    At Andhra Developers, we specialize in delivering modern, scalable, and innovative app development
-                    solutions tailored for startups, businesses, and educational platforms. Our tech-driven approach
-                    ensures your applications are powerful, secure, and user-centric—built to scale with your goals.
+                    Our graphic design services focus on creating visually stunning, impactful designs that communicate
+                    your
+                    brand message effectively. We believe in the power of visuals to captivate, engage, and inspire, and
+                    we use
+                    our skills to bring your brand’s personality to life.
                 </p>
                 <ul class="content-bullet-points">
-                    <li><i class="fas fa-check-circle"></i> Custom-built applications aligned with your business needs
+                    <li><i class="fas fa-check-circle"></i> Customized branding solutions for unique visual identity
                     </li>
-                    <li><i class="fas fa-check-circle"></i> Clean, responsive admin interfaces for easy content and data
-                        management</li>
-                    <li><i class="fas fa-check-circle"></i> Scalable solutions built for growth and performance</li>
-                    <li><i class="fas fa-check-circle"></i> Seamless integration with APIs, third-party services, and
-                        tools</li>
-                    <li><i class="fas fa-check-circle"></i> Robust, secure backend systems using cutting-edge
-                        technologies</li>
+                    <li><i class="fas fa-check-circle"></i> High-quality visuals optimized for both print and digital
+                        media</li>
+                    <li><i class="fas fa-check-circle"></i> Strategic design to attract and retain your target audience
+                    </li>
+                    <li><i class="fas fa-check-circle"></i> Consistent and memorable branding across all touchpoints
+                    </li>
+                    <li><i class="fas fa-check-circle"></i> Expert team dedicated to your creative vision</li>
                 </ul>
                 <p>
-                    Whether you’re launching a startup idea or expanding an enterprise platform, Andhra Developers will
-                    support your vision at every step—from planning and development to deployment and maintenance. We
-                    focus on building intuitive, high-performance applications that deliver real-world impact.
+                    We collaborate closely with you to understand your brand’s vision, audience, and style, ensuring
+                    that
+                    our designs resonate and leave a lasting impression.
                 </p>
             </div>
             <div class="col-md-6">
-                <img src="App.png" alt="App Development Image">
+                <img src="images/graphic des.png" alt="Graphic Design Image">
             </div>
         </div>
     </section>
-    <!-- Technologies We Use for APP Development Section -->
+
+    <!-- DESIGN TOOLS & TECHNOLOGIES SECTION -->
     <section class="container my-5 technologies-section">
-        <h2 class="text-center mb-4" style="color: #001f3f;">Technologies We Use</h2>
+        <h2 class="text-center mb-4" style="color: #001f3f;">Design Tools & Technologies</h2>
         <div class="row">
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="Flutter"
-                        style="width:50px;height:50px;">
-                    <h5>Flutter</h5>
-                    <p>Cross-platform framework for building natively compiled mobile, web, and desktop applications</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-image fa-3x mb-3" style="color: #31A8FF;"></i> <!-- Adobe Photoshop color -->
+                    <h5>Adobe Photoshop</h5>
+                    <p>Creating visually engaging designs with advanced editing tools.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fa-brands fa-java fa-5x" style="color: #0678BE;"></i> <!-- java -->
-                    <h5>Java</h5>
-                    <p>Popular object-oriented programming language widely used for Android and enterprise application
-                        development.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-draw-polygon fa-3x mb-3" style="color: #FF9A00;"></i>
+                    <!-- Adobe Illustrator color -->
+                    <h5>Adobe Illustrator</h5>
+                    <p>Crafting logos and vector graphics with precision and creativity.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-android fa-3x" style="color: #F44321;  size: 20px; !important"></i>
-                    <!-- android red -->
-                    <h5>Android</h5>
-                    <p>Open-source mobile operating system for developing smartphone and tablet applications</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-pen-nib fa-3x mb-3" style="color: #00C4CC;"></i> <!-- Canva color -->
+                    <h5>Canva</h5>
+                    <p>Creating quick and customizable graphic designs effortlessly.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fas fa-database fa-3x mb-3" style="color: #00758F;"></i> <!-- General database color -->
-                    <h5>MySQL</h5>
-                    <p>Reliable and fast relational database management system for APP.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-vector-square fa-3x mb-3" style="color: #FF3366;"></i> <!-- InVision color -->
+                    <h5>InVision</h5>
+                    <p>Prototyping and collaborating on creative design projects.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-php fa-3x mb-3" style="color: #777BB4;"></i> <!-- PHP purple -->
-                    <h5>PHP</h5>
-                    <p>Server-side scripting language for dynamic and scalable APP development.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-figma fa-3x mb-3" style="color: #A259FF;"></i> <!-- Figma color -->
+                    <h5>Figma</h5>
+                    <p>Developing interactive prototypes for seamless user experiences.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i> <!-- React blue -->
-                    <h5>React</h5>
-                    <p>Building fast, responsive user interfaces for APP-based websites.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-sketch fa-3x mb-3" style="color: #F7B500;"></i> <!-- Sketch color -->
+                    <h5>Sketch</h5>
+                    <p>Designing modern UI/UX layouts with creative flair.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-node fa-3x mb-3" style="color: #43853D;"></i> <!-- Node.js green -->
-                    <h5>Node.js</h5>
-                    <p>Creating fast and scalable server-side APP applications.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-drafting-compass fa-3x mb-3" style="color: #FF5733;"></i> <!-- AutoCAD color -->
+                    <h5>AutoCAD</h5>
+                    <p>Bringing technical precision to design concepts and plans.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-apple fa-3x mb-3x" style="color: #000000;"></i> <!-- ios pink -->
-                    <h5>IOS</h5>
-                    <p>Apple's mobile operating system for building iPhone and iPad applications using Swift or
-                        Objective-C.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-palette fa-3x mb-3" style="color: #6A1B9A;"></i> <!-- Color Theory color -->
+                    <h5>Color Theory</h5>
+                    <p>Applying color psychology to create emotionally resonant designs.</p>
                 </div>
             </div>
         </div>
     </section>
+
+
+
 
 
 
@@ -812,7 +746,7 @@
                 <div class="col-md-3">
                     <h5>Featured Services</h5>
                     <p><a href="Webdesign.html">Web Design & Development</a></p>
-                    <p><a href="APP.html">APP Development</a></p>
+                    <p><a href="cms.html">CMS Development</a></p>
                     <p><a href="ecommerce.html">E-Commerce Website Development</a></p>
                     <p><a href="webapp.html">Web Applications & Portals</a></p>
                     <p><a href="graphic.html">Graphic Design</a></p>
@@ -830,8 +764,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <!-- Footer Bottom Section -->
         <div class="footer-bottom">
