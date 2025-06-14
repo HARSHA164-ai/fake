@@ -15,6 +15,7 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
 
     #sidebar {
@@ -58,15 +59,31 @@
     }
 
     #main-content {
-      margin-left: 0;
       transition: margin-left 0.3s ease;
       width: 100%;
+      padding-left: 1rem;
+      margin-left: 0;
+    }
+
+    @media (min-width: 992px) {
+      #sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+      }
+
+      #main-content {
+        margin-left: 0;
+      }
+
+      .toggle-btn {
+        display: block;
+      }
     }
 
     .toggle-btn {
       position: fixed;
-      top: 15px;
-      left: 15px;
+      top: 20px;
+      left: 20px;
       z-index: 1101;
     }
   </style>
@@ -77,43 +94,47 @@
 <!-- Toggle Button -->
 <button class="btn btn-primary toggle-btn" id="toggleSidebar"><i class="fas fa-bars"></i></button>
 
-<div class="d-flex">
-  <!-- Sidebar -->
-  <nav id="sidebar" class="text-white p-3">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="mb-0">👨‍💻 AndhraDevelopers</h4>
-    </div>
-    <ul class="nav flex-column">
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-home me-2"></i> Dashboard</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-book me-2"></i> Courses</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-tasks me-2"></i> Enrolled</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-calendar-alt me-2"></i> Events</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-bell me-2"></i> Notifications</a></li>
-      <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-certificate me-2"></i> Certificates</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Content -->
-  <div class="flex-grow-1 p-4" id="main-content">
-    <div class="d-flex justify-content-between align-items-center">
-      <h2>Welcome, <span id="userName">User</span></h2>
-      <div>
-        <span id="userEmail">user@example.com</span>
-        <button class="btn btn-outline-dark ms-3" id="darkModeToggle"><i class="fas fa-moon"></i></button>
-      </div>
-    </div>
-    <hr>
-    <p>This is the main dashboard content area. You can add more components like cards, progress bars, or course lists here.</p>
+<!-- Sidebar -->
+<nav id="sidebar" class="text-white p-3">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">👨‍💻 AndhraDevelopers</h4>
   </div>
+  <ul class="nav flex-column">
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-home me-2"></i> Dashboard</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-book me-2"></i> Courses</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-tasks me-2"></i> Enrolled</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-calendar-alt me-2"></i> Events</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-bell me-2"></i> Notifications</a></li>
+    <li class="nav-item"><a class="nav-link text-white" href="#"><i class="fas fa-certificate me-2"></i> Certificates</a></li>
+  </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="p-4" id="main-content">
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="ms-5">Welcome, <span id="userName">User</span></h2>
+    <div>
+      <span id="userEmail">user@example.com</span>
+      <button class="btn btn-outline-dark ms-3" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+    </div>
+  </div>
+  <hr>
+  <p class="ms-5">This is the main dashboard content area. You can add more components like cards, progress bars, or course lists here.</p>
 </div>
 
 <script>
-  // Sidebar toggle
   const toggleBtn = document.getElementById("toggleSidebar");
   const sidebar = document.getElementById("sidebar");
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("show");
+  });
+
+  document.addEventListener("click", (event) => {
+    const isClickInside = sidebar.contains(event.target) || toggleBtn.contains(event.target);
+    if (!isClickInside && sidebar.classList.contains("show")) {
+      sidebar.classList.remove("show");
+    }
   });
 
   // Dark Mode Toggle
