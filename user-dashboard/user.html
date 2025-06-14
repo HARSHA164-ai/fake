@@ -39,7 +39,7 @@
     .sidebar {
       background-color: #ffffff;
       border-right: 1px solid #dee2e6;
-      min-height: 100vh;
+      height: 100vh;
       width: 260px;
       position: fixed;
       top: 0;
@@ -84,7 +84,7 @@
       padding: 2rem;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 991px) {
       .sidebar {
         transform: translateX(-100%);
       }
@@ -108,7 +108,7 @@
 <body>
   <header>
     <div class="d-flex align-items-center">
-      <button class="toggle-sidebar-btn d-md-none" id="toggleSidebarHeader">
+      <button class="toggle-sidebar-btn d-lg-none" id="toggleSidebarHeader">
         <i class="fas fa-bars"></i>
       </button>
       <span>Andhra Developers Dashboard</span>
@@ -118,7 +118,7 @@
 
   <div class="sidebar" id="sidebar">
     <!-- Toggle button inside sidebar for mobile -->
-    <div class="d-md-none text-end pe-3">
+    <div class="d-lg-none text-end pe-3">
       <button class="btn btn-sm btn-outline-secondary mt-2" id="toggleSidebarInside">
         <i class="fas fa-times"></i>
       </button>
