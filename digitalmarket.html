@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANDHRA DEVELOPERS-Web Design & Development</title>
+    <title>Anurag IT Solutions-Digital Marketing</title>
     <link rel="icon" href="images/logo anurag.png" type="image/x-png">
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         /* Navbar styles */
         .navbar-custom {
@@ -113,9 +112,7 @@
             transform: scale(1.1);
         }
 
-
-
-        /* Web Design & Development Banner Styling */
+        /* Digital Marketing Banner Styling */
         .web-design-banner {
             background-color: #001f3f;
             color: #ffffff;
@@ -141,9 +138,7 @@
             }
         }
 
-        /* Responsive Styles for Web Design Banner */
-
-
+        /* Responsive Styles for Banner */
         @media (max-width: 480px) {
             .web-design-banner {
                 padding: 30px 10px;
@@ -166,6 +161,7 @@
             border: none;
             border-radius: 10px;
             box-shadow: 4px 8px 10px rgba(0, 0, 0, 0.15);
+            min-height: 280px;
         }
 
         .card i {
@@ -186,30 +182,61 @@
             color: #ffdd00;
         }
 
-        /* Content section styling */
+        /* Keyframes for Fade-In-Up Effect */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply Fade-In-Up Animation to Cards */
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* Delayed Staggered Animation for Each Card */
+        .fade-in-up:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-in-up:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .fade-in-up:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .fade-in-up:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .fade-in-up:nth-child(5) {
+            animation-delay: 1s;
+        }
+
+        .fade-in-up:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+
+
+
+        /* Content Section Styling */
         .content-section {
-            margin-top: 60px;
-            padding: 40px;
-            background-color: white;
-            color: #111;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 1.5s ease-out forwards;
         }
 
-        /* Section Heading */
-        .section-heading {
-            color: #001f3f;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            border-left: 5px solid #ffc107;
-            padding-left: 15px;
-        }
-
-        /* Key Points Section Styling */
         .content-section img {
             max-width: 100%;
             border-radius: 8px;
@@ -245,7 +272,6 @@
             }
         }
 
-
         /* Technologies Section Styling */
         .technologies-section h2 {
             color: #001f3f;
@@ -260,7 +286,6 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             min-height: 280px;
-            /* Ensures all cards have equal height */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -270,7 +295,6 @@
         .tech-card i {
             color: #001f3f;
             transition: color 0.3s ease;
-            size: 10px
         }
 
         .tech-card h5 {
@@ -292,87 +316,26 @@
             box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .tech-card:hover i {
-            color: #ffbf00;
-        }
-
+        .tech-card:hover i,
         .tech-card:hover h5,
         .tech-card:hover p {
             color: #ffdd00;
         }
 
-        /* Animation for Heading */
-        @keyframes fadeInDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Animation Keyframes */
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Fade-in-up effect for tech cards */
+        /* Fade-In-Up Effect for Each Tech Card */
         .fade-in-up {
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1.5s ease-out forwards;
+            animation: fadeInUp 0.9s ease forwards;
         }
 
-        /* Staggered delay for each card */
-        .fade-in-up:nth-child(1) {
-            animation-delay: 0.1s;
-        }
 
-        .fade-in-up:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .fade-in-up:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .fade-in-up:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .fade-in-up:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .fade-in-up:nth-child(6) {
-            animation-delay: 0.6s;
-        }
-
-        .fade-in-up:nth-child(7) {
-            animation-delay: 0.7s;
-        }
-
-        .fade-in-up:nth-child(8) {
-            animation-delay: 0.8s;
-        }
-
-        /* Responsive Styling for Smaller Screens */
+        /* Responsive Styling */
         @media (max-width: 768px) {
             .technologies-section {
                 padding: 0 15px;
             }
         }
+
 
         /* Footer Section Styling */
         .footer {
@@ -469,19 +432,32 @@
             font-weight: bold;
             letter-spacing: 1px;
             color: #003366;
+            /* Dark navy */
         }
 
         .logo .highlight {
             color: #007bff;
+            /* Bright blue */
             background: linear-gradient(90deg, #007bff, #00c6ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Final override to ensure no underline appears */
+        .navbar .nav-link,
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus,
+        .navbar .nav-link:active {
+            text-decoration: none !important;
+            box-shadow: none !important;
         }
 
         .navbar-custom .navbar-nav .nav-link.active::after {
             display: none !important;
         }
     </style>
+
+
 </head>
 
 <body>
@@ -493,8 +469,6 @@
                 <!-- <img src="logo.png" alt="Anurag IT Solutions Logo" id="navbar-logo"> -->
                 <span class="logo">ANDHRA <span class="highlight">DEVELOPERS</span></span>
 
-
-
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -503,16 +477,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class='nav-link active' href='/'>Home</a>
+                        <a class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class='nav-link' href='/about'>About</a>
+                        <a class="nav-link" href="about.html">About</a>
                     </li>
                     <!-- Services dropdown -->
                     <li class="nav-item dropdown">
                         <!-- Direct link to service.html, no data-toggle to avoid conflict -->
-                        <a aria-expanded='false' aria-haspopup='true' class='nav-link' href='/service'
-                            id='navbarDropdown' role='button'>
+                        <a class="nav-link" href="service.html" id="navbarDropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
                             Services
                         </a>
                         <!-- Dropdown menu items -->
@@ -531,7 +505,7 @@
 
 
                     <li class="nav-item">
-                        <a class='nav-link' href='/contact'>contact</a>
+                        <a class="nav-link" href="contact.html">Contact</a>
                     </li>
                     <li class="nav-item">
                         <a href="login.html" class="btn btn-training nav-link">LOGIN</a>
@@ -541,138 +515,175 @@
         </div>
     </nav>
 
-    <!-- Web Design & Development Banner Section -->
+    <!-- Digital Marketing Banner Section -->
     <section class="web-design-banner">
-        <h1>Web Design & Development</h1>
-        <p>Crafting beautiful and functional websites tailored to your brand.</p>
+        <h1>Digital Marketing</h1>
+        <p>Empowering your brand with effective digital strategies that drive results.</p>
     </section>
 
-    <!-- Key Services Section -->
-    <div class="container my-5 content-section">
-        <h2 class="text-center mb-2" style="color: #001f3f;">OUR KEY SERVICES</h2>
-        <p class="text-center mb-4">Providing expert solutions to enhance your online presence.</p>
+    <!-- Key Services Section for Digital Marketing -->
+    <div class="container my-5 content-section fade-in-up">
+        <h2 class="text-center mb-2" style="color: #001f3f;">OUR DIGITAL MARKETING SERVICES</h2>
+        <p class="text-center mb-4">Delivering tailored solutions to grow your brand online.</p>
         <div class="row">
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4">
-                    <i class="fas fa-laptop-code fa-3x py-3" style="color: #1e90ff;"></i>
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-bullhorn fa-3x py-3" style="color: var(--icon-color, #ff5733);"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Responsive Design</h5>
-                        <p class="card-text">Creating websites that adapt to any screen size for seamless user
-                            experience.</p>
+                        <h5 class="card-title">Social Media Marketing</h5>
+                        <p class="card-text">Boosting your brand’s presence across social media platforms to reach a
+                            wider audience.</p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4">
-                    <i class="fas fa-paint-brush fa-3x py-3" style="color: #ff6347;"></i>
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-search fa-3x py-3" style="color: var(--icon-color, #28a745);"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Custom Themes</h5>
-                        <p class="card-text">Designing unique, brand-focused themes that stand out.</p>
+                        <h5 class="card-title">Search Engine Optimization (SEO)</h5>
+                        <p class="card-text">Improving your website’s search engine ranking to increase organic traffic.
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4 mb-3">
-                <div class="card text-center py-4">
-                    <i class="fas fa-cogs fa-3x py-3" style="color: #28a745;"></i>
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-envelope-open-text fa-3x py-3" style="color: var(--icon-color, #ffc107);"></i>
                     <div class="card-body">
-                        <h5 class="card-title">Web Optimization</h5>
-                        <p class="card-text">Ensuring your website is fast and optimized for best performance.</p>
+                        <h5 class="card-title">Email Marketing</h5>
+                        <p class="card-text">Engaging with your audience directly through targeted email campaigns.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-chart-line fa-3x py-3" style="color: var(--icon-color, #007bff);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Content Marketing</h5>
+                        <p class="card-text">Creating valuable content to attract, inform, and convert potential
+                            customers.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-clipboard-list fa-3x py-3" style="color: var(--icon-color, #17a2b8);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Pay-Per-Click Advertising (PPC)</h5>
+                        <p class="card-text">Driving traffic and conversions with targeted ad campaigns.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-3">
+                <div class="card text-center py-4 fade-in-up">
+                    <i class="fas fa-user-check fa-3x py-3" style="color: var(--icon-color, #6c757d);"></i>
+                    <div class="card-body">
+                        <h5 class="card-title">Online Reputation Management</h5>
+                        <p class="card-text">Building and protecting your brand’s image in the digital world.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Additional Content Section -->
+
+    <!-- Additional Content Section for Digital Marketing -->
     <section class="container content-section">
         <div class="row">
             <div class="col-md-6">
-                <h2 class="section-heading">Why Choose Andhra Developers?</h2>
-                <p class="section-text">
-                    At Andhra Developers, we specialize in crafting cutting-edge websites, mobile apps, and online
-                    platforms that help your business grow digitally. Whether you're a startup, small business, or
-                    enterprise, we provide high-quality solutions tailored to your goals.
+                <h2 style="color: #001f3f;">Why Choose Our Digital Marketing Services?</h2>
+                <p>
+                    Our digital marketing services are designed to help your brand thrive in the online space. We focus
+                    on
+                    creating targeted strategies that connect with your audience, boost engagement, and drive
+                    conversions.
+                    With our expertise, we ensure that your brand remains competitive and visible across digital
+                    channels.
                 </p>
                 <ul class="content-bullet-points">
-                    <li><i class="fas fa-check-circle"></i> Custom web and app development for your business</li>
-                    <li><i class="fas fa-check-circle"></i> Responsive designs optimized for all devices</li>
-                    <li><i class="fas fa-check-circle"></i> SEO-ready and fast-loading for better reach</li>
-                    <li><i class="fas fa-check-circle"></i> Tech courses to upskill future developers</li>
-                    <li><i class="fas fa-check-circle"></i> Trusted support and maintenance by our team</li>
+                    <li><i class="fas fa-check-circle"></i> Customized strategies to suit your business goals</li>
+                    <li><i class="fas fa-check-circle"></i> Data-driven decisions for better ROI</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-channel approach for maximum reach</li>
+                    <li><i class="fas fa-check-circle"></i> Experienced team dedicated to your growth</li>
+                    <li><i class="fas fa-check-circle"></i> Transparent reporting and ongoing optimization</li>
                 </ul>
+                <p>
+                    Our team collaborates with you to understand your brand’s vision and market needs, creating a
+                    strategy that elevates your online presence. We are committed to helping your business succeed in
+                    the
+                    dynamic digital landscape.
+                </p>
             </div>
             <div class="col-md-6">
-                <img src="logo.png" alt="Web Development Image">
+                <img src="images/digital mar.png" alt="Digital Marketing Image">
             </div>
         </div>
     </section>
 
-
-
-
-    <!-- Technologies We Use Section -->
-    <section class="container my-5 technologies-section">
+    <section class="container my-5 technologies-section mb-4 fade-in-up">
         <h2 class="text-center mb-4" style="color: #001f3f;">Technologies We Use</h2>
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-html5 fa-3x mb-3" style="color: #E34F26;"></i>
-                    <h5>HTML5</h5>
-                    <p>Building the structure of websites with semantic HTML.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-facebook fa-3x mb-3" style="color: #1877F2;"></i> <!-- Facebook color -->
+                    <h5>Facebook Ads</h5>
+                    <p>Engaging with users and driving traffic through targeted ads.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-css3-alt fa-3x mb-3" style="color: #1572B6;"></i>
-                    <h5>CSS3</h5>
-                    <p>Styling websites with advanced CSS for visual appeal.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-google fa-3x mb-3" style="color: #4285F4;"></i> <!-- Google color -->
+                    <h5>Google Ads</h5>
+                    <p>Reaching potential customers with strategic pay-per-click campaigns.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-js fa-3x mb-3" style="color: #F7DF1E;"></i>
-                    <h5>JavaScript</h5>
-                    <p>Adding interactivity and dynamic elements to websites.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-chart-line fa-3x mb-3" style="color: #2D9CDB;"></i> <!-- SEO color -->
+                    <h5>SEO Tools</h5>
+                    <p>Optimizing website visibility with tools like Ahrefs and SEMrush.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-react fa-3x mb-3" style="color: #61DAFB;"></i>
-                    <h5>React</h5>
-                    <p>Building responsive and fast single-page applications.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-mailchimp fa-3x mb-3" style="color: #FFE01B;"></i> <!-- Mailchimp color -->
+                    <h5>Email Marketing</h5>
+                    <p>Connecting with audiences through personalized email campaigns.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-bootstrap fa-3x mb-3" style="color: #7952B3;"></i>
-                    <h5>Bootstrap</h5>
-                    <p>Developing mobile-first websites with responsive design.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-instagram fa-3x mb-3" style="color: #E4405F;"></i>
+                    <!-- Instagram gradient color -->
+                    <h5>Instagram Marketing</h5>
+                    <p>Engaging visual content to enhance brand presence on Instagram.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fab fa-node fa-3x mb-3" style="color: #339933;"></i>
-                    <h5>Node.js</h5>
-                    <p>Creating server-side applications with efficient JavaScript.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fab fa-linkedin fa-3x mb-3" style="color: #0A66C2;"></i> <!-- LinkedIn color -->
+                    <h5>LinkedIn Marketing</h5>
+                    <p>Building professional connections and brand authority.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fa-brands fa-github fa-3x mb-3" style="color: #21759B;"></i>
-                    <h5>WordPress</h5>
-                    <p>Building CMS-driven websites with custom themes.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-video fa-3x mb-3" style="color: #FF0000;"></i> <!-- YouTube/Video color -->
+                    <h5>Video Marketing</h5>
+                    <p>Creating compelling video content to engage and convert viewers.</p>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 mb-4">
-                <div class="tech-card text-center p-4 fade-in-up">
-                    <i class="fas fa-database fa-3x mb-3" style="color: #4DB33D;"></i>
-                    <h5>Databases</h5>
-                    <p>Utilizing SQL and NoSQL databases for data management.</p>
+                <div class="tech-card text-center p-4">
+                    <i class="fas fa-ad fa-3x mb-3" style="color: #FFC107;"></i> <!-- General Ad color -->
+                    <h5>Retargeting Ads</h5>
+                    <p>Reaching out to audiences who've shown interest in your brand.</p>
                 </div>
             </div>
         </div>
     </section>
-
 
 
 
@@ -724,6 +735,9 @@
         </div>
 
 
+
+
+
         <!-- Footer Bottom Section -->
         <div class="footer-bottom">
             <div class="container d-flex justify-content-between align-items-center">
@@ -743,8 +757,6 @@
     <button id="scrollToTopBtn" class="scroll-to-top">
         ↑
     </button>
-
-
 
     <script>
         window.addEventListener("scroll", function () {
@@ -785,6 +797,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 
 </html>
