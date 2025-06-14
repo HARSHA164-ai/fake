@@ -189,69 +189,72 @@
 
     <!-- App Logic -->
     <!-- Replace inside your existing <script> tag at the bottom -->
-<script>
-    const body = document.body;
-    const darkToggle = document.getElementById("darkModeToggle");
-    const sidebar = document.getElementById("sidebar");
-    const toggleSidebarBtn = document.getElementById("toggleSidebar");
+    <script>
+        const body = document.body;
+        const darkToggle = document.getElementById("darkModeToggle");
+        const sidebar = document.getElementById("sidebar");
+        const toggleSidebarBtn = document.getElementById("toggleSidebar");
 
-    if (localStorage.getItem("darkMode") === "enabled") {
-        body.classList.add("dark-mode");
-    }
-
-    darkToggle.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
-        localStorage.setItem("darkMode", body.classList.contains("dark-mode") ? "enabled" : "disabled");
-    });
-
-    toggleSidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("visible");
-    });
-
-    // Firebase Auth: Ensure user is logged in
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            document.getElementById("userName").textContent = user.displayName || "User";
-            document.getElementById("userEmail").textContent = user.email;
-        } else {
-            alert("Please sign in to use the dashboard.");
-            window.location.href = "/login.html";
+        if (localStorage.getItem("darkMode") === "enabled") {
+            body.classList.add("dark-mode");
         }
-    });
 
-    const navLinks = document.querySelectorAll(".sidebar a");
-    const sections = document.querySelectorAll(".main-content section");
-
-    navLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const target = link.textContent.trim().toLowerCase() + "Section";
-            sections.forEach(section => {
-                section.style.display = section.id === target ? "block" : "none";
-            });
-            if (target === "coursesSection") loadCourses();
+        darkToggle.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            localStorage.setItem("darkMode", body.classList.contains("dark-mode") ? "enabled" : "disabled");
         });
-    });
 
-    // 🧠 Load courses and render cards
-    function loadCourses() {
-        const container = document.getElementById("coursesList");
-        const searchInput = document.getElementById("courseSearch");
+        toggleSidebarBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("visible");
+        });
 
-        db.collection("courses").onSnapshot(snapshot => {
-            let courses = [];
-            snapshot.forEach(doc => {
-                courses.push({ id: doc.id, ...doc.data() });
+        // Firebase Auth: Ensure user is logged in
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById("userName").textContent = user.displayName || "User";
+                document.getElementById("userEmail").textContent = user.email;
+            } else {
+                alert("Please sign in to use the dashboard.");
+                window.location.href = "/login.html";
+            }
+        });
+
+        const navLinks = document.querySelectorAll(".sidebar a");
+        const sections = document.querySelectorAll(".main-content section");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const target = link.textContent.trim().toLowerCase() + "Section";
+                sections.forEach(section => {
+                    section.style.display = section.id === target ? "block" : "none";
+                });
+
+                if (target === "coursesSection") loadCourses();
+                if (target === "enrolledSection") loadEnrolledCourses(); // ✅ Add this line
             });
+        });
 
-            function renderCourses(filter = "") {
-                let html = "";
-                const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
-                if (filtered.length === 0) {
-                    html = "<p>No courses found.</p>";
-                } else {
-                    filtered.forEach(course => {
-                        html += `
+
+        // 🧠 Load courses and render cards
+        function loadCourses() {
+            const container = document.getElementById("coursesList");
+            const searchInput = document.getElementById("courseSearch");
+
+            db.collection("courses").onSnapshot(snapshot => {
+                let courses = [];
+                snapshot.forEach(doc => {
+                    courses.push({ id: doc.id, ...doc.data() });
+                });
+
+                function renderCourses(filter = "") {
+                    let html = "";
+                    const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
+                    if (filtered.length === 0) {
+                        html = "<p>No courses found.</p>";
+                    } else {
+                        filtered.forEach(course => {
+                            html += `
                             <div class="course-card">
                                 <h5>${course.title}</h5>
                                 <p>${course.description}</p>
@@ -261,43 +264,86 @@
                                 </button>
                             </div>
                         `;
-                    });
+                        });
+                    }
+                    container.innerHTML = html;
                 }
-                container.innerHTML = html;
-            }
 
-            renderCourses();
+                renderCourses();
 
-            searchInput.addEventListener("input", () => {
-                renderCourses(searchInput.value);
+                searchInput.addEventListener("input", () => {
+                    renderCourses(searchInput.value);
+                });
             });
-        });
-    }
-
-    // 🚀 Function to request enrollment in Firestore
-    function requestEnrollment(courseId, courseTitle) {
-        const user = firebase.auth().currentUser;
-        if (!user) {
-            alert("Please log in first.");
-            return;
         }
 
-        const requestRef = db.collection("course_requests");
+        // 🚀 Function to request enrollment in Firestore
+        function requestEnrollment(courseId, courseTitle) {
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                alert("Please log in first.");
+                return;
+            }
 
-        // Save the request
-        requestRef.add({
-            userId: user.uid,
-            courseId: courseId,
-            status: "pending",
-            requestedAt: new Date()
-        }).then(() => {
-            alert(`Enrollment request sent for: ${courseTitle}`);
-        }).catch(error => {
-            console.error("Enrollment request error:", error);
-            alert("Failed to send request. Try again.");
-        });
-    }
-</script>
+            const requestRef = db.collection("course_requests");
+
+            // Save the request
+            requestRef.add({
+                userId: user.uid,
+                courseId: courseId,
+                status: "pending",
+                requestedAt: new Date()
+            }).then(() => {
+                alert(`Enrollment request sent for: ${courseTitle}`);
+            }).catch(error => {
+                console.error("Enrollment request error:", error);
+                alert("Failed to send request. Try again.");
+            });
+        }
+
+        function loadEnrolledCourses() {
+            const user = firebase.auth().currentUser;
+            const enrolledContainer = document.getElementById("enrolledSection");
+
+            if (!user) return;
+
+            db.collection("course_requests")
+                .where("userId", "==", user.uid)
+                .where("status", "==", "approved")
+                .get()
+                .then(requestSnapshot => {
+                    const courseIds = requestSnapshot.docs.map(doc => doc.data().courseId);
+
+                    if (courseIds.length === 0) {
+                        enrolledContainer.innerHTML = "<p>No enrolled courses.</p>";
+                        return;
+                    }
+
+                    db.collection("courses").get().then(courseSnapshot => {
+                        let html = "";
+                        courseSnapshot.forEach(doc => {
+                            const course = doc.data();
+                            if (courseIds.includes(doc.id)) {
+                                html += `
+                            <div class="course-card">
+                                <h5>${course.title}</h5>
+                                <p>${course.description}</p>
+                                <button class="btn btn-success btn-sm">Download Certificate</button>
+                                <button class="btn btn-outline-primary btn-sm">Watch Material</button>
+                            </div>
+                        `;
+                            }
+                        });
+                        enrolledContainer.innerHTML = html;
+                    });
+                })
+                .catch(error => {
+                    console.error("Error loading enrolled courses:", error);
+                });
+        }
+
+
+    </script>
 
 </body>
 
