@@ -35,6 +35,19 @@
             z-index: 1050;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+
         .toggle-sidebar-btn {
             background: none;
             border: none;
@@ -117,16 +130,21 @@
 
 <body>
     <header>
-        <div class="d-flex align-items-center">
+        <div class="header-left">
             <button class="toggle-sidebar-btn" id="toggleSidebar">
                 <i class="fas fa-bars"></i>
             </button>
             <span class="fw-bold fs-5">Andhra Developers</span>
         </div>
-        <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
-        <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
-        
+
+        <div class="header-right">
+            <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
+            <button class="btn btn-light" id="darkModeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
     </header>
+
 
     <div class="sidebar" id="sidebar">
         <h5 class="text-center">👨‍💻 Andhra Developers</h5>
