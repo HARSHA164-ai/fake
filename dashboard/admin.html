@@ -211,7 +211,7 @@
             }
 
             try {
-                
+
 
                 await db.collection("courses").add({
                     title,
@@ -242,13 +242,16 @@
                 const card = `
       <div class="col-md-4">
         <div class="card">
-          <img src="${data.thumbnail}" alt="Thumbnail" class="card-img-top thumbnail-img" onerror="this.src='https://via.placeholder.com/300x180.png?text=No+Image'">
+          <img src="${data.thumbnail}" alt="Thumbnail" class="card-img-top thumbnail-img" 
+               onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
           <div class="card-body">
             <h5 class="card-title">${data.title}</h5>
             <p class="card-text">${data.description}</p>
             <p class="badge bg-info">${data.category}</p>
             <a href="${data.courseLink}" target="_blank" class="btn btn-sm btn-outline-primary">Open Course</a>
-            <button class="btn btn-sm btn-danger ms-2" onclick="deleteCourse('${courseId}')"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-danger ms-2" onclick="deleteCourse('${courseId}')">
+              <i class="fas fa-trash"></i>
+            </button>
           </div>
         </div>
       </div>
