@@ -57,6 +57,15 @@
             cursor: pointer;
         }
 
+        .sidebar a.active {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+
+        .sidebar {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
         .sidebar {
             position: fixed;
             width: 260px;
@@ -362,6 +371,14 @@
                 window.location.href = "/login.html";
             });
         });
+
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.textContent.trim().toLowerCase() + "Section" === target) {
+                link.classList.add("active");
+            }
+        });
+
     </script>
 
 </body>
