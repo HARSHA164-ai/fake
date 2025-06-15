@@ -226,7 +226,7 @@
 
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                document.getElementById("userName").textContent = user.displayName || "User";
+                document.getElementById("userName").textContent = user.name || "User";
                 document.getElementById("userEmail").textContent = user.email;
 
                
