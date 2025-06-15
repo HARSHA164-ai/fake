@@ -224,14 +224,16 @@
             sidebar.classList.toggle("visible");
         });
 
+        let currentUser = null;
+
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                document.getElementById("userName").textContent = user.name || "User";
+                currentUser = user; // ✅ Save the user globally
+                document.getElementById("userName").textContent = user.displayName || "User";
                 document.getElementById("userEmail").textContent = user.email;
-
-
+                loadCourses(currentUser);
+                loadEnrolledCourses(currentUser);
             } else {
-
                 window.location.href = "/login.html";
             }
         });
@@ -247,10 +249,12 @@
                     section.style.display = section.id === target ? "block" : "none";
                 });
 
-                if (target === "coursesSection") loadCourses();
-                if (target === "enrolledSection") loadEnrolledCourses();
+                // ✅ Use currentUser instead of missing 'user'
+                if (target === "coursesSection") loadCourses(currentUser);
+                if (target === "enrolledSection") loadEnrolledCourses(currentUser);
             });
         });
+
 
         function loadCourses(user) {
             const container = document.getElementById("coursesList");
@@ -315,39 +319,41 @@
             });
         }
 
-        function loadEnrolledCourses(user) {
+        async function loadEnrolledCourses(user) {
             const container = document.getElementById("enrolledCoursesContainer");
-            db.collection("course_requests")
+            container.innerHTML = ""; // ✅ Clear first
+
+            const snapshot = await db.collection("course_requests")
                 .where("userId", "==", user.uid)
                 .where("status", "==", "approved")
-                .get()
-                .then(snapshot => {
-                    if (snapshot.empty) {
-                        container.innerHTML = "<p>No enrolled courses.</p>";
-                        return;
-                    }
+                .get();
 
-                    let html = "";
-                    snapshot.forEach(async doc => {
-                        const request = doc.data();
-                        const courseDoc = await db.collection("courses").doc(request.courseId).get();
-                        const course = courseDoc.data();
-                        html += `
-                            <div class="col-md-4">
-                                <div class="card course-card">
-                                    <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${course.title}</h5>
-                                        <p class="card-text">${course.description}</p>
-                                        <a href="${course.courseLink}" class="btn btn-sm btn-success" target="_blank">Go to Course</a>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        container.innerHTML = html;
-                    });
-                });
+            if (snapshot.empty) {
+                container.innerHTML = "<p>No enrolled courses.</p>";
+                return;
+            }
+
+            const courseCards = await Promise.all(snapshot.docs.map(async (doc) => {
+                const request = doc.data();
+                const courseDoc = await db.collection("courses").doc(request.courseId).get();
+                const course = courseDoc.data();
+                return `
+            <div class="col-md-4">
+                <div class="card course-card">
+                    <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                    <div class="card-body">
+                        <h5 class="card-title">${course.title}</h5>
+                        <p class="card-text">${course.description}</p>
+                        <a href="${course.courseLink}" class="btn btn-sm btn-success" target="_blank">Go to Course</a>
+                    </div>
+                </div>
+            </div>
+        `;
+            }));
+
+            container.innerHTML = courseCards.join("");
         }
+
 
         document.getElementById("logoutBtn").addEventListener("click", () => {
             firebase.auth().signOut().then(() => {
