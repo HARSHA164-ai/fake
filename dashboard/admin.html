@@ -22,6 +22,15 @@
       background-color: #343a40;
       color: #fff;
       padding-top: 1rem;
+      transition: width 0.3s;
+    }
+
+    .sidebar.collapsed {
+      width: 60px;
+    }
+
+    .sidebar.collapsed a span {
+      display: none;
     }
 
     .sidebar a {
@@ -39,6 +48,11 @@
     .main-content {
       margin-left: 240px;
       padding: 2rem;
+      transition: margin-left 0.3s;
+    }
+
+    .main-content.collapsed {
+      margin-left: 60px;
     }
 
     .hidden {
@@ -61,16 +75,21 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <header class="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Admin Dashboard</h5>
+    <button class="btn btn-sm btn-outline-light" onclick="toggleSidebar()">Toggle Sidebar</button>
+  </header>
+
+  <div class="sidebar" id="sidebar">
     <h4 class="text-center text-white">Admin Panel</h4>
-    <a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home me-2"></i> Dashboard</a>
-    <a href="#" onclick="showSection('coursesSection')"><i class="fas fa-book me-2"></i> Courses</a>
-    <a href="#" onclick="showSection('usersSection')"><i class="fas fa-users me-2"></i> Users</a>
-    <a href="#" onclick="showSection('enrollSection')"><i class="fas fa-check me-2"></i> Approve Enrollments</a>
-    <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+    <a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home me-2"></i> <span>Dashboard</span></a>
+    <a href="#" onclick="showSection('coursesSection')"><i class="fas fa-book me-2"></i> <span>Courses</span></a>
+    <a href="#" onclick="showSection('usersSection')"><i class="fas fa-users me-2"></i> <span>Users</span></a>
+    <a href="#" onclick="showSection('enrollSection')"><i class="fas fa-check me-2"></i> <span>Approve Enrollments</span></a>
+    <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> <span>Logout</span></a>
   </div>
 
-  <div class="main-content">
+  <div class="main-content" id="mainContent">
     <div id="dashboardSection">
       <h2 class="section-title">Welcome Admin</h2>
       <p>Use the sidebar to manage courses, users, and enrollment approvals.</p>
@@ -96,8 +115,9 @@
           <input type="url" id="courseLink" class="form-control" required>
         </div>
         <div class="mb-3">
-          <label for="thumbnailId" class="form-label">Google Drive Thumbnail File ID</label>
-          <input type="text" id="thumbnailId" class="form-control" placeholder="e.g., 1a2B3cD4EfGHijkLm" required>
+          <label for="thumbnailLink" class="form-label">Google Drive Thumbnail Link</label>
+          <input type="url" id="thumbnailLink" class="form-control" placeholder="Paste full Drive link" required>
+          <img id="thumbnailPreview" class="mt-2 thumbnail-img" style="max-height: 150px; display: none;" />
         </div>
         <button type="submit" class="btn btn-primary">Add Course</button>
       </form>
@@ -162,13 +182,32 @@
       }
     }
 
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("collapsed");
+      document.getElementById("mainContent").classList.toggle("collapsed");
+    }
+
+    document.getElementById("thumbnailLink").addEventListener("input", () => {
+      const link = document.getElementById("thumbnailLink").value;
+      const fileIdMatch = link.match(/[-\w]{25,}/);
+      const fileId = fileIdMatch ? fileIdMatch[0] : null;
+      if (fileId) {
+        const previewUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+        const img = document.getElementById("thumbnailPreview");
+        img.src = previewUrl;
+        img.style.display = "block";
+      }
+    });
+
     document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("title").value;
       const description = document.getElementById("description").value;
       const category = document.getElementById("category").value;
       const courseLink = document.getElementById("courseLink").value;
-      const thumbnailId = document.getElementById("thumbnailId").value;
+      const link = document.getElementById("thumbnailLink").value;
+      const fileIdMatch = link.match(/[-\w]{25,}/);
+      const thumbnailId = fileIdMatch ? fileIdMatch[0] : null;
       const thumbnailUrl = `https://drive.google.com/uc?export=view&id=${thumbnailId}`;
 
       try {
@@ -182,6 +221,7 @@
         });
         document.getElementById("courseMsg").innerHTML = `<div class='alert alert-success'>Course added successfully!</div>`;
         e.target.reset();
+        document.getElementById("thumbnailPreview").style.display = "none";
         loadCourses();
       } catch (err) {
         console.error("Error adding course:", err);
