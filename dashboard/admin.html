@@ -279,13 +279,13 @@
 
 
         async function loadCourses() {
-            const courseList = document.getElementById("courseList");
-            courseList.innerHTML = "";
-            const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const courseId = doc.id;
-                const card = `
+  const courseList = document.getElementById("courseList");
+  courseList.innerHTML = ""; // ✅ Clear old cards before adding new
+  const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const courseId = doc.id;
+    const card = `
       <div class="col-md-4">
         <div class="card">
           <img src="${data.thumbnail}" alt="Thumbnail" class="card-img-top thumbnail-img" 
@@ -302,9 +302,10 @@
         </div>
       </div>
     `;
-                courseList.innerHTML += card;
-            });
-        }
+    courseList.innerHTML += card;
+  });
+}
+
 
         async function deleteCourse(id) {
             if (confirm("Are you sure you want to delete this course?")) {
