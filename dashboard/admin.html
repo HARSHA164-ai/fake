@@ -138,7 +138,22 @@
 
         <div id="usersSection" class="hidden">
             <h2 class="section-title">User Management</h2>
-            <p>Feature coming soon.</p>
+            <div id="userList" class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Change Role</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
         <div id="enrollSection" class="hidden">
@@ -196,6 +211,10 @@
             if (sectionId === 'coursesSection') {
                 loadCourses();
             }
+            if (sectionId === 'usersSection') {
+                loadUsers();
+            }
+
         }
 
         document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
@@ -269,6 +288,40 @@
                     alert("Error deleting course.");
                     console.error(err);
                 }
+            }
+        }
+        async function loadUsers() {
+            const userTableBody = document.getElementById("userTableBody");
+            userTableBody.innerHTML = "";
+            const snapshot = await db.collection("users").get();
+            snapshot.forEach(doc => {
+                const user = doc.data();
+                const row = `
+      <tr>
+        <td>${user.name || 'N/A'}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td>
+          <select onchange="changeUserRole('${doc.id}', this.value)">
+            <option ${user.role === 'student' ? 'selected' : ''}>student</option>
+            <option ${user.role === 'faculty' ? 'selected' : ''}>faculty</option>
+            <option ${user.role === 'admin' ? 'selected' : ''}>admin</option>
+          </select>
+        </td>
+      </tr>
+    `;
+                userTableBody.innerHTML += row;
+            });
+        }
+
+        async function changeUserRole(userId, newRole) {
+            try {
+                await db.collection("users").doc(userId).update({ role: newRole });
+                alert("Role updated successfully!");
+                loadUsers();
+            } catch (err) {
+                alert("Error updating role");
+                console.error(err);
             }
         }
 
