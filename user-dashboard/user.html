@@ -131,9 +131,7 @@
         <a href="#"><i class="fas fa-home me-2"></i> Dashboard</a>
         <a href="#"><i class="fas fa-book me-2"></i> Courses</a>
         <a href="#"><i class="fas fa-tasks me-2"></i> Enrolled</a>
-        <a href="#"><i class="fas fa-calendar-alt me-2"></i> Events</a>
         <a href="#"><i class="fas fa-bell me-2"></i> Notifications</a>
-        <a href="#"><i class="fas fa-certificate me-2"></i> Certificates</a>
     </div>
 
     <div class="main-content" id="mainContent">
@@ -152,28 +150,19 @@
 
         <section id="enrolledSection" style="display: none;">
             <h2>Enrolled Courses</h2>
-            <p>Courses you're enrolled in.</p>
-        </section>
-
-        <section id="eventsSection" style="display: none;">
-            <h2>Events</h2>
-            <p>Upcoming events and schedules.</p>
+            <div id="enrolledCoursesContainer">Loading...</div>
         </section>
 
         <section id="notificationsSection" style="display: none;">
             <h2>Notifications</h2>
             <p>All latest updates.</p>
         </section>
-
-        <section id="certificatesSection" style="display: none;">
-            <h2>Certificates</h2>
-            <p>Download your earned certificates.</p>
-        </section>
     </div>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
@@ -187,8 +176,6 @@
         const db = firebase.firestore();
     </script>
 
-    <!-- App Logic -->
-    <!-- Replace inside your existing <script> tag at the bottom -->
     <script>
         const body = document.body;
         const darkToggle = document.getElementById("darkModeToggle");
@@ -208,7 +195,6 @@
             sidebar.classList.toggle("visible");
         });
 
-        // Firebase Auth: Ensure user is logged in
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById("userName").textContent = user.displayName || "User";
@@ -231,12 +217,10 @@
                 });
 
                 if (target === "coursesSection") loadCourses();
-                if (target === "enrolledSection") loadEnrolledCourses(); // ✅ Add this line
+                if (target === "enrolledSection") loadEnrolledCourses();
             });
         });
 
-
-        // 🧠 Load courses and render cards
         function loadCourses() {
             const container = document.getElementById("coursesList");
             const searchInput = document.getElementById("courseSearch");
@@ -255,29 +239,27 @@
                     } else {
                         filtered.forEach(course => {
                             html += `
-                            <div class="course-card">
-                                <h5>${course.title}</h5>
-                                <p>${course.description}</p>
-                                <button class="btn btn-primary btn-sm btn-enroll"
-                                    onclick="requestEnrollment('${course.id}', '${course.title}')">
-                                    Request Enroll
-                                </button>
-                            </div>
-                        `;
+                                <div class="course-card">
+                                    <h5>${course.title}</h5>
+                                    <p>${course.description}</p>
+                                    <button class="btn btn-primary btn-sm btn-enroll"
+                                        onclick="requestEnrollment('${course.id}', '${course.title}')">
+                                        Request Enroll
+                                    </button>
+                                </div>
+                            `;
                         });
                     }
                     container.innerHTML = html;
                 }
 
                 renderCourses();
-
                 searchInput.addEventListener("input", () => {
                     renderCourses(searchInput.value);
                 });
             });
         }
 
-        // 🚀 Function to request enrollment in Firestore
         function requestEnrollment(courseId, courseTitle) {
             const user = firebase.auth().currentUser;
             if (!user) {
@@ -287,7 +269,6 @@
 
             const requestRef = db.collection("course_requests");
 
-            // Save the request
             requestRef.add({
                 userId: user.uid,
                 courseId: courseId,
@@ -302,49 +283,38 @@
         }
 
         function loadEnrolledCourses() {
+            const container = document.getElementById("enrolledCoursesContainer");
             const user = firebase.auth().currentUser;
-            const enrolledContainer = document.getElementById("enrolledSection");
-
             if (!user) return;
 
             db.collection("course_requests")
                 .where("userId", "==", user.uid)
                 .where("status", "==", "approved")
                 .get()
-                .then(requestSnapshot => {
-                    const courseIds = requestSnapshot.docs.map(doc => doc.data().courseId);
-
-                    if (courseIds.length === 0) {
-                        enrolledContainer.innerHTML = "<p>No enrolled courses.</p>";
+                .then(snapshot => {
+                    if (snapshot.empty) {
+                        container.innerHTML = "<p>No enrolled courses.</p>";
                         return;
                     }
 
-                    db.collection("courses").get().then(courseSnapshot => {
-                        let html = "";
-                        courseSnapshot.forEach(doc => {
-                            const course = doc.data();
-                            if (courseIds.includes(doc.id)) {
-                                html += `
-                            <div class="course-card">
-                                <h5>${course.title}</h5>
-                                <p>${course.description}</p>
-                                <button class="btn btn-success btn-sm">Download Certificate</button>
-                                <button class="btn btn-outline-primary btn-sm">Watch Material</button>
-                            </div>
-                        `;
-                            }
+                    let html = "";
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        db.collection("courses").doc(data.courseId).get().then(courseDoc => {
+                            const course = courseDoc.data();
+                            html += `
+                                <div class="course-card">
+                                    <h5>${course.title}</h5>
+                                    <p>${course.description}</p>
+                                    <a class="btn btn-success btn-sm" href="${course.link}" target="_blank">Go to Course</a>
+                                </div>
+                            `;
+                            container.innerHTML = html;
                         });
-                        enrolledContainer.innerHTML = html;
                     });
-                })
-                .catch(error => {
-                    console.error("Error loading enrolled courses:", error);
                 });
         }
-
-
     </script>
-
 </body>
 
 </html>
