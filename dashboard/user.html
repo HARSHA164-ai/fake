@@ -229,27 +229,7 @@
                 document.getElementById("userName").textContent = user.displayName || "User";
                 document.getElementById("userEmail").textContent = user.email;
 
-                // Check Firestore for existing phone number
-                const userDoc = await db.collection("users").doc(user.uid).get();
-                const userData = userDoc.data();
-
-                if (!user.phone && (!userData || !userData.phoneNumber)) {
-                    const phoneNumber = prompt("Please enter your phone number (required):");
-                    if (phone) {
-                        db.collection("users").doc(user.uid).set({
-                            phone: phoneNumber,
-                            email: user.email,
-                            name: user.displayName || "User"
-                        }, { merge: true }).then(() => {
-                            alert("✅ Phone number saved successfully.");
-                        }).catch(error => {
-                            console.error("❌ Error saving phone:", error);
-                            alert("❌ Failed to save phone number.");
-                        });
-                    } else {
-                        alert("⚠️ Phone number is required to continue.");
-                    }
-                }
+               
             } else {
 
                 window.location.href = "/login.html";
