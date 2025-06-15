@@ -6,31 +6,41 @@
   <title>Admin Dashboard | Andhra Developers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
     }
 
+    .header {
+      height: 60px;
+      background-color: #343a40;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
     .sidebar {
       width: 240px;
       height: 100vh;
       position: fixed;
-      top: 0;
+      top: 60px;
       left: 0;
       background-color: #343a40;
       color: #fff;
       padding-top: 1rem;
-      transition: width 0.3s;
+      transition: transform 0.3s ease;
     }
 
-    .sidebar.collapsed {
-      width: 60px;
-    }
-
-    .sidebar.collapsed a span {
-      display: none;
+    .sidebar.hidden {
+      transform: translateX(-100%);
     }
 
     .sidebar a {
@@ -47,12 +57,12 @@
 
     .main-content {
       margin-left: 240px;
-      padding: 2rem;
-      transition: margin-left 0.3s;
+      padding: 80px 20px 20px;
+      transition: margin-left 0.3s ease;
     }
 
-    .main-content.collapsed {
-      margin-left: 60px;
+    .sidebar.hidden + .main-content {
+      margin-left: 0;
     }
 
     .hidden {
@@ -75,18 +85,17 @@
   </style>
 </head>
 <body>
-  <header class="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Admin Dashboard</h5>
-    <button class="btn btn-sm btn-outline-light" onclick="toggleSidebar()">Toggle Sidebar</button>
-  </header>
+  <div class="header">
+    <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Admin Dashboard</span>
+    <span>Andhra Developers</span>
+  </div>
 
   <div class="sidebar" id="sidebar">
-    <h4 class="text-center text-white">Admin Panel</h4>
-    <a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home me-2"></i> <span>Dashboard</span></a>
-    <a href="#" onclick="showSection('coursesSection')"><i class="fas fa-book me-2"></i> <span>Courses</span></a>
-    <a href="#" onclick="showSection('usersSection')"><i class="fas fa-users me-2"></i> <span>Users</span></a>
-    <a href="#" onclick="showSection('enrollSection')"><i class="fas fa-check me-2"></i> <span>Approve Enrollments</span></a>
-    <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> <span>Logout</span></a>
+    <a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home me-2"></i> Dashboard</a>
+    <a href="#" onclick="showSection('coursesSection')"><i class="fas fa-book me-2"></i> Courses</a>
+    <a href="#" onclick="showSection('usersSection')"><i class="fas fa-users me-2"></i> Users</a>
+    <a href="#" onclick="showSection('enrollSection')"><i class="fas fa-check me-2"></i> Approve Enrollments</a>
+    <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
   </div>
 
   <div class="main-content" id="mainContent">
@@ -115,9 +124,8 @@
           <input type="url" id="courseLink" class="form-control" required>
         </div>
         <div class="mb-3">
-          <label for="thumbnailLink" class="form-label">Google Drive Thumbnail Link</label>
-          <input type="url" id="thumbnailLink" class="form-control" placeholder="Paste full Drive link" required>
-          <img id="thumbnailPreview" class="mt-2 thumbnail-img" style="max-height: 150px; display: none;" />
+          <label for="thumbnailLink" class="form-label">Thumbnail Google Drive Link</label>
+          <input type="url" id="thumbnailLink" class="form-control" placeholder="Paste full Google Drive URL here" required>
         </div>
         <button type="submit" class="btn btn-primary">Add Course</button>
       </form>
@@ -152,9 +160,12 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-  </script>
 
-  <script>
+    document.getElementById("toggleSidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("hidden");
+      document.getElementById("mainContent").classList.toggle("sidebar-hidden");
+    });
+
     const allowedAdmin = "yaswanthgiet@gmail.com";
 
     firebase.auth().onAuthStateChanged(async (user) => {
@@ -182,33 +193,16 @@
       }
     }
 
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("collapsed");
-      document.getElementById("mainContent").classList.toggle("collapsed");
-    }
-
-    document.getElementById("thumbnailLink").addEventListener("input", () => {
-      const link = document.getElementById("thumbnailLink").value;
-      const fileIdMatch = link.match(/[-\w]{25,}/);
-      const fileId = fileIdMatch ? fileIdMatch[0] : null;
-      if (fileId) {
-        const previewUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-        const img = document.getElementById("thumbnailPreview");
-        img.src = previewUrl;
-        img.style.display = "block";
-      }
-    });
-
     document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("title").value;
       const description = document.getElementById("description").value;
       const category = document.getElementById("category").value;
       const courseLink = document.getElementById("courseLink").value;
-      const link = document.getElementById("thumbnailLink").value;
-      const fileIdMatch = link.match(/[-\w]{25,}/);
-      const thumbnailId = fileIdMatch ? fileIdMatch[0] : null;
-      const thumbnailUrl = `https://drive.google.com/uc?export=view&id=${thumbnailId}`;
+      const thumbnailLink = document.getElementById("thumbnailLink").value;
+      const match = thumbnailLink.match(/\/d\/([^/]+)\/view/);
+      const fileId = match ? match[1] : null;
+      const thumbnailUrl = fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : "";
 
       try {
         await db.collection("courses").add({
@@ -221,7 +215,6 @@
         });
         document.getElementById("courseMsg").innerHTML = `<div class='alert alert-success'>Course added successfully!</div>`;
         e.target.reset();
-        document.getElementById("thumbnailPreview").style.display = "none";
         loadCourses();
       } catch (err) {
         console.error("Error adding course:", err);
