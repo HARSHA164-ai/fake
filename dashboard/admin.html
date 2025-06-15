@@ -13,6 +13,26 @@
       background-color: #f5f5f5;
     }
 
+    header {
+      background-color: #0d6efd;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1050;
+    }
+
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
     .sidebar {
       width: 240px;
       height: 100vh;
@@ -21,7 +41,13 @@
       left: 0;
       background-color: #343a40;
       color: #fff;
-      padding-top: 1rem;
+      padding-top: 4rem;
+      transition: transform 0.3s ease;
+      transform: translateX(0);
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(-100%);
     }
 
     .sidebar a {
@@ -39,6 +65,11 @@
     .main-content {
       margin-left: 240px;
       padding: 2rem;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.collapsed ~ .main-content {
+      margin-left: 0;
     }
 
     .hidden {
@@ -55,16 +86,24 @@
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h4 class="text-center text-white">Admin Panel</h4>
+  <header>
+    <button class="toggle-btn" onclick="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <h4 class="m-0">Admin Panel</h4>
+    <button class="btn btn-danger btn-sm" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </header>
+
+  <div class="sidebar" id="sidebar">
     <a href="#" onclick="showSection('dashboardSection')"><i class="fas fa-home me-2"></i> Dashboard</a>
     <a href="#" onclick="showSection('coursesSection')"><i class="fas fa-book me-2"></i> Courses</a>
     <a href="#" onclick="showSection('usersSection')"><i class="fas fa-users me-2"></i> Users</a>
     <a href="#" onclick="showSection('enrollSection')"><i class="fas fa-check me-2"></i> Approve Enrollments</a>
-    <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
   </div>
 
-  <div class="main-content">
+  <div class="main-content" id="mainContent">
     <div id="dashboardSection">
       <h2 class="section-title">Welcome Admin</h2>
       <p>Use the sidebar to manage courses, users, and enrollment approvals.</p>
@@ -72,19 +111,16 @@
 
     <div id="coursesSection" class="hidden">
       <h2 class="section-title">Course Management</h2>
-      <!-- TODO: Add course form & list here -->
       <p>Feature coming soon.</p>
     </div>
 
     <div id="usersSection" class="hidden">
       <h2 class="section-title">User Management</h2>
-      <!-- TODO: Display users, assign roles -->
       <p>Feature coming soon.</p>
     </div>
 
     <div id="enrollSection" class="hidden">
       <h2 class="section-title">Approve Enrollments</h2>
-      <!-- TODO: Show pending course requests -->
       <p>Feature coming soon.</p>
     </div>
   </div>
@@ -129,6 +165,10 @@
       const sections = document.querySelectorAll(".main-content > div");
       sections.forEach(sec => sec.classList.add("hidden"));
       document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("collapsed");
     }
   </script>
 </body>
