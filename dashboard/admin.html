@@ -303,7 +303,7 @@
         <td>${user.role}</td>
         <td>
           <select onchange="changeUserRole('${doc.id}', this.value)">
-            <option ${user.role === 'student' ? 'selected' : ''}>student</option>
+            <option ${user.role === 'user' ? 'selected' : ''}>user</option>
             <option ${user.role === 'faculty' ? 'selected' : ''}>faculty</option>
             <option ${user.role === 'admin' ? 'selected' : ''}>admin</option>
           </select>
