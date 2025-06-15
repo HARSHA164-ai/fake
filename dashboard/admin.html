@@ -126,9 +126,10 @@
                     <input type="url" id="courseLink" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="thumbnailFile" class="form-label">Upload Thumbnail Image</label>
-                    <input type="file" id="thumbnailFile" class="form-control" accept="image/*" required>
+                    <label for="thumbnailUrl" class="form-label">Thumbnail Image URL (Internxt or ImgBB)</label>
+                    <input type="url" id="thumbnailUrl" class="form-control" required placeholder="https://...">
                 </div>
+
                 <button type="submit" class="btn btn-primary">Add Course</button>
             </form>
             <div id="courseMsg" class="mt-3"></div>
@@ -203,17 +204,14 @@
             const description = document.getElementById("description").value;
             const category = document.getElementById("category").value;
             const courseLink = document.getElementById("courseLink").value;
-            const thumbnailFile = document.getElementById("thumbnailFile").files[0];
-
-            if (!thumbnailFile) {
-                alert("Please select an image file.");
+            const thumbnailUrl = document.getElementById("thumbnailUrl").value;
+            if (!thumbnailUrl) {
+                alert("Please enter a valid image URL.");
                 return;
             }
 
             try {
-                const storageRef = firebase.storage().ref(`course-thumbnails/${Date.now()}_${thumbnailFile.name}`);
-                const snapshot = await storageRef.put(thumbnailFile);
-                const thumbnailUrl = await snapshot.ref.getDownloadURL();
+                
 
                 await db.collection("courses").add({
                     title,
