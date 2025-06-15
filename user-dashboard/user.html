@@ -124,6 +124,7 @@
             <span class="fw-bold fs-5">Andhra Developers</span>
         </div>
         <button class="btn btn-light" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+        <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
     </header>
 
     <div class="sidebar" id="sidebar">
@@ -314,6 +315,13 @@
                     });
                 });
         }
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/login.html";
+            });
+        });
+
     </script>
 </body>
 
