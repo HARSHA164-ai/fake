@@ -179,7 +179,7 @@
 
         <section id="enrolledSection" style="display: none;">
             <h2>Enrolled Courses</h2>
-            <div id="enrolledCoursesContainer">Loading...</div>
+            <div id="enrolledCoursesContainer" class="row">Loading...</div>
         </section>
 
         <section id="notificationsSection" style="display: none;">
@@ -272,7 +272,7 @@
             });
         });
 
-        function loadCourses() {
+        function loadCourses(user) {
             const container = document.getElementById("coursesList");
             const searchInput = document.getElementById("courseSearch");
 
@@ -290,20 +290,18 @@
                     } else {
                         filtered.forEach(course => {
                             html += `
-                    <div class="course-card card mb-3">
-                        <img src="${course.thumbnail}" class="card-img-top" alt="Thumbnail" 
-                             onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
-                        <div class="card-body">
-                            <h5 class="card-title">${course.title}</h5>
-                            <p class="card-text">${course.description}</p>
-                            <span class="badge bg-primary">${course.category}</span>
-                            <button class="btn btn-sm btn-primary float-end" 
-                                onclick="requestEnrollment('${course.id}', '${course.title}')">
-                                Request Enroll
-                            </button>
-                        </div>
-                    </div>
-                `;
+                                <div class="col-md-4">
+                                    <div class="card course-card">
+                                        <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${course.title}</h5>
+                                            <p class="card-text">${course.description}</p>
+                                            <span class="badge bg-info">${course.category}</span>
+                                            <button class="btn btn-sm btn-primary float-end" onclick="requestEnrollment('${course.id}', '${course.title}')">Request Enroll</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
                         });
                     }
                     container.innerHTML = html;
@@ -322,27 +320,21 @@
                 alert("Please log in first.");
                 return;
             }
-
-            const requestRef = db.collection("course_requests");
-
-            requestRef.add({
+            db.collection("course_requests").add({
                 userId: user.uid,
                 courseId: courseId,
                 status: "pending",
                 requestedAt: new Date()
             }).then(() => {
                 alert(`Enrollment request sent for: ${courseTitle}`);
-            }).catch(error => {
-                console.error("Enrollment request error:", error);
-                alert("Failed to send request. Try again.");
+            }).catch(err => {
+                console.error("Error sending request:", err);
+                alert("Failed to send enrollment request.");
             });
         }
 
-        function loadEnrolledCourses() {
-            const container = document.getElementById("enrolledCoursesContainer");
-            const user = firebase.auth().currentUser;
-            if (!user) return;
-
+        function loadEnrolledCourses(user) {
+         const container = document.getElementById("enrolledCoursesContainer");
             db.collection("course_requests")
                 .where("userId", "==", user.uid)
                 .where("status", "==", "approved")
@@ -354,23 +346,27 @@
                     }
 
                     let html = "";
-                    snapshot.forEach(doc => {
-                        const data = doc.data();
-                        db.collection("courses").doc(data.courseId).get().then(courseDoc => {
-                            const course = courseDoc.data();
-                            html += `
-                            <div class="course-card">
-                                <h5>${course.title}</h5>
-                                <p>${course.description}</p>
-                                <a class="btn btn-success btn-sm" href="${course.link}" target="_blank">Go to Course</a>
+                    snapshot.forEach(async doc => {
+                        const request = doc.data();
+                        const courseDoc = await db.collection("courses").doc(request.courseId).get();
+                        const course = courseDoc.data();
+                        html += `
+                            <div class="col-md-4">
+                                <div class="card course-card">
+                                    <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${course.title}</h5>
+                                        <p class="card-text">${course.description}</p>
+                                        <a href="${course.courseLink}" class="btn btn-sm btn-success" target="_blank">Go to Course</a>
+                                    </div>
+                                </div>
                             </div>
                         `;
-                            container.innerHTML = html;
-                        });
+                        container.innerHTML = html;
                     });
                 });
         }
-
+        
         document.getElementById("logoutBtn").addEventListener("click", () => {
             firebase.auth().signOut().then(() => {
                 window.location.href = "/login.html";
