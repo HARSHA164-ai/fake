@@ -174,7 +174,7 @@
         <section id="coursesSection" style="display: none;">
             <h2>Courses</h2>
             <input type="text" id="courseSearch" class="form-control mb-3" placeholder="Search courses...">
-            <div id="coursesList">Loading...</div>
+            <div id="coursesList" class="row">Loading...</div>
         </section>
 
         <section id="enrolledSection" style="display: none;">
@@ -251,7 +251,7 @@
                     }
                 }
             } else {
-                
+
                 window.location.href = "/login.html";
             }
         });
@@ -290,15 +290,20 @@
                     } else {
                         filtered.forEach(course => {
                             html += `
-                            <div class="course-card">
-                                <h5>${course.title}</h5>
-                                <p>${course.description}</p>
-                                <button class="btn btn-primary btn-sm btn-enroll"
-                                    onclick="requestEnrollment('${course.id}', '${course.title}')">
-                                    Request Enroll
-                                </button>
-                            </div>
-                        `;
+                    <div class="course-card card mb-3">
+                        <img src="${course.thumbnail}" class="card-img-top" alt="Thumbnail" 
+                             onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                        <div class="card-body">
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-text">${course.description}</p>
+                            <span class="badge bg-primary">${course.category}</span>
+                            <button class="btn btn-sm btn-primary float-end" 
+                                onclick="requestEnrollment('${course.id}', '${course.title}')">
+                                Request Enroll
+                            </button>
+                        </div>
+                    </div>
+                `;
                         });
                     }
                     container.innerHTML = html;
