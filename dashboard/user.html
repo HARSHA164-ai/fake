@@ -319,6 +319,9 @@
             });
         }
 
+        const course = courseDoc.data();
+
+
         async function loadEnrolledCourses(user) {
             const container = document.getElementById("enrolledCoursesContainer");
             container.innerHTML = ""; // ✅ Clear first
@@ -337,19 +340,23 @@
                 const request = doc.data();
                 const courseDoc = await db.collection("courses").doc(request.courseId).get();
                 const course = courseDoc.data();
+
+                if (!course) return ''; // 🔐 Skip if course doesn't exist
+
                 return `
-            <div class="col-md-4">
-                <div class="card course-card">
-                    <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
-                    <div class="card-body">
-                        <h5 class="card-title">${course.title}</h5>
-                        <p class="card-text">${course.description}</p>
-                        <a href="${course.courseLink}" class="btn btn-sm btn-success" target="_blank">Go to Course</a>
-                    </div>
+        <div class="col-md-4">
+            <div class="card course-card">
+                <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                <div class="card-body">
+                    <h5 class="card-title">${course.title}</h5>
+                    <p class="card-text">${course.description}</p>
+                    <a href="${course.courseLink}" class="btn btn-sm btn-success" target="_blank">Go to Course</a>
                 </div>
             </div>
-        `;
+        </div>
+    `;
             }));
+
 
             container.innerHTML = courseCards.join("");
         }
