@@ -222,7 +222,7 @@
                     const role = doc.data().role;
                     if (role === "admin") window.location.href = "/dashboard/admin.html";
                     else if (role === "employer") window.location.href = "/dashboard/employer.html";
-                    else window.location.href = "/user-dashboard/user.html";
+                    else window.location.href = "/dashboard/user.html";
                 })
                 .catch(error => showMessage("error", "Login failed: " + error.message));
         }
@@ -290,7 +290,7 @@
                         const role = doc.data()?.role || "user";
                         if (role === "admin") window.location.href = "/dashboard/admin.html";
                         else if (role === "employer") window.location.href = "/dashboard/employer.html";
-                        else window.location.href = "/user-dashboard/user.html";
+                        else window.location.href = "/dashboard/user.html";
                     });
                 })
                 .catch(error => {
