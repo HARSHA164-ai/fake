@@ -229,7 +229,7 @@
                 document.getElementById("userName").textContent = user.name || "User";
                 document.getElementById("userEmail").textContent = user.email;
 
-               
+
             } else {
 
                 window.location.href = "/login.html";
@@ -302,7 +302,9 @@
             }
             db.collection("course_requests").add({
                 userId: user.uid,
+                email: user.email,                      // ✅ Add this
                 courseId: courseId,
+                courseTitle: courseTitle,               // ✅ Add this
                 status: "pending",
                 requestedAt: new Date()
             }).then(() => {
@@ -314,7 +316,7 @@
         }
 
         function loadEnrolledCourses(user) {
-         const container = document.getElementById("enrolledCoursesContainer");
+            const container = document.getElementById("enrolledCoursesContainer");
             db.collection("course_requests")
                 .where("userId", "==", user.uid)
                 .where("status", "==", "approved")
@@ -359,6 +361,9 @@
                 link.classList.add("active");
             }
         });
+
+
+        console.log("Loading course for:", request.courseId);
 
     </script>
 
