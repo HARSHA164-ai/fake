@@ -233,11 +233,11 @@
                 const userDoc = await db.collection("users").doc(user.uid).get();
                 const userData = userDoc.data();
 
-                if (!user.phoneNumber && (!userData || !userData.phoneNumber)) {
-                    const phone = prompt("Please enter your phone number (required):");
+                if (!user.phone && (!userData || !userData.phoneNumber)) {
+                    const phoneNumber = prompt("Please enter your phone number (required):");
                     if (phone) {
                         db.collection("users").doc(user.uid).set({
-                            phoneNumber: phone,
+                            phone: phoneNumber,
                             email: user.email,
                             name: user.displayName || "User"
                         }, { merge: true }).then(() => {
@@ -366,7 +366,7 @@
                     });
                 });
         }
-        
+
         document.getElementById("logoutBtn").addEventListener("click", () => {
             firebase.auth().signOut().then(() => {
                 window.location.href = "/login.html";
