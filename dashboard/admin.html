@@ -232,23 +232,17 @@
             const sections = document.querySelectorAll(".main-content > div");
             sections.forEach(sec => sec.classList.add("hidden"));
             document.getElementById(sectionId).classList.remove("hidden");
-            if (sectionId === 'coursesSection') {
-                loadCourses();
-            }
-            if (sectionId === 'usersSection') {
-                loadUsers();
-            }
-            if (sectionId === 'enrollSection') {
-                loadEnrollments();
-            }
+
             if (sectionId === 'coursesSection') {
                 loadCourses();
                 populateCourseDropdown();
+            } else if (sectionId === 'usersSection') {
+                loadUsers();
+            } else if (sectionId === 'enrollSection') {
+                loadEnrollments();
             }
-
-
-
         }
+
 
         document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
             e.preventDefault();
