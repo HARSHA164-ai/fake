@@ -126,9 +126,8 @@
                     <input type="url" id="courseLink" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="thumbnailLink" class="form-label">Thumbnail Google Drive Link</label>
-                    <input type="url" id="thumbnailLink" class="form-control"
-                        placeholder="Paste full Google Drive URL here" required>
+                    <label for="thumbnailFile" class="form-label">Upload Thumbnail Image</label>
+                    <input type="file" id="thumbnailFile" class="form-control" accept="image/*" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Course</button>
             </form>
@@ -151,6 +150,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
 
     <script>
         const firebaseConfig = {
@@ -202,13 +203,18 @@
             const description = document.getElementById("description").value;
             const category = document.getElementById("category").value;
             const courseLink = document.getElementById("courseLink").value;
-            const thumbnailLink = document.getElementById("thumbnailLink").value;
-            const match = thumbnailLink.match(/\/d\/([^/]+)\/view/);
-            const fileId = match ? match[1] : null;
-            const thumbnailUrl = fileId ? `https://drive.google.com/uc?export=download&id=${fileId}` : "";
+            const thumbnailFile = document.getElementById("thumbnailFile").files[0];
 
+            if (!thumbnailFile) {
+                alert("Please select an image file.");
+                return;
+            }
 
             try {
+                const storageRef = firebase.storage().ref(`course-thumbnails/${Date.now()}_${thumbnailFile.name}`);
+                const snapshot = await storageRef.put(thumbnailFile);
+                const thumbnailUrl = await snapshot.ref.getDownloadURL();
+
                 await db.collection("courses").add({
                     title,
                     description,
@@ -217,6 +223,7 @@
                     thumbnail: thumbnailUrl,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
+
                 document.getElementById("courseMsg").innerHTML = `<div class='alert alert-success'>Course added successfully!</div>`;
                 e.target.reset();
                 loadCourses();
@@ -225,6 +232,7 @@
                 document.getElementById("courseMsg").innerHTML = `<div class='alert alert-danger'>Error adding course. Try again later.</div>`;
             }
         });
+
 
         async function loadCourses() {
             const courseList = document.getElementById("courseList");
