@@ -86,6 +86,7 @@
         <a href="#" onclick="showSection('courses')">Manage Courses</a>
         <a href="#" onclick="showSection('users')">User Roles</a>
         <a href="#" onclick="showSection('enrollmentApprovalSection')">Approve Enrollments</a>
+        <a href="#" onclick="showSection('approvedEnrollmentsSection')">View Approved Enrollments</a>
         <a href="#" onclick="logout()" class="text-danger">Logout</a>
     </div>
     <div class="main-content" id="mainContent">
@@ -113,6 +114,10 @@
     <div id="enrollmentApprovalSection" class="hidden">
         <h3>Approve Enrollment Requests</h3>
         <div id="pendingRequests">Loading...</div>
+    </div>
+    <div id="approvedEnrollmentsSection" class="hidden">
+        <h3>Approved Enrollments</h3>
+        <div id="approvedRequests">Loading...</div>
     </div>
 
     </div>
@@ -196,6 +201,7 @@
             });
         }
 
+
         async function deleteCourse(courseId) {
             if (confirm("Delete this course?")) {
                 await db.collection("courses").doc(courseId).delete();
@@ -263,13 +269,40 @@
             }
         }
 
+        async function loadApprovedEnrollments() {
+            const container = document.getElementById("approvedRequests");
+            container.innerHTML = "Loading...";
+            const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
+
+            if (snapshot.empty) {
+                container.innerHTML = "<p>No approved enrollments.</p>";
+                return;
+            }
+
+            let html = `<table class="table table-bordered">
+<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr></thead><tbody>`;
+
+            for (const doc of snapshot.docs) {
+                const data = doc.data();
+                const userSnap = await db.collection("users").doc(data.userId).get();
+                const courseSnap = await db.collection("courses").doc(data.courseId).get();
+                const user = userSnap.exists ? userSnap.data() : {};
+                const course = courseSnap.exists ? courseSnap.data() : {};
+
+                html += `<tr><td>${user.name || "Unknown"}</td><td>${user.email || "Unknown"}</td><td>${user.phoneNumber || "Unknown"}</td><td>${course.title || "Unknown"}</td></tr>`;
+            }
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
 
         function logout() {
             alert("Logging out...");
             firebase.auth().signOut().then(() => {
                 window.location.href = "/login.html";
             });
-            // add Firebase signOut logic here if needed
+
         }
     </script>
 </body>
