@@ -36,7 +36,13 @@
             top: 60px;
             bottom: 0;
             padding-top: 1rem;
+            transform: translateX(0);
             transition: transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar.hide {
+            transform: translateX(-100%);
         }
 
         .sidebar a {
@@ -55,6 +61,11 @@
         .main-content {
             margin-left: 240px;
             padding: 80px 20px 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.full {
+            margin-left: 0;
         }
 
         .sidebar {
@@ -74,7 +85,6 @@
             }
 
             .main-content {
-                margin-left: 0;
                 padding: 80px 10px 20px;
             }
         }
@@ -191,8 +201,25 @@
         const auth = firebase.auth();
 
         document.getElementById("toggleSidebar").addEventListener("click", () => {
-            document.getElementById("sidebar").classList.toggle("show");
+            const sidebar = document.getElementById("sidebar");
+            const content = document.querySelector(".main-content");
+
+            sidebar.classList.toggle("hide");
+            content.classList.toggle("full");
         });
+
+        document.querySelectorAll(".sidebar a").forEach(link => {
+            link.addEventListener("click", () => {
+                const sidebar = document.getElementById("sidebar");
+                const content = document.querySelector(".main-content");
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add("hide");
+                    content.classList.add("full");
+                }
+            });
+        });
+
+
 
         function showSection(id) {
             document.querySelectorAll(".main-content > div").forEach(el => el.classList.add("hidden"));
