@@ -19,7 +19,7 @@
 
     <style>
         body {
-            background-color: #f4f6f9;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
             padding: 15px;
         }
 
@@ -78,15 +78,12 @@
             border: 1px solid #e0a5a5;
         }
 
+
         .btn-google {
-            margin-top: 10px;
+
             background: white;
             border: 1px solid #ccc;
             color: #444;
-        }
-
-        .btn-google i {
-            margin-right: 8px;
         }
 
         .btn-google:hover {
@@ -105,13 +102,19 @@
 <body>
 
     <div class="auth-box">
-        <ul class="nav nav-tabs mb-3" id="authTab" role="tablist">
+        <div class="text-center mb-4">
+            <img src="your-logo.png" alt="Andhra Developers Logo" width="80">
+            <h4 class="mt-2 fw-bold">Andhra Developers</h4>
+            <p class="text-muted">Login or create a new account</p>
+        </div>
+
+        <ul class="nav nav-pills justify-content-center mb-3" id="authTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login"
+                <button class="nav-link active rounded-pill" id="login-tab" data-bs-toggle="tab" data-bs-target="#login"
                     type="button">Login</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup"
+                <button class="nav-link rounded-pill" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup"
                     type="button">Sign Up</button>
             </li>
         </ul>
@@ -119,37 +122,62 @@
         <div class="tab-content" id="authTabContent">
             <!-- Login Tab -->
             <div class="tab-pane fade show active" id="login" role="tabpanel">
-                <input type="email" id="loginEmail" class="form-control mb-3" placeholder="Email">
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Email">
+                </div>
                 <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     <input type="password" id="loginPassword" class="form-control" placeholder="Password">
                     <span class="input-group-text" onclick="togglePassword('loginPassword', this)"><i
                             class="fas fa-eye"></i></span>
                 </div>
                 <a href="#" class="forgot-password" onclick="resetPassword()">Forgot Password?</a>
                 <div id="messageBox"></div>
-                <button class="btn btn-custom w-100" onclick="login()">Login</button>
-                <button class="btn btn-google w-100" onclick="signInWithGoogle()"><i class="fab fa-google"></i> Sign in
-                    with Google</button>
+                <div id="loadingSpinner" class="text-center my-2" style="display:none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-custom" onclick="login()">Login</button>
+                    <button class="btn btn-google" onclick="signInWithGoogle()">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                </div>
             </div>
 
             <!-- Sign Up Tab -->
             <div class="tab-pane fade" id="signup" role="tabpanel">
-                <input type="text" id="signupName" class="form-control mb-3" placeholder="Full Name">
-                <input type="tel" id="signupPhone" class="form-control mb-3" placeholder="Phone Number">
-                <input type="email" id="signupEmail" class="form-control mb-3" placeholder="Email">
                 <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" id="signupName" class="form-control" placeholder="Full Name">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="tel" id="signupPhone" class="form-control" placeholder="Phone Number">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" id="signupEmail" class="form-control" placeholder="Email">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     <input type="password" id="signupPassword" class="form-control" placeholder="Password">
                     <span class="input-group-text" onclick="togglePassword('signupPassword', this)"><i
                             class="fas fa-eye"></i></span>
                 </div>
                 <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
                     <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password"
                         oninput="checkPasswordMatch()">
                     <span class="input-group-text" onclick="togglePassword('confirmPassword', this)"><i
                             class="fas fa-eye"></i></span>
                 </div>
                 <div id="passwordMessage" style="font-size: 0.9rem; margin-bottom: 10px;"></div>
-                <button class="btn btn-custom w-100" onclick="signUp()">Sign Up</button>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-custom" onclick="signUp()">Sign Up</button>
+                </div>
             </div>
         </div>
     </div>
@@ -173,12 +201,10 @@
             const icon = el.querySelector('i');
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
             } else {
                 input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
             }
         }
 
@@ -212,19 +238,22 @@
         function login() {
             const email = document.getElementById("loginEmail").value;
             const password = document.getElementById("loginPassword").value;
+            document.getElementById("loadingSpinner").style.display = 'block';
 
             auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    const uid = userCredential.user.uid;
-                    return db.collection("users").doc(uid).get();
-                })
+                .then(userCredential => db.collection("users").doc(userCredential.user.uid).get())
                 .then(doc => {
+                    document.getElementById("loadingSpinner").style.display = 'none';
                     const role = doc.data().role;
                     if (role === "admin") window.location.href = "/dashboard/admin.html";
                     else if (role === "faculty") window.location.href = "/dashboard/Faculty.html";
                     else window.location.href = "/dashboard/user.html";
                 })
-                .catch(error => showMessage("error", "Login failed: " + error.message));
+                .catch(error => {
+                    document.getElementById("loadingSpinner").style.display = 'none';
+                    console.error("Login error:", error);
+                    showMessage("error", "Login failed: " + error.message);
+                });
         }
 
         function signUp() {
@@ -243,17 +272,17 @@
                 .then(userCredential => {
                     const uid = userCredential.user.uid;
                     return db.collection("users").doc(uid).set({
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        role: "user"
+                        name, phone, email, role: "user"
                     });
                 })
                 .then(() => {
                     showMessage("success", "Sign up successful! Please log in.");
                     document.getElementById("login-tab").click();
                 })
-                .catch(error => showMessage("error", "Sign up failed: " + error.message));
+                .catch(error => {
+                    console.error("Signup error:", error);
+                    showMessage("error", "Sign up failed: " + error.message);
+                });
         }
 
         function resetPassword() {
@@ -265,7 +294,10 @@
 
             auth.sendPasswordResetEmail(email)
                 .then(() => showMessage("success", "Password reset email sent!"))
-                .catch(error => showMessage("error", "Failed to send reset email: " + error.message));
+                .catch(error => {
+                    console.error("Reset password error:", error);
+                    showMessage("error", "Failed to send reset email: " + error.message);
+                });
         }
 
         function signInWithGoogle() {
@@ -326,12 +358,12 @@
             else if (role === "faculty") window.location.href = "/dashboard/Faculty.html";
             else window.location.href = "/dashboard/user.html";
         }
-
-
+        
     </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Phone Number Modal -->
     <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
         <div class="modal-dialog">
