@@ -155,8 +155,9 @@
     </div>
     <div id="users" class="hidden">
         <h3>Manage User Roles (User/Faculty)</h3>
-        <!-- Display list of users with role dropdown -->
+        <div id="userRoleList">Loading users...</div>
     </div>
+
     <div id="enrollmentApprovalSection" class="hidden">
         <h3>Approve Enrollment Requests</h3>
         <div id="pendingRequests">Loading...</div>
@@ -200,6 +201,7 @@
             document.getElementById(sectionId).classList.remove("hidden");
 
             if (sectionId === 'courses') loadCourses();
+            if (sectionId === 'users') loadUserRoles();
             if (sectionId === 'enrollmentApprovalSection') loadPendingRequests();
             if (sectionId === 'approvedEnrollmentsSection') loadApprovedEnrollments();
         }
@@ -349,6 +351,51 @@
 
             html += `</tbody></table>`;
             container.innerHTML = html;
+        }
+
+        async function loadUserRoles() {
+            const container = document.getElementById("userRoleList");
+            container.innerHTML = "Loading users...";
+
+            const snapshot = await db.collection("users").get();
+
+            if (snapshot.empty) {
+                container.innerHTML = "<p>No users found.</p>";
+                return;
+            }
+
+            let html = `<table class="table table-bordered table-striped table-hover">
+        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Change Role</th></tr></thead><tbody>`;
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                html += `<tr>
+            <td>${data.name || 'Unknown'}</td>
+            <td>${data.email || 'Unknown'}</td>
+            <td>${data.phone || 'Unknown'}</td>
+            <td>${data.role || 'user'}</td>
+            <td>
+                <select class="form-select form-select-sm" onchange="updateUserRole('${doc.id}', this.value)">
+                    <option value="user" ${data.role === 'user' ? 'selected' : ''}>User</option>
+                    <option value="faculty" ${data.role === 'faculty' ? 'selected' : ''}>Faculty</option>
+                </select>
+            </td>
+        </tr>`;
+            });
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        async function updateUserRole(userId, newRole) {
+            try {
+                await db.collection("users").doc(userId).update({ role: newRole });
+                alert("✅ Role updated successfully.");
+                loadUserRoles(); // Refresh the list
+            } catch (error) {
+                console.error("Error updating role:", error);
+                alert("❌ Failed to update role.");
+            }
         }
 
 
