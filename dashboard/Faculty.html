@@ -57,6 +57,11 @@
             padding: 80px 20px 20px;
         }
 
+        .sidebar {
+            transform: translateX(0);
+        }
+
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -169,6 +174,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
@@ -354,6 +361,16 @@
             auth.signOut().then(() => window.location.href = "/login.html");
         }
     </script>
+    <script>
+        document.querySelectorAll(".sidebar a").forEach(link => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 768) {
+                    document.getElementById("sidebar").classList.remove("show");
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
