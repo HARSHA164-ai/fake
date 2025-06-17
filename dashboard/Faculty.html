@@ -370,19 +370,43 @@
         async function loadApprovedEnrollments() {
             const container = document.getElementById("approvedRequests");
             const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
-            if (snapshot.empty) return container.innerHTML = "<p>No approved enrollments.</p>";
-            let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th></tr></thead><tbody>`;
+
+            if (snapshot.empty) {
+                container.innerHTML = "<p>No approved enrollments.</p>";
+                return;
+            }
+
+            let html = `<table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
             for (const doc of snapshot.docs) {
                 const d = doc.data();
                 const userSnap = await db.collection("users").doc(d.userId).get();
                 const courseSnap = await db.collection("courses").doc(d.courseId).get();
                 const user = userSnap.data() || {};
                 const course = courseSnap.data() || {};
-                html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td></tr>`;
+
+                html += `
+            <tr>
+                <td>${user.name || "N/A"}</td>
+                <td>${user.email || "N/A"}</td>
+                <td>${user.phone || "N/A"}</td>
+                <td>${course.title || "N/A"}</td>
+            </tr>`;
             }
+
             html += `</tbody></table>`;
             container.innerHTML = html;
         }
+
 
         function logout() {
             auth.signOut().then(() => window.location.href = "/login.html");
