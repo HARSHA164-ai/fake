@@ -73,7 +73,6 @@
         .card {
             margin-bottom: 1rem;
         }
-        
     </style>
 </head>
 
@@ -196,11 +195,11 @@
                 const c = doc.data();
                 const html = `
                 <div class="card">
-                    <div class="card-body">
+                   
                         <img src="${c.thumbnail}" alt="Thumbnail" class="card-img-top thumbnail-img"
      onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
 
-          <div class="card-body">
+        
                         <h5>${c.title}</h5>
                         <p>${c.description}</p>
                         <p><strong>Category:</strong> ${c.category}</p>
