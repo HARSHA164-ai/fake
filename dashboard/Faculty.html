@@ -211,6 +211,9 @@
 
         function logout() {
             alert("Logging out...");
+            firebase.auth().signOut().then(() => {
+                window.location.href = "/login.html";
+            });
             // add Firebase signOut logic here if needed
         }
     </script>
