@@ -152,11 +152,17 @@
             const sections = document.querySelectorAll(".main-content > div");
             sections.forEach(div => div.classList.add("hidden"));
             document.getElementById(sectionId).classList.remove("hidden");
+
+            if (sectionId === 'courses') loadCourses();
+            if (sectionId === 'enrollmentApprovalSection') loadPendingRequests();
+            if (sectionId === 'approvedEnrollmentsSection') loadApprovedEnrollments();
         }
+
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 loadPendingRequests(); // 👈 This loads requests after login
                 document.getElementById("dashboard").innerHTML = `Welcome, ${user.displayName || 'Faculty'}<br><small>${user.email}</small>`;
+                loadCourses();
 
             } else {
                 alert("Please login.");
@@ -289,7 +295,7 @@
                 const user = userSnap.exists ? userSnap.data() : {};
                 const course = courseSnap.exists ? courseSnap.data() : {};
 
-                html += `<tr><td>${user.name || "Unknown"}</td><td>${user.email || "Unknown"}</td><td>${user.phoneNumber || "Unknown"}</td><td>${course.title || "Unknown"}</td></tr>`;
+                html += `<tr><td>${user.name || "Unknown"}</td><td>${user.email || "Unknown"}</td><td>${user.phone || "Unknown"}</td><td>${course.title || "Unknown"}</td></tr>`;
             }
 
             html += `</tbody></table>`;
