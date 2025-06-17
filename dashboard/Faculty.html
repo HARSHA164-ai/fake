@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard | Andhra Developers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            height: 60px;
+            background-color: #343a40;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar a {
+            display: block;
+            color: #ddd;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 80px 20px 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.hidden+.main-content {
+            margin-left: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .card {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Faculty Dashboard</span>
+        <span>Andhra Developers</span>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('courses')">Manage Courses</a>
+        <a href="#" onclick="showSection('users')">User Roles</a>
+        <a href="#" onclick="showSection('enrollmentApprovalSection')">Approve Enrollments</a>
+        <a href="#" onclick="logout()" class="text-danger">Logout</a>
+    </div>
+    <div class="main-content" id="mainContent">
+        <div id="dashboard">Welcome, Faculty</div>
+        <div id="courses" class="hidden">
+            <h3>Manage Courses</h3>
+            <!-- Add/Edit/Delete Courses code here -->
+        </div>
+        <div id="users" class="hidden">
+            <h3>Manage User Roles (User/Faculty)</h3>
+            <!-- Display list of users with role dropdown -->
+        </div>
+        <div id="enrollmentApprovalSection" class="hidden">
+            <h3>Approve Enrollment Requests</h3>
+            <div id="pendingRequests">Loading...</div>
+        </div>
+
+    </div>
+
+    <!-- Toggle Sidebar Script -->
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.getElementById("sidebar").classList.toggle("hidden");
+            document.getElementById("mainContent").classList.toggle("sidebar-hidden");
+        });
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll(".main-content > div");
+            sections.forEach(div => div.classList.add("hidden"));
+            document.getElementById(sectionId).classList.remove("hidden");
+        }
+
+        async function loadPendingRequests() {
+            const container = document.getElementById("pendingRequests");
+            container.innerHTML = "Loading...";
+
+            const snapshot = await db.collection("course_requests").where("status", "==", "pending").get();
+
+            if (snapshot.empty) {
+                container.innerHTML = "<p>No pending requests.</p>";
+                return;
+            }
+
+            let html = `<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Course</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+            for (const doc of snapshot.docs) {
+                const data = doc.data();
+                const userSnap = await db.collection("users").doc(data.userId).get();
+                const courseSnap = await db.collection("courses").doc(data.courseId).get();
+
+                const user = userSnap.exists ? userSnap.data() : {};
+                const course = courseSnap.exists ? courseSnap.data() : {};
+
+                html += `
+      <tr>
+        <td>${user.name || "Unknown"}</td>
+        <td>${user.email || "Unknown"}</td>
+        <td>${user.phoneNumber || "Unknown"}</td>
+        <td>${course.title || "Unknown"}</td>
+        <td><button class="btn btn-success btn-sm" onclick="approveRequest('${doc.id}')">Approve</button></td>
+      </tr>
+    `;
+            }
+
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+
+        function logout() {
+            alert("Logging out...");
+            // add Firebase signOut logic here if needed
+        }
+    </script>
+</body>
+
+</html>
