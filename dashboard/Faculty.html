@@ -1,209 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Faculty Dashboard | Andhra Developers</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty Dashboard | Andhra Developers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
 
-    .header {
-      height: 60px;
-      background-color: #1d3557;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
+        .header {
+            height: 60px;
+            background-color: #1d3557;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-    .sidebar {
-      width: 240px;
-      background-color: #343a40;
-      color: #fff;
-      position: fixed;
-      top: 60px;
-      bottom: 0;
-      padding-top: 1rem;
-      transition: transform 0.3s ease;
-    }
+        .sidebar {
+            width: 240px;
+            background-color: #343a40;
+            color: #fff;
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            padding-top: 1rem;
+            transition: transform 0.3s ease;
+        }
 
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      padding: 12px 20px;
-      text-decoration: none;
-      transition: background 0.2s ease;
-    }
+        .sidebar a {
+            display: block;
+            color: #ccc;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
 
-    .sidebar a:hover {
-      background-color: #495057;
-      color: #fff;
-    }
+        .sidebar a:hover {
+            background-color: #495057;
+            color: #fff;
+        }
 
-    .main-content {
-      margin-left: 240px;
-      padding: 80px 20px 20px;
-    }
+        .main-content {
+            margin-left: 240px;
+            padding: 80px 20px 20px;
+        }
 
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        z-index: 999;
-      }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 999;
+            }
 
-      .sidebar.show {
-        transform: translateX(0);
-      }
+            .sidebar.show {
+                transform: translateX(0);
+            }
 
-      .main-content {
-        margin-left: 0;
-        padding: 80px 10px 20px;
-      }
-    }
+            .main-content {
+                margin-left: 0;
+                padding: 80px 10px 20px;
+            }
+        }
 
-    .card {
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
 
-    .user-card {
-      background-color: #ffffff;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
-    }
+        .user-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
 
-    .user-card:hover {
-      transform: translateY(-4px);
-    }
+        .user-card:hover {
+            transform: translateY(-4px);
+        }
 
-    .hidden { display: none; }
-  </style>
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="header">
-  <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Faculty Dashboard</span>
-  <span>Andhra Developers</span>
-</div>
+    <div class="header">
+        <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Faculty Dashboard</span>
+        <span>Andhra Developers</span>
+    </div>
 
-<div class="sidebar" id="sidebar">
-  <a href="#" onclick="showSection('dashboard')"><i class="fas fa-home me-2"></i>Dashboard</a>
-  <a href="#" onclick="showSection('courses')"><i class="fas fa-book me-2"></i>Manage Courses</a>
-  <a href="#" onclick="showSection('users')"><i class="fas fa-users-cog me-2"></i>User Roles</a>
-  <a href="#" onclick="showSection('enrollmentApprovalSection')"><i class="fas fa-check me-2"></i>Approve Enrollments</a>
-  <a href="#" onclick="showSection('approvedEnrollmentsSection')"><i class="fas fa-eye me-2"></i>Approved Enrollments</a>
-  <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
-</div>
+    <div class="sidebar" id="sidebar">
+        <a href="#" onclick="showSection('dashboard')"><i class="fas fa-home me-2"></i>Dashboard</a>
+        <a href="#" onclick="showSection('courses')"><i class="fas fa-book me-2"></i>Manage Courses</a>
+        <a href="#" onclick="showSection('users')"><i class="fas fa-users-cog me-2"></i>User Roles</a>
+        <a href="#" onclick="showSection('enrollmentApprovalSection')"><i class="fas fa-check me-2"></i>Approve
+            Enrollments</a>
+        <a href="#" onclick="showSection('approvedEnrollmentsSection')"><i class="fas fa-eye me-2"></i>Approved
+            Enrollments</a>
+        <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+    </div>
 
-<div class="main-content">
-  <div id="dashboard"><h2>Welcome, Faculty</h2></div>
+    <div class="main-content">
+        <div id="dashboard">
+            <h2>Welcome, Faculty</h2>
+        </div>
 
-  <div id="courses" class="hidden">
-    <h3>Manage Courses</h3>
-    <form id="addCourseForm" class="mb-4">
-      <input type="text" id="courseTitle" class="form-control mb-2" placeholder="Course Title" required>
-      <textarea id="courseDescription" class="form-control mb-2" placeholder="Course Description" required></textarea>
-      <input type="text" id="courseCategory" class="form-control mb-2" placeholder="Category" required>
-      <input type="url" id="courseLink" class="form-control mb-2" placeholder="Course Link" required>
-      <input type="url" id="thumbnailUrl" class="form-control mb-2" placeholder="Thumbnail Image URL" required>
-      <button class="btn btn-primary" type="submit">Add Course</button>
-    </form>
-    <div class="row" id="coursesList"></div>
-  </div>
+        <div id="courses" class="hidden">
+            <h3>Manage Courses</h3>
+            <form id="addCourseForm" class="mb-4">
+                <input type="text" id="courseTitle" class="form-control mb-2" placeholder="Course Title" required>
+                <textarea id="courseDescription" class="form-control mb-2" placeholder="Course Description"
+                    required></textarea>
+                <input type="text" id="courseCategory" class="form-control mb-2" placeholder="Category" required>
+                <input type="url" id="courseLink" class="form-control mb-2" placeholder="Course Link" required>
+                <input type="url" id="thumbnailUrl" class="form-control mb-2" placeholder="Thumbnail Image URL"
+                    required>
+                <button class="btn btn-primary" type="submit">Add Course</button>
+            </form>
+            <div class="row" id="coursesList"></div>
+        </div>
 
-  <div id="users" class="hidden">
-    <h3><i class="fas fa-user-cog me-2 text-primary"></i>Manage User Roles</h3>
-    <div class="row" id="userRoleList">Loading...</div>
-  </div>
+        <div id="users" class="hidden">
+            <h3>All Users and Role Management</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userRoleList"></tbody>
+                </table>
+            </div>
+        </div>
 
-  <div id="enrollmentApprovalSection" class="hidden">
-    <h3>Approve Enrollment Requests</h3>
-    <div id="pendingRequests">Loading...</div>
-  </div>
+        <div id="enrollmentApprovalSection" class="hidden">
+            <h3>Approve Enrollment Requests</h3>
+            <div id="pendingRequests">Loading...</div>
+        </div>
 
-  <div id="approvedEnrollmentsSection" class="hidden">
-    <h3>Approved Enrollments</h3>
-    <div id="approvedRequests">Loading...</div>
-  </div>
-</div>
+        <div id="approvedEnrollmentsSection" class="hidden">
+            <h3>Approved Enrollments</h3>
+            <div id="approvedRequests">Loading...</div>
+        </div>
+    </div>
 
-<!-- Firebase & JS -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
-  authDomain: "ad2026-b18de.firebaseapp.com",
-  projectId: "ad2026-b18de",
-  storageBucket: "ad2026-b18de.appspot.com",
-  messagingSenderId: "837618240318",
-  appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
-};
+    <!-- Firebase & JS -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
+            authDomain: "ad2026-b18de.firebaseapp.com",
+            projectId: "ad2026-b18de",
+            storageBucket: "ad2026-b18de.appspot.com",
+            messagingSenderId: "837618240318",
+            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
+        };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
-document.getElementById("toggleSidebar").addEventListener("click", () => {
-  document.getElementById("sidebar").classList.toggle("show");
-});
+        document.getElementById("toggleSidebar").addEventListener("click", () => {
+            document.getElementById("sidebar").classList.toggle("show");
+        });
 
-function showSection(id) {
-  document.querySelectorAll(".main-content > div").forEach(el => el.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  if (id === "courses") loadCourses();
-  if (id === "users") loadUserRoles();
-  if (id === "enrollmentApprovalSection") loadPendingRequests();
-  if (id === "approvedEnrollmentsSection") loadApprovedEnrollments();
-}
+        function showSection(id) {
+            document.querySelectorAll(".main-content > div").forEach(el => el.classList.add("hidden"));
+            document.getElementById(id).classList.remove("hidden");
+            if (id === "courses") loadCourses();
+            if (id === "users") loadUserRoles();
+            if (id === "enrollmentApprovalSection") loadPendingRequests();
+            if (id === "approvedEnrollmentsSection") loadApprovedEnrollments();
+        }
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById("dashboard").innerHTML = `<h2>Welcome, ${user.displayName || 'Faculty'} <br><small>${user.email}</small></h2>`;
-    loadCourses();
-  } else {
-    window.location.href = "/login.html";
-  }
-});
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                document.getElementById("dashboard").innerHTML = `<h2>Welcome, ${user.displayName || 'Faculty'} <br><small>${user.email}</small></h2>`;
+                loadCourses();
+            } else {
+                window.location.href = "/login.html";
+            }
+        });
 
-document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const title = courseTitle.value;
-  const description = courseDescription.value;
-  const category = courseCategory.value;
-  const courseLink = courseLink.value;
-  const thumbnail = thumbnailUrl.value;
+        document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const title = courseTitle.value;
+            const description = courseDescription.value;
+            const category = courseCategory.value;
+            const courseLink = courseLink.value;
+            const thumbnail = thumbnailUrl.value;
 
-  await db.collection("courses").add({
-    title, description, category, courseLink, thumbnail,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-  e.target.reset();
-  loadCourses();
-});
+            await db.collection("courses").add({
+                title, description, category, courseLink, thumbnail,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            e.target.reset();
+            loadCourses();
+        });
 
-async function loadCourses() {
-  const container = document.getElementById("coursesList");
-  container.innerHTML = "";
-  const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
-  snapshot.forEach(doc => {
-    const c = doc.data();
-    container.innerHTML += `
+        async function loadCourses() {
+            const container = document.getElementById("coursesList");
+            container.innerHTML = "";
+            const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
+            snapshot.forEach(doc => {
+                const c = doc.data();
+                container.innerHTML += `
     <div class="col-md-4 mb-3">
       <div class="card">
         <img src="${c.thumbnail}" class="card-img-top" alt="Thumbnail" onerror="this.src='https://dummyimage.com/300x180/ccc/000&text=No+Image'">
@@ -216,25 +243,25 @@ async function loadCourses() {
         </div>
       </div>
     </div>`;
-  });
-}
+            });
+        }
 
-async function deleteCourse(id) {
-  if (confirm("Delete course?")) {
-    await db.collection("courses").doc(id).delete();
-    loadCourses();
-  }
-}
+        async function deleteCourse(id) {
+            if (confirm("Delete course?")) {
+                await db.collection("courses").doc(id).delete();
+                loadCourses();
+            }
+        }
 
-async function loadUserRoles() {
-  const container = document.getElementById("userRoleList");
-  container.innerHTML = "";
-  const snapshot = await db.collection("users").get();
+        async function loadUserRoles() {
+            const container = document.getElementById("userRoleList");
+            container.innerHTML = "";
+            const snapshot = await db.collection("users").get();
 
-  snapshot.forEach(doc => {
-    const d = doc.data();
-    const role = d.role || "user";
-    container.innerHTML += `
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                const role = d.role || "user";
+                container.innerHTML += `
     <div class="col-md-4 mb-3">
       <div class="user-card">
         <h5>${d.name || "Unnamed"}</h5>
@@ -247,60 +274,61 @@ async function loadUserRoles() {
         </select>
       </div>
     </div>`;
-  });
-}
+            });
+        }
 
-async function updateUserRole(id, role) {
-  await db.collection("users").doc(id).update({ role });
-  alert("Role updated!");
-  loadUserRoles();
-}
+        async function updateUserRole(id, role) {
+            await db.collection("users").doc(id).update({ role });
+            alert("Role updated!");
+            loadUserRoles();
+        }
 
-async function loadPendingRequests() {
-  const container = document.getElementById("pendingRequests");
-  container.innerHTML = "Loading...";
-  const snapshot = await db.collection("course_requests").where("status", "==", "pending").get();
-  if (snapshot.empty) return container.innerHTML = "<p>No pending requests.</p>";
+        async function loadPendingRequests() {
+            const container = document.getElementById("pendingRequests");
+            container.innerHTML = "Loading...";
+            const snapshot = await db.collection("course_requests").where("status", "==", "pending").get();
+            if (snapshot.empty) return container.innerHTML = "<p>No pending requests.</p>";
 
-  let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th><th>Action</th></tr></thead><tbody>`;
-  for (const doc of snapshot.docs) {
-    const d = doc.data();
-    const userSnap = await db.collection("users").doc(d.userId).get();
-    const courseSnap = await db.collection("courses").doc(d.courseId).get();
-    const user = userSnap.data() || {};
-    const course = courseSnap.data() || {};
-    html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td><td><button class="btn btn-success btn-sm" onclick="approveRequest('${doc.id}')">Approve</button></td></tr>`;
-  }
-  html += `</tbody></table>`;
-  container.innerHTML = html;
-}
+            let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th><th>Action</th></tr></thead><tbody>`;
+            for (const doc of snapshot.docs) {
+                const d = doc.data();
+                const userSnap = await db.collection("users").doc(d.userId).get();
+                const courseSnap = await db.collection("courses").doc(d.courseId).get();
+                const user = userSnap.data() || {};
+                const course = courseSnap.data() || {};
+                html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td><td><button class="btn btn-success btn-sm" onclick="approveRequest('${doc.id}')">Approve</button></td></tr>`;
+            }
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
 
-async function approveRequest(id) {
-  await db.collection("course_requests").doc(id).update({ status: "approved" });
-  alert("Approved!");
-  loadPendingRequests();
-}
+        async function approveRequest(id) {
+            await db.collection("course_requests").doc(id).update({ status: "approved" });
+            alert("Approved!");
+            loadPendingRequests();
+        }
 
-async function loadApprovedEnrollments() {
-  const container = document.getElementById("approvedRequests");
-  const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
-  if (snapshot.empty) return container.innerHTML = "<p>No approved enrollments.</p>";
-  let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th></tr></thead><tbody>`;
-  for (const doc of snapshot.docs) {
-    const d = doc.data();
-    const userSnap = await db.collection("users").doc(d.userId).get();
-    const courseSnap = await db.collection("courses").doc(d.courseId).get();
-    const user = userSnap.data() || {};
-    const course = courseSnap.data() || {};
-    html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td></tr>`;
-  }
-  html += `</tbody></table>`;
-  container.innerHTML = html;
-}
+        async function loadApprovedEnrollments() {
+            const container = document.getElementById("approvedRequests");
+            const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
+            if (snapshot.empty) return container.innerHTML = "<p>No approved enrollments.</p>";
+            let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th></tr></thead><tbody>`;
+            for (const doc of snapshot.docs) {
+                const d = doc.data();
+                const userSnap = await db.collection("users").doc(d.userId).get();
+                const courseSnap = await db.collection("courses").doc(d.courseId).get();
+                const user = userSnap.data() || {};
+                const course = courseSnap.data() || {};
+                html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
 
-function logout() {
-  auth.signOut().then(() => window.location.href = "/login.html");
-}
-</script>
+        function logout() {
+            auth.signOut().then(() => window.location.href = "/login.html");
+        }
+    </script>
 </body>
+
 </html>
