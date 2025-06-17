@@ -208,16 +208,7 @@
             content.classList.toggle("full");
         });
 
-        document.querySelectorAll(".sidebar a").forEach(link => {
-            link.addEventListener("click", () => {
-                const sidebar = document.getElementById("sidebar");
-                const content = document.querySelector(".main-content");
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.add("hide");
-                    content.classList.add("full");
-                }
-            });
-        });
+        
 
 
 
