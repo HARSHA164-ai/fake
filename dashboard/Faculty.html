@@ -142,19 +142,16 @@
 
         <div id="users" class="hidden">
             <h3>All Users and Role Management</h3>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userRoleList"></tbody>
-                </table>
+            <div class="mb-3">
+                <label for="roleFilter" class="form-label">Filter by Role:</label>
+                <select class="form-select" id="roleFilter" onchange="loadUserRoles()">
+                    <option value="all">All</option>
+                    <option value="user">User</option>
+                    <option value="faculty">Faculty</option>
+                    <option value="admin">Admin</option>
+                </select>
             </div>
+
         </div>
 
         <div id="enrollmentApprovalSection" class="hidden">
@@ -255,6 +252,7 @@
 
         async function loadUserRoles() {
             const container = document.getElementById("userRoleList");
+            const roleFilter = document.getElementById("roleFilter").value;
             const snapshot = await db.collection("users").get();
 
             if (snapshot.empty) {
@@ -263,44 +261,52 @@
             }
 
             let html = `<table class="table table-striped table-bordered">
-<thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Role</th>
-  </tr>
-</thead>
-<tbody>`;
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>`;
 
             snapshot.forEach(doc => {
                 const d = doc.data();
                 const role = d.role || "user";
+
+                // Apply filter
+                if (roleFilter !== "all" && role !== roleFilter) return;
+
                 html += `
-  <tr>
-    <td>${d.name || "Unnamed"}</td>
-    <td>${d.email || "N/A"}</td>
-    <td>${d.phone || "N/A"}</td>
-    <td>
-      <select class="form-select" onchange="updateUserRole('${doc.id}', this.value)">
-        <option value="user" ${role === "user" ? "selected" : ""}>User</option>
-        <option value="faculty" ${role === "faculty" ? "selected" : ""}>Faculty</option>
-        <option value="admin" ${role === "admin" ? "selected" : ""}>Admin</option>
-      </select>
-    </td>
-  </tr>`;
+    <tr>
+      <td>${d.name || "Unnamed"}</td>
+      <td>${d.email || "N/A"}</td>
+      <td>${d.phone || "N/A"}</td>
+      <td>
+        <select class="form-select" onchange="updateUserRole('${doc.id}', this.value)">
+          <option value="user" ${role === "user" ? "selected" : ""}>User</option>
+          <option value="faculty" ${role === "faculty" ? "selected" : ""}>Faculty</option>
+          <option value="admin" ${role === "admin" ? "selected" : ""}>Admin</option>
+        </select>
+      </td>
+    </tr>`;
             });
 
             html += `</tbody></table>`;
             container.innerHTML = html;
-
         }
 
-        async function updateUserRole(id, role) {
-            await db.collection("users").doc(id).update({ role });
-            alert("Role updated!");
-            loadUserRoles();
+
+        async function updateUserRole(userId, newRole) {
+            try {
+                await db.collection("users").doc(userId).update({ role: newRole });
+                loadUserRoles(); // Refresh after role change
+            } catch (error) {
+                console.error("Error updating role:", error);
+            }
         }
+
 
         async function loadPendingRequests() {
             const container = document.getElementById("pendingRequests");
