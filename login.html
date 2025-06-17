@@ -275,32 +275,81 @@
                     const uid = result.user.uid;
                     const userRef = db.collection("users").doc(uid);
 
-                    userRef.get().then(doc => {
+                    return userRef.get().then(doc => {
                         if (!doc.exists) {
-                            userRef.set({
+                            return userRef.set({
                                 name: result.user.displayName,
                                 email: result.user.email,
                                 phone: result.user.phoneNumber || "",
                                 role: "user"
                             });
                         }
-
-                        return userRef.get();
-                    }).then(doc => {
-                        const role = doc.data()?.role || "user";
-                        if (role === "admin") window.location.href = "/dashboard/admin.html";
-                        else if (role === "faculty") window.location.href = "/dashboard/Faculty.html";
-                        else window.location.href = "/dashboard/user.html";
-                    });
+                    }).then(() => userRef.get())
+                        .then(doc => {
+                            const userData = doc.data();
+                            if (!userData.phone) {
+                                // Store UID temporarily and show phone modal
+                                window.tempUID = uid;
+                                const phoneModal = new bootstrap.Modal(document.getElementById('phoneModal'));
+                                phoneModal.show();
+                            } else {
+                                redirectToDashboard(userData.role);
+                            }
+                        });
                 })
-                .catch(error => {
-                    showMessage("error", "Google sign-in failed: " + error.message);
-                });
+                .catch(error => showMessage("error", "Google sign-in failed: " + error.message));
         }
+
+
+        function savePhoneNumber() {
+            const phone = document.getElementById("modalPhone").value.trim();
+            const errorBox = document.getElementById("phoneError");
+
+            if (!phone || phone.length < 8) {
+                errorBox.innerText = "Please enter a valid phone number.";
+                errorBox.style.display = "block";
+                return;
+            }
+
+            db.collection("users").doc(window.tempUID).update({ phone })
+                .then(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('phoneModal'));
+                    modal.hide();
+                    return db.collection("users").doc(window.tempUID).get();
+                })
+                .then(doc => redirectToDashboard(doc.data().role))
+                .catch(err => showMessage("error", "Failed to save phone number: " + err.message));
+        }
+
+        function redirectToDashboard(role) {
+            if (role === "admin") window.location.href = "/dashboard/admin.html";
+            else if (role === "faculty") window.location.href = "/dashboard/Faculty.html";
+            else window.location.href = "/dashboard/user.html";
+        }
+
+
     </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Phone Number Modal -->
+    <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="phoneModalLabel">Enter Your Phone Number</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="tel" id="modalPhone" class="form-control" placeholder="Phone Number">
+                    <div id="phoneError" class="text-danger small mt-2" style="display:none;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-custom" onclick="savePhoneNumber()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
