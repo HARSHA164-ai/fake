@@ -106,6 +106,25 @@
     </div>
 
     <!-- Toggle Sidebar Script -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
+            authDomain: "ad2026-b18de.firebaseapp.com",
+            projectId: "ad2026-b18de",
+            storageBucket: "ad2026-b18de.firebasestorage.app",
+            messagingSenderId: "837618240318",
+            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+    </script>
+
     <script>
         document.getElementById("toggleSidebar").addEventListener("click", () => {
             document.getElementById("sidebar").classList.toggle("hidden");
@@ -117,17 +136,20 @@
             sections.forEach(div => div.classList.add("hidden"));
             document.getElementById(sectionId).classList.remove("hidden");
         }
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                loadPendingRequests(); // 👈 This loads requests after login
+                document.getElementById("dashboard").innerHTML = `Welcome, ${user.displayName || 'Faculty'}<br><small>${user.email}</small>`;
+
+            } else {
+                alert("Please login.");
+                window.location.href = "/login.html";
+            }
+        });
 
 
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
-            authDomain: "ad2026-b18de.firebaseapp.com",
-            projectId: "ad2026-b18de",
-            storageBucket: "ad2026-b18de.firebasestorage.app",
-            messagingSenderId: "837618240318",
-            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
-        };
+
         async function loadPendingRequests() {
             const container = document.getElementById("pendingRequests");
             container.innerHTML = "Loading...";
@@ -172,6 +194,18 @@
 
             html += `</tbody></table>`;
             container.innerHTML = html;
+        }
+        async function approveRequest(requestId) {
+            try {
+                await db.collection("course_requests").doc(requestId).update({
+                    status: "approved"
+                });
+                alert("✅ Request approved!");
+                loadPendingRequests(); // Refresh table
+            } catch (err) {
+                console.error("❌ Error approving request:", err);
+                alert("Failed to approve request.");
+            }
         }
 
 
