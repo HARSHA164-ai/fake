@@ -1,412 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Dashboard | Andhra Developers</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faculty Dashboard | Andhra Developers</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+    }
 
-        .header {
-            height: 60px;
-            background-color: #343a40;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
+    .header {
+      height: 60px;
+      background-color: #1d3557;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-        .sidebar {
-            width: 240px;
-            height: 100vh;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            background-color: #212529;
-            color: #fff;
-            padding-top: 1rem;
-            transition: transform 0.3s ease;
-        }
+    .sidebar {
+      width: 240px;
+      background-color: #343a40;
+      color: #fff;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      padding-top: 1rem;
+      transition: transform 0.3s ease;
+    }
 
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
 
-        .sidebar a {
-            display: block;
-            color: #ddd;
-            padding: 12px 20px;
-            text-decoration: none;
-            transition: background 0.2s ease;
-        }
+    .sidebar a:hover {
+      background-color: #495057;
+      color: #fff;
+    }
 
-        .sidebar a:hover {
-            background-color: #495057;
-            color: #fff;
-        }
+    .main-content {
+      margin-left: 240px;
+      padding: 80px 20px 20px;
+    }
 
-        .main-content {
-            margin-left: 240px;
-            padding: 80px 20px 20px;
-            transition: margin-left 0.3s ease;
-        }
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 999;
+      }
 
-        .sidebar.hidden+.main-content {
-            margin-left: 0;
-        }
+      .sidebar.show {
+        transform: translateX(0);
+      }
 
-        .hidden {
-            display: none;
-        }
+      .main-content {
+        margin-left: 0;
+        padding: 80px 10px 20px;
+      }
+    }
 
-        .card {
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
 
-        .card img {
-            max-height: 180px;
-            object-fit: cover;
-            width: 100%;
-        }
+    .user-card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
 
-        .card-body {
-            padding: 1rem;
-        }
+    .user-card:hover {
+      transform: translateY(-4px);
+    }
 
-        .card h5 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                position: fixed;
-                z-index: 999;
-            }
-
-            .sidebar.visible {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-                padding: 80px 10px 20px;
-            }
-        }
-    </style>
+    .hidden { display: none; }
+  </style>
 </head>
-
 <body>
-    <div class="header">
-        <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Faculty Dashboard</span>
-        <span>Andhra Developers</span>
-    </div>
-    <div class="sidebar" id="sidebar">
-        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
-        <a href="#" onclick="showSection('courses')">Manage Courses</a>
-        <a href="#" onclick="showSection('users')">User Roles</a>
-        <a href="#" onclick="showSection('enrollmentApprovalSection')">Approve Enrollments</a>
-        <a href="#" onclick="showSection('approvedEnrollmentsSection')">View Approved Enrollments</a>
-        <a href="#" onclick="logout()" class="text-danger">Logout</a>
-    </div>
-    <div class="main-content" id="mainContent">
-        <div id="dashboard">Welcome, Faculty</div>
-        <div id="courses" class="hidden">
 
-            <h3>Manage Courses</h3>
-            <form id="addCourseForm">
-                <input type="text" id="courseTitle" class="form-control mb-2" placeholder="Course Title" required>
-                <textarea id="courseDescription" class="form-control mb-2" placeholder="Course Description"
-                    required></textarea>
-                <input type="text" id="courseCategory" class="form-control mb-2" placeholder="Category" required>
-                <input type="url" id="courseLink" class="form-control mb-2" placeholder="Course Link" required>
-                <input type="url" id="thumbnailUrl" class="form-control mb-2" placeholder="Thumbnail Image URL"
-                    required>
-                <button class="btn btn-primary" type="submit">Add Course</button>
-            </form>
-            <div class="row" id="coursesList">
-                <!-- Cards will be appended here -->
-            </div>
+<div class="header">
+  <span><i class="fas fa-bars" id="toggleSidebar" style="cursor:pointer;"></i> Faculty Dashboard</span>
+  <span>Andhra Developers</span>
+</div>
 
-        </div>
-    </div>
-    <div id="users" class="hidden">
-        <h3>Manage User Roles (User/Faculty)</h3>
-        <div id="userRoleList">Loading users...</div>
-    </div>
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="showSection('dashboard')"><i class="fas fa-home me-2"></i>Dashboard</a>
+  <a href="#" onclick="showSection('courses')"><i class="fas fa-book me-2"></i>Manage Courses</a>
+  <a href="#" onclick="showSection('users')"><i class="fas fa-users-cog me-2"></i>User Roles</a>
+  <a href="#" onclick="showSection('enrollmentApprovalSection')"><i class="fas fa-check me-2"></i>Approve Enrollments</a>
+  <a href="#" onclick="showSection('approvedEnrollmentsSection')"><i class="fas fa-eye me-2"></i>Approved Enrollments</a>
+  <a href="#" onclick="logout()" class="text-danger"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+</div>
 
-    <div id="enrollmentApprovalSection" class="hidden">
-        <h3>Approve Enrollment Requests</h3>
-        <div id="pendingRequests">Loading...</div>
-    </div>
-    <div id="approvedEnrollmentsSection" class="hidden">
-        <h3>Approved Enrollments</h3>
-        <div id="approvedRequests">Loading...</div>
-    </div>
+<div class="main-content">
+  <div id="dashboard"><h2>Welcome, Faculty</h2></div>
 
-
-
-    <!-- Toggle Sidebar Script -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
-            authDomain: "ad2026-b18de.firebaseapp.com",
-            projectId: "ad2026-b18de",
-            storageBucket: "ad2026-b18de.firebasestorage.app",
-            messagingSenderId: "837618240318",
-            appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-    </script>
-
-    <script>
-        document.getElementById("toggleSidebar").addEventListener("click", () => {
-            document.getElementById("sidebar").classList.toggle("hidden");
-            document.getElementById("mainContent").classList.toggle("sidebar-hidden");
-        });
-
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll(".main-content > div");
-            sections.forEach(div => div.classList.add("hidden"));
-            document.getElementById(sectionId).classList.remove("hidden");
-
-            if (sectionId === 'courses') loadCourses();
-            if (sectionId === 'users') loadUserRoles();
-            if (sectionId === 'enrollmentApprovalSection') loadPendingRequests();
-            if (sectionId === 'approvedEnrollmentsSection') loadApprovedEnrollments();
-        }
-
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                loadPendingRequests(); // 👈 This loads requests after login
-                document.getElementById("dashboard").innerHTML = `Welcome, ${user.displayName || 'Faculty'}<br><small>${user.email}</small>`;
-                loadCourses();
-
-            } else {
-                alert("Please login.");
-                window.location.href = "/login.html";
-            }
-        });
-
-
-        document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const title = document.getElementById("courseTitle").value;
-            const description = document.getElementById("courseDescription").value;
-            const category = document.getElementById("courseCategory").value;
-            const courseLink = document.getElementById("courseLink").value;
-            const thumbnail = document.getElementById("thumbnailUrl").value;
-
-            await db.collection("courses").add({
-                title, description, category, courseLink, thumbnail,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            e.target.reset();
-            loadCourses();
-        });
-
-        async function loadCourses() {
-            const container = document.getElementById("coursesList");
-            container.innerHTML = "";
-            const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
-            snapshot.forEach(doc => {
-                const c = doc.data();
-                const html = `
-                <div class="card col-md-4">
-    <img src="${c.thumbnail}" class="card-img-top" alt="Course Thumbnail"
-        onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
-    <div class="card-body">
-      <h5 class="card-title">${c.title}</h5>
-      <p class="card-text">${c.description}</p>
-      <p class="card-text"><strong>Category:</strong> ${c.category}</p>
-      <a href="${c.courseLink}" target="_blank" class="btn btn-primary btn-sm">View Course</a>
-      <button class="btn btn-danger btn-sm ms-2" onclick="deleteCourse('${doc.id}')">Delete</button>
-    </div>
+  <div id="courses" class="hidden">
+    <h3>Manage Courses</h3>
+    <form id="addCourseForm" class="mb-4">
+      <input type="text" id="courseTitle" class="form-control mb-2" placeholder="Course Title" required>
+      <textarea id="courseDescription" class="form-control mb-2" placeholder="Course Description" required></textarea>
+      <input type="text" id="courseCategory" class="form-control mb-2" placeholder="Category" required>
+      <input type="url" id="courseLink" class="form-control mb-2" placeholder="Course Link" required>
+      <input type="url" id="thumbnailUrl" class="form-control mb-2" placeholder="Thumbnail Image URL" required>
+      <button class="btn btn-primary" type="submit">Add Course</button>
+    </form>
+    <div class="row" id="coursesList"></div>
   </div>
-`;
-                container.innerHTML += html;
-            });
-        }
 
+  <div id="users" class="hidden">
+    <h3><i class="fas fa-user-cog me-2 text-primary"></i>Manage User Roles</h3>
+    <div class="row" id="userRoleList">Loading...</div>
+  </div>
 
-        async function deleteCourse(courseId) {
-            if (confirm("Delete this course?")) {
-                await db.collection("courses").doc(courseId).delete();
-                loadCourses();
-            }
-        }
+  <div id="enrollmentApprovalSection" class="hidden">
+    <h3>Approve Enrollment Requests</h3>
+    <div id="pendingRequests">Loading...</div>
+  </div>
 
+  <div id="approvedEnrollmentsSection" class="hidden">
+    <h3>Approved Enrollments</h3>
+    <div id="approvedRequests">Loading...</div>
+  </div>
+</div>
 
+<!-- Firebase & JS -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC9BtE5OnvtHd1EsN6Ag_InBy1r3S1VM7U",
+  authDomain: "ad2026-b18de.firebaseapp.com",
+  projectId: "ad2026-b18de",
+  storageBucket: "ad2026-b18de.appspot.com",
+  messagingSenderId: "837618240318",
+  appId: "1:837618240318:web:8c3fedc57c3cb3e711fa6f"
+};
 
-        async function loadPendingRequests() {
-            const container = document.getElementById("pendingRequests");
-            container.innerHTML = "Loading...";
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
 
-            const snapshot = await db.collection("course_requests").where("status", "==", "pending").get();
+document.getElementById("toggleSidebar").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("show");
+});
 
-            if (snapshot.empty) {
-                container.innerHTML = "<p>No pending requests.</p>";
-                return;
-            }
+function showSection(id) {
+  document.querySelectorAll(".main-content > div").forEach(el => el.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  if (id === "courses") loadCourses();
+  if (id === "users") loadUserRoles();
+  if (id === "enrollmentApprovalSection") loadPendingRequests();
+  if (id === "approvedEnrollmentsSection") loadApprovedEnrollments();
+}
 
-            let html = `<table class="table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Course</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>`;
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById("dashboard").innerHTML = `<h2>Welcome, ${user.displayName || 'Faculty'} <br><small>${user.email}</small></h2>`;
+    loadCourses();
+  } else {
+    window.location.href = "/login.html";
+  }
+});
 
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const userSnap = await db.collection("users").doc(data.userId).get();
-                const courseSnap = await db.collection("courses").doc(data.courseId).get();
+document.getElementById("addCourseForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = courseTitle.value;
+  const description = courseDescription.value;
+  const category = courseCategory.value;
+  const courseLink = courseLink.value;
+  const thumbnail = thumbnailUrl.value;
 
-                const user = userSnap.exists ? userSnap.data() : {};
-                const course = courseSnap.exists ? courseSnap.data() : {};
+  await db.collection("courses").add({
+    title, description, category, courseLink, thumbnail,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  e.target.reset();
+  loadCourses();
+});
 
-                html += `
-      <tr>
-        <td>${user.name || "Unknown"}</td>
-        <td>${user.email || "Unknown"}</td>
-        <td>${user.phone || "Unknown"}</td>
-        <td>${course.title || "Unknown"}</td>
-        <td><button class="btn btn-success btn-sm" onclick="approveRequest('${doc.id}')">Approve</button></td>
-      </tr>
-    `;
-            }
+async function loadCourses() {
+  const container = document.getElementById("coursesList");
+  container.innerHTML = "";
+  const snapshot = await db.collection("courses").orderBy("createdAt", "desc").get();
+  snapshot.forEach(doc => {
+    const c = doc.data();
+    container.innerHTML += `
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <img src="${c.thumbnail}" class="card-img-top" alt="Thumbnail" onerror="this.src='https://dummyimage.com/300x180/ccc/000&text=No+Image'">
+        <div class="card-body">
+          <h5 class="card-title">${c.title}</h5>
+          <p>${c.description}</p>
+          <p><strong>Category:</strong> ${c.category}</p>
+          <a href="${c.courseLink}" target="_blank" class="btn btn-primary btn-sm">View</a>
+          <button class="btn btn-danger btn-sm ms-2" onclick="deleteCourse('${doc.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`;
+  });
+}
 
-            html += `</tbody></table>`;
-            container.innerHTML = html;
-        }
-        async function approveRequest(requestId) {
-            try {
-                await db.collection("course_requests").doc(requestId).update({
-                    status: "approved"
-                });
-                alert("✅ Request approved!");
-                loadPendingRequests(); // Refresh table
-            } catch (err) {
-                console.error("❌ Error approving request:", err);
-                alert("Failed to approve request.");
-            }
-        }
+async function deleteCourse(id) {
+  if (confirm("Delete course?")) {
+    await db.collection("courses").doc(id).delete();
+    loadCourses();
+  }
+}
 
-        async function loadApprovedEnrollments() {
-            const container = document.getElementById("approvedRequests");
-            container.innerHTML = "Loading...";
-            const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
+async function loadUserRoles() {
+  const container = document.getElementById("userRoleList");
+  container.innerHTML = "";
+  const snapshot = await db.collection("users").get();
 
-            if (snapshot.empty) {
-                container.innerHTML = "<p>No approved enrollments.</p>";
-                return;
-            }
+  snapshot.forEach(doc => {
+    const d = doc.data();
+    const role = d.role || "user";
+    container.innerHTML += `
+    <div class="col-md-4 mb-3">
+      <div class="user-card">
+        <h5>${d.name || "Unnamed"}</h5>
+        <p><i class="fas fa-envelope"></i> ${d.email || "N/A"}</p>
+        <p><i class="fas fa-phone"></i> ${d.phone || "N/A"}</p>
+        <label>Change Role:</label>
+        <select class="form-select" onchange="updateUserRole('${doc.id}', this.value)">
+          <option value="user" ${role === "user" ? "selected" : ""}>User</option>
+          <option value="faculty" ${role === "faculty" ? "selected" : ""}>Faculty</option>
+        </select>
+      </div>
+    </div>`;
+  });
+}
 
-            let html = `<table class="table table-bordered table-striped table-hover">
-<thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Course</th></tr></thead><tbody>`;
+async function updateUserRole(id, role) {
+  await db.collection("users").doc(id).update({ role });
+  alert("Role updated!");
+  loadUserRoles();
+}
 
-            for (const doc of snapshot.docs) {
-                const data = doc.data();
-                const userSnap = await db.collection("users").doc(data.userId).get();
-                const courseSnap = await db.collection("courses").doc(data.courseId).get();
-                const user = userSnap.exists ? userSnap.data() : {};
-                const course = courseSnap.exists ? courseSnap.data() : {};
+async function loadPendingRequests() {
+  const container = document.getElementById("pendingRequests");
+  container.innerHTML = "Loading...";
+  const snapshot = await db.collection("course_requests").where("status", "==", "pending").get();
+  if (snapshot.empty) return container.innerHTML = "<p>No pending requests.</p>";
 
-                html += `<tr><td>${user.name || "Unknown"}</td><td>${user.email || "Unknown"}</td><td>${user.phone || "Unknown"}</td><td>${course.title || "Unknown"}</td></tr>`;
-            }
+  let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th><th>Action</th></tr></thead><tbody>`;
+  for (const doc of snapshot.docs) {
+    const d = doc.data();
+    const userSnap = await db.collection("users").doc(d.userId).get();
+    const courseSnap = await db.collection("courses").doc(d.courseId).get();
+    const user = userSnap.data() || {};
+    const course = courseSnap.data() || {};
+    html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td><td><button class="btn btn-success btn-sm" onclick="approveRequest('${doc.id}')">Approve</button></td></tr>`;
+  }
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+}
 
-            html += `</tbody></table>`;
-            container.innerHTML = html;
-        }
+async function approveRequest(id) {
+  await db.collection("course_requests").doc(id).update({ status: "approved" });
+  alert("Approved!");
+  loadPendingRequests();
+}
 
-        async function loadUserRoles() {
-            const container = document.getElementById("userRoleList");
-            container.innerHTML = "Loading users...";
+async function loadApprovedEnrollments() {
+  const container = document.getElementById("approvedRequests");
+  const snapshot = await db.collection("course_requests").where("status", "==", "approved").get();
+  if (snapshot.empty) return container.innerHTML = "<p>No approved enrollments.</p>";
+  let html = `<table class="table table-bordered"><thead><tr><th>Name</th><th>Email</th><th>Course</th></tr></thead><tbody>`;
+  for (const doc of snapshot.docs) {
+    const d = doc.data();
+    const userSnap = await db.collection("users").doc(d.userId).get();
+    const courseSnap = await db.collection("courses").doc(d.courseId).get();
+    const user = userSnap.data() || {};
+    const course = courseSnap.data() || {};
+    html += `<tr><td>${user.name}</td><td>${user.email}</td><td>${course.title}</td></tr>`;
+  }
+  html += `</tbody></table>`;
+  container.innerHTML = html;
+}
 
-            const snapshot = await db.collection("users").get();
-
-            if (snapshot.empty) {
-                container.innerHTML = "<p>No users found.</p>";
-                return;
-            }
-
-            let html = `<table class="table table-bordered table-striped table-hover">
-        <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Change Role</th></tr></thead><tbody>`;
-
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                html += `<tr>
-            <td>${data.name || 'Unknown'}</td>
-            <td>${data.email || 'Unknown'}</td>
-            <td>${data.phone || 'Unknown'}</td>
-            <td>${data.role || 'user'}</td>
-            <td>
-                <select class="form-select form-select-sm" onchange="updateUserRole('${doc.id}', this.value)">
-                    <option value="user" ${data.role === 'user' ? 'selected' : ''}>User</option>
-                    <option value="faculty" ${data.role === 'faculty' ? 'selected' : ''}>Faculty</option>
-                </select>
-            </td>
-        </tr>`;
-            });
-
-            html += `</tbody></table>`;
-            container.innerHTML = html;
-        }
-
-        async function updateUserRole(userId, newRole) {
-            try {
-                await db.collection("users").doc(userId).update({ role: newRole });
-                alert("✅ Role updated successfully.");
-                loadUserRoles(); // Refresh the list
-            } catch (error) {
-                console.error("Error updating role:", error);
-                alert("❌ Failed to update role.");
-            }
-        }
-
-
-        function logout() {
-            alert("Logging out...");
-            firebase.auth().signOut().then(() => {
-                window.location.href = "/login.html";
-            });
-
-        }
-    </script>
+function logout() {
+  auth.signOut().then(() => window.location.href = "/login.html");
+}
+</script>
 </body>
-
 </html>
