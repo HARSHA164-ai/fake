@@ -263,21 +263,29 @@
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
-                document.getElementById("userName").textContent = user.name || "User";
                 document.getElementById("userEmail").textContent = user.email;
-                document.getElementById("userPhone").textContent = user.phone || "Not Provided";
-
-
                 const phoneSpan = document.getElementById("userPhone");
                 const addPhoneBtn = document.getElementById("addPhoneBtn");
 
-                if (user.phone) {
-                    phoneSpan.textContent = user.phone;
-                    addPhoneBtn.classList.add("d-none");
-                } else {
-                    phoneSpan.textContent = "Not Provided";
-                    addPhoneBtn.classList.remove("d-none");
-                }
+                // Fetch from Firestore
+                db.collection("users").doc(user.uid).get().then(doc => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById("userName").textContent = data.name || "User";
+
+                        if (data.phone) {
+                            phoneSpan.textContent = data.phone;
+                            addPhoneBtn.classList.add("d-none");
+                        } else {
+                            phoneSpan.textContent = "Not Provided";
+                            addPhoneBtn.classList.remove("d-none");
+                        }
+                    } else {
+                        document.getElementById("userName").textContent = "User";
+                        phoneSpan.textContent = "Not Provided";
+                        addPhoneBtn.classList.remove("d-none");
+                    }
+                });
 
 
                 loadCourses(currentUser);
@@ -291,7 +299,8 @@
         document.getElementById("addPhoneBtn").addEventListener("click", () => {
             const phonenumber = prompt("Enter your phone number:");
 
-            if (phone && currentUser) {
+            if (phonenumber && currentUser) {
+
                 db.collection("users").doc(currentUser.uid).set({
                     phone: phonenumber
                 }, { merge: true })
