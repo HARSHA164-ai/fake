@@ -257,46 +257,70 @@
 
 
         function loadCourses(user) {
-            const container = document.getElementById("coursesList");
-            const searchInput = document.getElementById("courseSearch");
+    const container = document.getElementById("coursesList");
+    const searchInput = document.getElementById("courseSearch");
 
-            db.collection("courses").onSnapshot(snapshot => {
-                let courses = [];
-                snapshot.forEach(doc => {
-                    courses.push({ id: doc.id, ...doc.data() });
-                });
+    db.collection("courses").onSnapshot(async (snapshot) => {
+        let courses = [];
+        snapshot.forEach(doc => {
+            courses.push({ id: doc.id, ...doc.data() });
+        });
 
-                function renderCourses(filter = "") {
-                    let html = "";
-                    const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
-                    if (filtered.length === 0) {
-                        html = "<p>No courses found.</p>";
+        // 🔍 Fetch user course requests
+        const requestSnap = await db.collection("course_requests")
+            .where("userId", "==", user.uid)
+            .get();
+
+        const requestMap = {};
+        requestSnap.forEach(doc => {
+            const data = doc.data();
+            requestMap[data.courseId] = data.status; // e.g., "pending" or "approved"
+        });
+
+        function renderCourses(filter = "") {
+            let html = "";
+            const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
+            if (filtered.length === 0) {
+                html = "<p>No courses found.</p>";
+            } else {
+                filtered.forEach(course => {
+                    let action = "";
+
+                    // 🎯 Check if already requested or approved
+                    const status = requestMap[course.id];
+                    if (status === "pending") {
+                        action = `<span class="badge bg-warning text-dark float-end">Pending</span>`;
+                    } else if (status === "approved") {
+                        action = `<span class="badge bg-success float-end">Enrolled</span>`;
                     } else {
-                        filtered.forEach(course => {
-                            html += `
-                                <div class="col-md-4">
-                                    <div class="card course-card">
-                                        <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${course.title}</h5>
-                                            <p class="card-text">${course.description}</p>
-                                            <span class="badge bg-info">${course.category}</span>
-                                            <button class="btn btn-sm btn-primary float-end" onclick="requestEnrollment('${course.id}', '${course.title}')">Request Enroll</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        });
+                        action = `<button class="btn btn-sm btn-primary float-end" onclick="requestEnrollment('${course.id}', '${course.title}')">Request Enroll</button>`;
                     }
-                    container.innerHTML = html;
-                }
 
-                renderCourses();
-                searchInput.addEventListener("input", () => {
-                    renderCourses(searchInput.value);
+                    html += `
+                        <div class="col-md-4">
+                            <div class="card course-card">
+                                <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
+                                <div class="card-body">
+                                    <h5 class="card-title">${course.title}</h5>
+                                    <p class="card-text">${course.description}</p>
+                                    <span class="badge bg-info">${course.category}</span>
+                                    ${action}
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 });
-            });
+            }
+            container.innerHTML = html;
         }
+
+        renderCourses();
+        searchInput.addEventListener("input", () => {
+            renderCourses(searchInput.value);
+        });
+    });
+}
+
 
         function requestEnrollment(courseId, courseTitle) {
             const user = firebase.auth().currentUser;
