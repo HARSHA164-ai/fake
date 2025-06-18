@@ -166,10 +166,44 @@
     <div class="main-content" id="mainContent">
         <section id="dashboardSection">
             <h2>Welcome, <span id="userName">User</span></h2>
-            <span id="userEmail">user@example.com</span>
+            <p>Email: <span id="userEmail">user@example.com</span></p>
+            <p>Phone: <span id="userPhone">Not Provided</span></p>
+            <button id="addPhoneBtn" class="btn btn-sm btn-outline-primary d-none">Add Phone</button>
+
+
+
             <hr>
-            <p>This is the Dashboard content.</p>
+
+            <div class="row text-center mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-light shadow-sm">
+                        <div class="card-body">
+                            <h5>Total Courses</h5>
+                            <p class="fs-4 fw-bold" id="totalCourses">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-success text-white shadow-sm">
+                        <div class="card-body">
+                            <h5>Enrolled Courses</h5>
+                            <p class="fs-4 fw-bold" id="enrolledCount">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card bg-warning text-dark shadow-sm">
+                        <div class="card-body">
+                            <h5>Pending Requests</h5>
+                            <p class="fs-4 fw-bold" id="pendingCount">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="showCourses()">View Available Courses</button>
         </section>
+
 
         <section id="coursesSection" style="display: none;">
             <h2>Courses</h2>
@@ -228,15 +262,80 @@
 
         firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                currentUser = user; // ✅ Save the user globally
-                document.getElementById("userName").textContent = user.displayName || "User";
+                currentUser = user;
+                document.getElementById("userName").textContent = user.name || "User";
                 document.getElementById("userEmail").textContent = user.email;
+                document.getElementById("userPhone").textContent = user.phone || "Not Provided";
+
+
+                const phoneSpan = document.getElementById("userPhone");
+                const addPhoneBtn = document.getElementById("addPhoneBtn");
+
+                if (user.phone) {
+                    phoneSpan.textContent = user.phone;
+                    addPhoneBtn.classList.add("d-none");
+                } else {
+                    phoneSpan.textContent = "Not Provided";
+                    addPhoneBtn.classList.remove("d-none");
+                }
+
+
                 loadCourses(currentUser);
                 loadEnrolledCourses(currentUser);
+                loadDashboardStats(currentUser); // 👈 new function
             } else {
                 window.location.href = "/login.html";
             }
         });
+
+        document.getElementById("addPhoneBtn").addEventListener("click", () => {
+            const phonenumber = prompt("Enter your phone number:");
+
+            if (phone && currentUser) {
+                db.collection("users").doc(currentUser.uid).set({
+                    phone: phonenumber
+                }, { merge: true })
+                    .then(() => {
+                        document.getElementById("userPhone").textContent = phonenumber;
+                        document.getElementById("addPhoneBtn").classList.add("d-none");
+                        alert("Phone number added successfully!");
+                    })
+                    .catch((error) => {
+                        console.error("Error saving phone:", error);
+                        alert("Failed to save phone number.");
+                    });
+            }
+        });
+
+
+        function loadDashboardStats(user) {
+            // Total Courses
+            db.collection("courses").get().then(snapshot => {
+                document.getElementById("totalCourses").textContent = snapshot.size;
+            });
+
+            // Enrolled
+            db.collection("course_requests")
+                .where("userId", "==", user.uid)
+                .where("status", "==", "approved")
+                .get().then(snapshot => {
+                    document.getElementById("enrolledCount").textContent = snapshot.size;
+                });
+
+            // Pending
+            db.collection("course_requests")
+                .where("userId", "==", user.uid)
+                .where("status", "==", "pending")
+                .get().then(snapshot => {
+                    document.getElementById("pendingCount").textContent = snapshot.size;
+                });
+        }
+
+        function showCourses() {
+            document.querySelectorAll(".main-content section").forEach(s => s.style.display = "none");
+            document.getElementById("coursesSection").style.display = "block";
+        }
+
 
         const navLinks = document.querySelectorAll(".sidebar a");
         const sections = document.querySelectorAll(".main-content section");
@@ -257,46 +356,46 @@
 
 
         function loadCourses(user) {
-    const container = document.getElementById("coursesList");
-    const searchInput = document.getElementById("courseSearch");
+            const container = document.getElementById("coursesList");
+            const searchInput = document.getElementById("courseSearch");
 
-    db.collection("courses").onSnapshot(async (snapshot) => {
-        let courses = [];
-        snapshot.forEach(doc => {
-            courses.push({ id: doc.id, ...doc.data() });
-        });
+            db.collection("courses").onSnapshot(async (snapshot) => {
+                let courses = [];
+                snapshot.forEach(doc => {
+                    courses.push({ id: doc.id, ...doc.data() });
+                });
 
-        // 🔍 Fetch user course requests
-        const requestSnap = await db.collection("course_requests")
-            .where("userId", "==", user.uid)
-            .get();
+                // 🔍 Fetch user course requests
+                const requestSnap = await db.collection("course_requests")
+                    .where("userId", "==", user.uid)
+                    .get();
 
-        const requestMap = {};
-        requestSnap.forEach(doc => {
-            const data = doc.data();
-            requestMap[data.courseId] = data.status; // e.g., "pending" or "approved"
-        });
+                const requestMap = {};
+                requestSnap.forEach(doc => {
+                    const data = doc.data();
+                    requestMap[data.courseId] = data.status; // e.g., "pending" or "approved"
+                });
 
-        function renderCourses(filter = "") {
-            let html = "";
-            const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
-            if (filtered.length === 0) {
-                html = "<p>No courses found.</p>";
-            } else {
-                filtered.forEach(course => {
-                    let action = "";
-
-                    // 🎯 Check if already requested or approved
-                    const status = requestMap[course.id];
-                    if (status === "pending") {
-                        action = `<span class="badge bg-warning text-dark float-end">Pending</span>`;
-                    } else if (status === "approved") {
-                        action = `<span class="badge bg-success float-end">Enrolled</span>`;
+                function renderCourses(filter = "") {
+                    let html = "";
+                    const filtered = courses.filter(c => c.title.toLowerCase().includes(filter.toLowerCase()));
+                    if (filtered.length === 0) {
+                        html = "<p>No courses found.</p>";
                     } else {
-                        action = `<button class="btn btn-sm btn-primary float-end" onclick="requestEnrollment('${course.id}', '${course.title}')">Request Enroll</button>`;
-                    }
+                        filtered.forEach(course => {
+                            let action = "";
 
-                    html += `
+                            // 🎯 Check if already requested or approved
+                            const status = requestMap[course.id];
+                            if (status === "pending") {
+                                action = `<span class="badge bg-warning text-dark float-end">Pending</span>`;
+                            } else if (status === "approved") {
+                                action = `<span class="badge bg-success float-end">Enrolled</span>`;
+                            } else {
+                                action = `<button class="btn btn-sm btn-primary float-end" onclick="requestEnrollment('${course.id}', '${course.title}')">Request Enroll</button>`;
+                            }
+
+                            html += `
                         <div class="col-md-4">
                             <div class="card course-card">
                                 <img src="${course.thumbnail}" alt="Thumbnail" class="card-img-top" onerror="this.src='https://dummyimage.com/300x180/cccccc/000000.png&text=No+Image'">
@@ -309,17 +408,17 @@
                             </div>
                         </div>
                     `;
-                });
-            }
-            container.innerHTML = html;
-        }
+                        });
+                    }
+                    container.innerHTML = html;
+                }
 
-        renderCourses();
-        searchInput.addEventListener("input", () => {
-            renderCourses(searchInput.value);
-        });
-    });
-}
+                renderCourses();
+                searchInput.addEventListener("input", () => {
+                    renderCourses(searchInput.value);
+                });
+            });
+        }
 
 
         function requestEnrollment(courseId, courseTitle) {
@@ -343,7 +442,7 @@
             });
         }
 
-        
+
 
         async function loadEnrolledCourses(user) {
             const container = document.getElementById("enrolledCoursesContainer");
